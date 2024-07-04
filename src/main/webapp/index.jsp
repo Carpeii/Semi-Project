@@ -7,6 +7,6 @@
 <body>
 <h1><%= "Hello World!" %></h1>
 <br/>
-<a href="hello-servlet">Hello test change</a>
+<a href="hello-servlet">Hello cyj branch</a>
 </body>
 </html>
