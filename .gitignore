@@ -36,9 +36,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-### Tomcat ###
-/tomcat/logs/
-/tomcat/temp/
-/tomcat/work/
-/tomcat/webapps/ROOT/
