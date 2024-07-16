@@ -11,6 +11,9 @@
     <title>Title</title>
 </head>
 <body>
+ <a href="../document/termUsing.jsp">이용약관</a>
+ <a href="../document/termPrivate.jsp">개인정보처리방침</a>
+ <a href="../etc/faq.jsp">고객문의</a>
 
 </body>
 </html>
