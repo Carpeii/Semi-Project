@@ -11,6 +11,8 @@
     <title>Title</title>
 </head>
 <body>
-
+<a href="../index.jsp">메인 페이지</a>
+<a href="../user/profile.jsp">마이페이지</a>
+<a href="../auth/login.jsp">로그인</a>
 </body>
 </html>
