@@ -32,7 +32,7 @@
     </header>
  <!-- main content -->
 <!--  <main> -->
-<div class="container marketing">
+<!-- <div class="container marketing"> -->
 <!-- 동글뱅이앨범   #안씀-->
 <!--     Three columns of text below the carousel -->
 <!--     <div class="row"> -->
@@ -59,8 +59,8 @@
 
     
 
+<!--   </div> -->
 <!-- START ALBUM -->
-  </div>
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -134,37 +134,70 @@
         </div>
         
         
-
+          <div class="col">
+         <div class="card shadow-sm">
+          <a href="해당 페이지">
+          <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="./image/img3.jpg" alt="이미지없음">
+          </a>
+            <div class="card-body">
+            <p class="card-title">타워 팰리스</p>
+              <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">이게 오버플로우 설정하긴 했는데 몇 글자 부터 안보이는건지 진짜 모르겠네</p>
+              <div class="d-flex justify-content-between align-items-center">
+             </div>
+                <small class="text-body-secondary">방 1 </small>
+                <small class="text-body-secondary">화장실 1</small>
+                <small class="text-body-secondary">거실 0</small>
+                <small class="text-body-secondary">주방 0</small>
+              </div>
+                      <div class="card-footer">
+        <small class="text-primary">바퀴벌레 나옴</small>
+      </div>
+          </div>
+        </div>
+        
 
       </div>
     </div>
   </div>
 <!-- END ALBUM -->
-
+<!--  <div class="album py-5 bg-body-tertiary"> -->
+<!--     <div class="container"> -->
+<!--       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> -->
 <!-- START THE FEATURETTES -->
 
     <hr class="featurette-divider">
-
+    <div class="py-5 bg-body-tertiary">
+<div class="row row-cols-3 row-cols-xm row-cols-xm g-1">
     <div class="row featurette">
       <div class="col-md">
       <span>매물 위치</span>
        <span class="text-body-secondary-">후기 제목</span>
         <p class="lead">간단 후기 내용</p>
       </div>
-      <div class="col-md">
+      <div class="col-xm">
         <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 200x200" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect></svg>
       </div>
-        <div class="col-md">
+    </div>
+    <div class="row featurette">
+        <div class="col-xm">
         <h4 class="featurette-heading fw-normal lh-1">First featurette heading. <span class="text-body-secondary">It’ll blow your mind.</span></h4>
         <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
       </div>
-      <div class="col-md">
+      <div class="col-xm">
         <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect></svg>
       </div>
+      </div>
+      
+      
+    
+      
+   
+      
+      
+      
+    </div>
     </div>
    
-    <hr class="featurette-divider">
-
     <!-- /END THE FEATURETTES -->
 <!-- </main> -->
  <!-- footer -->
