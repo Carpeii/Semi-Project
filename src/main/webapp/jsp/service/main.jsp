@@ -7,13 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>로그인하기</h2>
-
-
-<button onclick="location.href='../auth/loginOk.jsp'">로그인</button>
-<br>
-<button onclick="location.href='../auth/join.jsp'">회원가입</button>
-
-
+<button onclick="location.href='../service/hostMain.jsp'">호스트 모드</button>
+<button onclick="location.href='../auth/login.jsp'">로그인/회원가입</button>
 </body>
 </html>
