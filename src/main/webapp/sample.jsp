@@ -11,11 +11,11 @@
   <body>
   <script src="webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 
-<div class="container">
-   <div class="row">
+<div class="container mt-3">
+   <div class="rows">
    
-      <div class="col-4">
-         <div class="card shadow-sm">
+      <div class="row mb-3">
+         <div class="col-1 shadow-sm">
             <div class="card-body">
                <img src="사진_이미지_URL" class="img-fluid">
                <h5 class="card-title">제목</h5>
