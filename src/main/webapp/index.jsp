@@ -7,6 +7,6 @@
 <body>
 <h1><%= "Hello World!" %></h1>
 <br/>
-<a href="hello-servlet">Hello hdhdhh</a>
+<a href="./jsp/auth/loginMain.jsp">Hello hdhdhh</a>
 </body>
 </html>
