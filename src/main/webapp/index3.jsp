@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%request.setCharacterEncoding("utf-8"); %>
+    
 <!doctype html>
 <html>
   <head>
@@ -9,15 +11,13 @@
      <title>호스트 메인</title>
      <link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.css">
   <script src="webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
+  
   </head>
   <body>
   
 <!-- 호스트 게스트 조건문으로 처리? -->
 <%-- <%@include file="/jsp/common/hostHeader.jsp" %> --%>
-<%@include file="/jsp/common/guestHeader.jsp" %>
-   
-
-
+<%@include file="/jsp/common/Header.jsp" %>
 <!-- START ALBUM -->
   <div class="album py-5 bg-body-tertiary">
   
@@ -27,13 +27,12 @@
      
     <div class="container d-flex justify-content-center m-5">
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 w-50 " role="search">
-            <input type="search" class="form-control w-200" placeholder="지역 또는 건물명" aria-label="Search">
+            <input type="search" class="form-control w-200 " placeholder="지역 또는 건물명을 입력 하세요" aria-label="Search">
         </form>
-        <button class="btn btn-outline-secondary btn-lg px-3 rounded-pill ms-2" type="button">
+        <button class="btn btn-outline-info btn-lg px-3 rounded-pill ms-2" type="button">
             검색
         </button>
 </div>
-
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       
