@@ -14,6 +14,9 @@ public class Booking {
     private Date checkOutDate;
     private int bookingStatus;
 
+    private Member member;
+    private Room room;
+
     public Booking() {
     }
 

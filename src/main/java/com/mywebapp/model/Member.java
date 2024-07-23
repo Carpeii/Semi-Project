@@ -17,6 +17,8 @@ public class Member {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
+    private Host host;
+
     public Member(){
     }
 
