@@ -4,11 +4,14 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>join.jsp</title>
 </head>
 <body>
-<!-- ?join_type=guest -->
-<button onclick="location.href='../auth/guestJoin.jsp'">게스트로 가입하기</button>
-<button onclick="location.href='../auth/hostJoin.jsp'">호스트로 가입하기</button>
+<h1>회원가입</h1>
+<h2>서비스 이용을 위한</h2>
+<h2>이용약관에 동의해주세요</h2>
+개인정보처리방침<button onclick="location.href='${pageContext.request.contextPath}/jsp/document/termPrivate.jsp'">개인정보처리방침 자세히 보기</button><br>
+이용약관<button onclick="location.href='${pageContext.request.contextPath}/jsp/document/termUsing.jsp'">이용약관 자세히 보기</button><br>
+<button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/joinForm.jsp'">전체동의</button>
 </body>
 </html>

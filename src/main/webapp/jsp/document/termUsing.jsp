@@ -11,6 +11,6 @@
     <title>1평 이용약관</title>
 </head>
 <body>
-
+이용약관
 </body>
 </html>

@@ -14,11 +14,11 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/service/main.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/service/main.jsp").forward(request, response);
     }
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         String pw = req.getParameter("pw");
 
@@ -31,25 +31,25 @@ public class LoginServlet extends HttpServlet {
                 // 아직 db 없어서 예시로
                 if (id.equals("test") && pw.equals("1234")) {
                     req.getSession().setAttribute("id", id);
-                    resp.sendRedirect(req.getContextPath() + "/service/main.jsp");
+                    resp.sendRedirect(req.getContextPath() + "/jsp/service/main.jsp"); // 경로를 하나 더 들어가야함
                 } else {
                     req.setAttribute("errMag", "아이디와 비밀번호를 확인하세요");
-                    req.getRequestDispatcher("/auth/loginMain.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
                 }
                 // req.getRequestDispatcher("/guestLoginOk.jsp").forward(req, resp);
             } else {
                 req.setAttribute("errMag", "아이디와 비밀번호를 모두 채워주세요.");
-                req.getRequestDispatcher("/auth/loginMain.jsp").forward(req, resp);
+                req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
             }
         } else if (hostLogin != null) {
             if (id != null && pw != null) { // 공백이 아니고 값이 다 있는 경우
                 // db연결해서 아이디와 비밀번호가 일치하는지 확인하기
                 if (id.equals("test") && pw.equals("1234")) {
                     req.getSession().setAttribute("id", id);
-                    resp.sendRedirect(req.getContextPath() + "/service/hostMain.jsp");
+                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
                 } else {
                     req.setAttribute("errMag", "아이디, 비밀번호를 확인하세요");
-                    req.getRequestDispatcher("/auth/loginMain.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
                     // 로그인처럼 보안이 필요한 이동은 RequestDispatcher 써야함
                     // 사용자 화면 url에서 이동이 보이지 않음
                 }
