@@ -26,8 +26,8 @@
     <div class="container">
      
     <div class="container d-flex justify-content-center m-5">
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 w-50 " role="search">
-            <input type="search" class="form-control w-200 " placeholder="지역 또는 건물명을 입력 하세요" aria-label="Search">
+        <form action="/" method="post" class="col-12 col-lg-auto mb-3 mb-lg-0 w-50 " role="search">
+            <input type="search" id="search" class="form-control w-200" placeholder="지역 또는 건물명을 입력 하세요" aria-label="Search">
         </form>
         <button class="btn btn-outline-info btn-lg px-3 rounded-pill ms-2" type="button">
             검색
