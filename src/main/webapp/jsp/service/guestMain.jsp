@@ -16,7 +16,7 @@
 	</tr>
 	<c:forEach var="room" items="${requestScope.roomList }">
 		<tr>
-			<td>${room.roomName }</td>
+			<td>${room.id }</td>
 			<td>${room.jibunAddress }</td>
 			<td>${room.streetAddress }</td>
 		</tr>
