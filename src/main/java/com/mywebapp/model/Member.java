@@ -1,4 +1,4 @@
-package com.mywebapp.dto;
+package com.mywebapp.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 
 @Getter @Setter
-public class MemberDto {
+public class Member {
     private long id;
     private String userId;
     private String password;
@@ -17,10 +17,10 @@ public class MemberDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MemberDto(){
+    public Member(){
     }
 
-    public MemberDto(long id, String userId, String password, String name, String phone, int memberType, Timestamp createdAt, Timestamp updatedAt) {
+    public Member(long id, String userId, String password, String name, String phone, int memberType, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.userId = userId;
         this.password = password;

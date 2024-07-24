@@ -1,11 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: now
-  Date: 2024. 7. 17.
-  Time: 14:52
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
 <html>
 <head>
     <title>detail.jsp</title>
@@ -13,8 +8,8 @@
 <body>
 
 <script type="text/javascript">
-    <button onClick="location.href='./booking.jsp'">ê³„ì•½ ì‹œì‘í•˜ê¸°</button>
-    alert("ê³„ì•½ ìŠ¹ì¸ì„ ìš”ì²­í–ˆìŠµë‹ˆë‹¤.");
+    <button onClick="location.href='./booking.jsp'">°è¾à ½ÃÀÛÇÏ±â</button>
+    alert("°è¾à ½ÂÀÎÀ» ¿äÃ»Çß½À´Ï´Ù.");
     location.href = "./booking.jsp";
 </script>
 </body>

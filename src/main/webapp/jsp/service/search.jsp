@@ -1,20 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: now
-  Date: 2024. 7. 17.
-  Time: 16:31
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
 </head>
 <body>
+<!-- 검색된 결과들 보이기 -->
 
-<a href="./detail.jsp">
-  <img class="img-room" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSsOGzBpxL7hDroo8XYPWqSAC3CJM0lSS4sA&s"/>
-</a>
+<!-- 결과중 하나 선택 -->
+<button onclick="location.href='../service/detail.jsp'">이태원루프탑 STAY</button>
 
 </body>
 </html>

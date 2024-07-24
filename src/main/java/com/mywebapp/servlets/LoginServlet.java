@@ -1,7 +1,5 @@
 package com.mywebapp.servlets;
 
-import org.example.semiproject.HelloServlet;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

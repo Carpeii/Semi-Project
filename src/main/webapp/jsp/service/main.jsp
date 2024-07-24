@@ -7,8 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <button onclick="location.href='../service/hostMain.jsp'">호스트 모드</button>
+<!-- 로그인 안되어 있을때 -->
 <button onclick="location.href='../auth/login.jsp'">로그인/회원가입</button>
-<input type="text" name="search">검색어를 입력하세요<button onclick="location.href='./search.jsp'">검색</button>
+<!-- 로그인 되어 있을때 -->
+<button onclick="location.href='../auth/login.jsp'">로그인/회원가입</button>
+
+<br><br>
+<h2>단기임대, 1평에서 찾아보세요</h2>
+<button onclick="location.href='../service/searchByMap.jsp'">지도로 검색</button>
+<button onclick="location.href='../service/search.jsp'">검색</button>
 </body>
 </html>
