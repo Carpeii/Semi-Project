@@ -1,4 +1,4 @@
-package com.mywebapp.dto;
+package com.mywebapp.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter @Setter
-public class RoomDto {
+public class Room {
     private long id;
     private String hostId;
     private String jibunAddress;
@@ -25,17 +25,17 @@ public class RoomDto {
     private int minimumContract;
     private int approve;
 
-    private List<RoomImageDto> roomImageDtoList;
-    private RoomOptionDto roomOptionDto;
-    private RoomPriceDto roomPriceDto;
+    private List<RoomImage> roomImageList;
+    private RoomOption roomOption;
+    private RoomPrice roomPrice;
 
+    public Room() {}
 
-    public RoomDto() {}
-
-    public RoomDto(long id, String hostId, String jibunAddress, String streetAddress,
-                   int floor, int usableArea, int roomCount, int livingRoomCount,
-                   int toiletCount, int kitchenCount, boolean duplex, boolean elevator,
-                   boolean park, String parkDetail, int roomType, int minimumContract, int approve) {
+    public Room(long id, String hostId, String jibunAddress, String streetAddress,
+                int floor, int usableArea, int roomCount, int livingRoomCount,
+                int toiletCount, int kitchenCount, boolean duplex, boolean elevator,
+                boolean park, String parkDetail, int roomType, int minimumContract,
+                int approve, List<RoomImage> roomImageList, RoomOption roomOption, RoomPrice roomPrice) {
         this.id = id;
         this.hostId = hostId;
         this.jibunAddress = jibunAddress;
@@ -53,5 +53,8 @@ public class RoomDto {
         this.roomType = roomType;
         this.minimumContract = minimumContract;
         this.approve = approve;
+        this.roomImageList = roomImageList;
+        this.roomOption = roomOption;
+        this.roomPrice = roomPrice;
     }
 }
