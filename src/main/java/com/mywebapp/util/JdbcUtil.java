@@ -1,4 +1,4 @@
-package db;
+package com.mywebapp.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,16 +10,17 @@ public class JdbcUtil {
     public static Connection getCon() {
         Connection con = null;
         try {
-            // MariaDB JDBC 드라이버 클래스 로드
+            // MariaDB JDBC 드라이버 로드
             Class.forName("org.mariadb.jdbc.Driver");
+            // MariaDB URL (localhost:3306은 MariaDB의 기본 포트)
             String url = "jdbc:mariadb://localhost:3306/pyeong";
-            con = DriverManager.getConnection(url, "root", "123456");
-            System.out.println("MariaDB 연결 성공!");
+            // MariaDB 사용자명과 비밀번호
+            con = DriverManager.getConnection(url, "root", "1234");
             return con;
         } catch (ClassNotFoundException ce) {
-            System.out.println("JDBC 드라이버를 찾을 수 없습니다: " + ce.getMessage());
+            System.out.println(ce.getMessage());
         } catch (SQLException se) {
-            System.out.println("데이터베이스 연결 오류: " + se.getMessage());
+            System.out.println(se.getMessage());
         }
         return null;
     }
