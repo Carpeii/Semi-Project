@@ -1,10 +1,6 @@
 package com.mywebapp.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class JdbcUtil {
     public static Connection getCon() {
@@ -53,6 +49,15 @@ public class JdbcUtil {
         try {
             if (rs != null) rs.close();
             if (stmt != null) stmt.close();
+            if (con != null) con.close();
+        } catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+    public static void close(Connection con, PreparedStatement pstmt, ResultSet rs) {
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
             if (con != null) con.close();
         } catch (SQLException s) {
             s.printStackTrace();

@@ -19,13 +19,13 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet("/roomAdd")
+@WebServlet("/service/roomAdd")
 public class RoomController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = null;
-
+        System.out.println("test");
         try {
             connection = JdbcUtil.getCon();
 
@@ -35,6 +35,7 @@ public class RoomController extends HttpServlet {
             room.setRoomName(req.getParameter("roomName"));
             room.setJibunAddress(req.getParameter("jibunAddress"));
             room.setStreetAddress(req.getParameter("streetAddress"));
+            room.setAddressDetail(req.getParameter("addressDetail"));
             room.setFloor(Integer.parseInt(req.getParameter("floor")));
             room.setUsableArea(Integer.parseInt(req.getParameter("usableArea")));
             room.setRoomCount(Integer.parseInt(req.getParameter("roomCount")));
@@ -50,57 +51,63 @@ public class RoomController extends HttpServlet {
             room.setApprove(Integer.parseInt(req.getParameter("approve")));
 
             RoomDao roomDao = new RoomDao();
-            roomDao.create(room);
+
+            if(roomDao.insert(room) != -1){
+                resp.sendRedirect("success.jsp");
+            }else {
+                resp.sendRedirect("error.jsp");
+            }
 
             // Create RoomImage, RoomOption, RoomPrice if provided
             // Example (repeat for RoomImage, RoomOption, RoomPrice)
 
-            String[] imageNames = req.getParameterValues("imageName");
-            String[] imagePaths = req.getParameterValues("imagePath");
-            String[] imageOrders = req.getParameterValues("imageOrder");
-            if (imageNames != null && imagePaths != null && imageOrders != null) {
-                RoomImageDao roomImageDao = new RoomImageDao();
-                for (int i = 0; i < imageNames.length; i++) {
-                    RoomImage roomImage = new RoomImage();
-                    roomImage.setRoomId(room.getId()); // Ensure room ID is set correctly
-                    roomImage.setImageName(imageNames[i]);
-                    roomImage.setImagePath(imagePaths[i]);
-                    roomImage.setImageOrder(Integer.parseInt(imageOrders[i]));
-                    roomImageDao.create(roomImage);
-                }
-            }
+//            String[] imageNames = req.getParameterValues("imageName");
+//            String[] imagePaths = req.getParameterValues("imagePath");
+//            String[] imageOrders = req.getParameterValues("imageOrder");
+//            if (imageNames != null && imagePaths != null && imageOrders != null) {
+//                RoomImageDao roomImageDao = new RoomImageDao();
+//                for (int i = 0; i < imageNames.length; i++) {
+//                    RoomImage roomImage = new RoomImage();
+//                    roomImage.setRoomId(room.getId()); // Ensure room ID is set correctly
+//                    roomImage.setImageName(imageNames[i]);
+//                    roomImage.setImagePath(imagePaths[i]);
+//                    roomImage.setImageOrder(Integer.parseInt(imageOrders[i]));
+//                    roomImageDao.create(roomImage);
+//                }
+//            }
+//
+//            // Handle RoomOption and RoomPrice similarly
+//            // Example code for RoomOption
+//            RoomOption roomOption = new RoomOption();
+//            roomOption.setRoomId(room.getId());
+//            roomOption.setRoomOption(req.getParameter("roomOption"));
+//            RoomOptionDao roomOptionDao = new RoomOptionDao();
+//            roomOptionDao.insert(roomOption);
+//
+//            // Example code for RoomPrice
+//            RoomPrice roomPrice = new RoomPrice();
+//            roomPrice.setRoomId(room.getId());
+//            roomPrice.setRentPrice(Integer.parseInt(req.getParameter("rentPrice")));
+//            roomPrice.setLongTerm(Integer.parseInt(req.getParameter("longTerm")));
+//            roomPrice.setLongTermDiscount(Integer.parseInt(req.getParameter("longTermDiscount")));
+//            roomPrice.setEarlyCheckIn(Integer.parseInt(req.getParameter("earlyCheckIn")));
+//            roomPrice.setEarlyCheckInDiscount(Integer.parseInt(req.getParameter("earlyCheckInDiscount")));
+//            roomPrice.setMaintenanceBill(Integer.parseInt(req.getParameter("maintenanceBill")));
+//            roomPrice.setMaintenanceBillDetail(req.getParameter("maintenanceBillDetail"));
+//            roomPrice.setElectricity(req.getParameter("electricity") != null);
+//            roomPrice.setWater(req.getParameter("water") != null);
+//            roomPrice.setGas(req.getParameter("gas") != null);
+//            roomPrice.setInternet(req.getParameter("internet") != null);
+//            roomPrice.setCleaningFee(Integer.parseInt(req.getParameter("cleaningFee")));
+//            roomPrice.setRefundType(Integer.parseInt(req.getParameter("refundType")));
+//            RoomPriceDao roomPriceDao = new RoomPriceDao();
+//            roomPriceDao.insert(roomPrice);
 
-            // Handle RoomOption and RoomPrice similarly
-            // Example code for RoomOption
-            RoomOption roomOption = new RoomOption();
-            roomOption.setRoomId(room.getId());
-            roomOption.setRoomOption(req.getParameter("roomOption"));
-            RoomOptionDao roomOptionDao = new RoomOptionDao();
-            roomOptionDao.create(roomOption);
-
-            // Example code for RoomPrice
-            RoomPrice roomPrice = new RoomPrice();
-            roomPrice.setRoomId(room.getId());
-            roomPrice.setRentPrice(Integer.parseInt(req.getParameter("rentPrice")));
-            roomPrice.setLongTerm(Integer.parseInt(req.getParameter("longTerm")));
-            roomPrice.setLongTermDiscount(Integer.parseInt(req.getParameter("longTermDiscount")));
-            roomPrice.setEarlyCheckIn(Integer.parseInt(req.getParameter("earlyCheckIn")));
-            roomPrice.setEarlyCheckInDiscount(Integer.parseInt(req.getParameter("earlyCheckInDiscount")));
-            roomPrice.setMaintenanceBill(Integer.parseInt(req.getParameter("maintenanceBill")));
-            roomPrice.setMaintenanceBillDiscount(Integer.parseInt(req.getParameter("maintenanceBillDiscount")));
-            roomPrice.setElectricity(req.getParameter("electricity") != null);
-            roomPrice.setWater(req.getParameter("water") != null);
-            roomPrice.setGas(req.getParameter("gas") != null);
-            roomPrice.setInternet(req.getParameter("internet") != null);
-            roomPrice.setCleaningFee(Integer.parseInt(req.getParameter("cleaningFee")));
-            roomPrice.setRefundType(Integer.parseInt(req.getParameter("refundType")));
-            RoomPriceDao roomPriceDao = new RoomPriceDao();
-            roomPriceDao.create(roomPrice);
-
-            resp.sendRedirect("success.jsp");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            resp.sendRedirect("error.jsp");
+//            resp.sendRedirect("success.jsp");
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//            resp.sendRedirect("error.jsp");
         } finally {
             JdbcUtil.close(connection);
         }
