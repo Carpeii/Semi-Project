@@ -3,11 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+    <title>detail.jsp</title>
 </head>
 <body>
-<button onclick="location.href='../service/booking.jsp'">계약 시작하기</button>
 
+<script type="text/javascript">
+    <button onClick="location.href='./booking.jsp'">계약 시작하기</button>
+    alert("계약 승인을 요청했습니다.");
+    location.href = "./booking.jsp";
+</script>
 </body>
 </html>

@@ -11,6 +11,6 @@
     <title>1평 개인정보 처리 방침</title>
 </head>
 <body>
-
+개인정보처리방침
 </body>
 </html>
