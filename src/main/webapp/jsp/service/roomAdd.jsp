@@ -89,8 +89,8 @@
     <label for="maintenanceBill">Maintenance Bill:</label>
     <input type="number" id="maintenanceBill" name="maintenanceBill"><br>
 
-    <label for="maintenanceBillDiscount">Maintenance Bill Discount (%):</label>
-    <input type="number" id="maintenanceBillDiscount" name="maintenanceBillDiscount"><br>
+    <label for="maintenanceBillDetail">Maintenance Bill Discount (%):</label>
+    <input type="number" id="maintenanceBillDetail" name="maintenanceBillDetail"><br>
 
     <label for="electricity">Electricity Included:</label>
     <input type="checkbox" id="electricity" name="electricity"><br>
