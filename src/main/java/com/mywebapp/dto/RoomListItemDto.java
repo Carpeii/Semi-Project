@@ -9,11 +9,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomListItemDto {
-	private String image_path;
-	private String image_name;
-	private String room_name;
-	private String street_address;
-	private int rent_price;
-	private String room_option;
+	private String imagePath;
+	private String imageName;
+	private String roomName;
+	private String streetAddress;
+	private int rentPrice;
+	private String roomOption;
 
 }
