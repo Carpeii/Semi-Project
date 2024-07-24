@@ -1,6 +1,7 @@
 package com.mywebapp.dao;
 
 import com.mywebapp.model.Room;
+import com.mywebapp.model.RoomPrice;
 import com.mywebapp.util.JdbcUtil;
 
 import java.sql.*;
@@ -11,6 +12,7 @@ public class RoomDao {
 
     private Connection connection;
 
+    public RoomDao() {}
     public RoomDao(Connection connection) {
         this.connection = connection;
     }
@@ -140,4 +142,66 @@ public class RoomDao {
             stmt.executeUpdate();
         }
     }
+    
+    
+    //승인여부도 확인해야됨 applove -> 1정상
+    public List<Room> search(String searchWord) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Room> rooms = new ArrayList<Room>();
+		
+		try {
+			connection = JdbcUtil.getCon();
+			String sql = "select distinct* from  room r "
+					+"LEFT JOIN room_price rp ON r.id = rp.room_id "
+					+ "where "
+					+ "(r.approve=1) "
+					+ "and (r.jibun_address like ? "
+					+ "or r.jibun_address like ? "
+					+ "or r.jibun_address like ? "
+					+ "or r.street_address like ? "
+					+ "or r.street_address like ? "
+					+ "or r.street_address like ? "
+					+ "or r.room_name like ? "
+					+ "or r.room_name like ? "
+					+ "or r.room_name like ?)";
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setString(1,searchWord+"%");
+			pstmt.setString(2,"%"+searchWord+"%");
+			pstmt.setString(3,"%"+searchWord);
+			pstmt.setString(4,searchWord+"%");
+			pstmt.setString(5,"%"+searchWord+"%");
+			pstmt.setString(6,"%"+searchWord);
+			pstmt.setString(7,searchWord+"%");
+			pstmt.setString(8,"%"+searchWord+"%");
+			pstmt.setString(9,"%"+searchWord);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				 Long roomId = rs.getLong("room_id");
+				 int rentPrice =  rs.getInt("rent_price");
+				int longTermDiscount = rs.getInt("long_term_discount");
+				 int earlyCheckInDiscount = rs.getInt("early_check_in_discount");
+				 
+				 long id = rs.getLong("id");
+				 String hostId = rs.getString("host_id");
+				 String jibunAddress = rs.getString("jibun_address");
+				 int roomCount           = rs.getInt("room_count");
+					int livingRoomCount  = rs.getInt("living_room_count");
+					int toiletCount      = rs.getInt("toilet_count");
+					int kitchenCount     = rs.getInt("kitchen_count");
+					 int approve         = rs.getInt("approve");
+					Room room = new Room(id, hostId, jibunAddress,
+							roomCount, livingRoomCount, toiletCount, kitchenCount,
+							 approve, new RoomPrice(roomId,rentPrice,longTermDiscount,earlyCheckInDiscount));
+				rooms.add(room);
+			}
+			
+		}catch(SQLException s) {
+			s.printStackTrace();
+		}
+			return rooms;
+		
+	}
+    
 }
+
