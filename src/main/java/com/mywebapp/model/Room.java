@@ -9,6 +9,7 @@ import java.util.List;
 public class Room {
     private long id;
     private String hostId;
+    private String roomName;
     private String jibunAddress;
     private String streetAddress;
     private int floor;
@@ -31,13 +32,14 @@ public class Room {
 
     public Room() {}
 
-    public Room(long id, String hostId, String jibunAddress, String streetAddress,
+    public Room(long id, String hostId, String roomName, String jibunAddress, String streetAddress,
                 int floor, int usableArea, int roomCount, int livingRoomCount,
                 int toiletCount, int kitchenCount, boolean duplex, boolean elevator,
                 boolean park, String parkDetail, int roomType, int minimumContract,
                 int approve, List<RoomImage> roomImageList, RoomOption roomOption, RoomPrice roomPrice) {
         this.id = id;
         this.hostId = hostId;
+        this.roomName = roomName;
         this.jibunAddress = jibunAddress;
         this.streetAddress = streetAddress;
         this.floor = floor;
