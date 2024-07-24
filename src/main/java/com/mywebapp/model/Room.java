@@ -30,6 +30,9 @@ public class Room {
     private RoomPrice roomPrice;
 
     public Room() {}
+  
+    
+    
 
     public Room(long id, String hostId, String jibunAddress, String streetAddress,
                 int floor, int usableArea, int roomCount, int livingRoomCount,
@@ -57,4 +60,20 @@ public class Room {
         this.roomOption = roomOption;
         this.roomPrice = roomPrice;
     }
+    //사진// 호스트id, 지번 , 방 거실 화장실 주방 개수  -  임대료 장기계약 / 빠른입주 할인 
+    //RoomDao - search 에서 호출
+	public Room(long id, String hostId, String jibunAddress,
+			int roomCount, int livingRoomCount, int toiletCount, int kitchenCount,
+			 int approve, RoomPrice roomPrice) {
+		super();
+		this.id = id;
+		this.hostId = hostId;
+		this.jibunAddress = jibunAddress;
+		this.roomCount = roomCount;
+		this.livingRoomCount = livingRoomCount;
+		this.toiletCount = toiletCount;
+		this.kitchenCount = kitchenCount;
+		this.approve = approve;
+		this.roomPrice = roomPrice;
+	}
 }

@@ -22,6 +22,9 @@ public class RoomPrice {
 
     public RoomPrice() {
     }
+    
+    
+    
     public RoomPrice(long roomId, int rentPrice, int longTerm, int longTermDiscount, int earlyCheckIn, int earlyCheckInDiscount, int maintenanceBill, int maintenanceBillDiscount, boolean electricity, boolean water, boolean gas, boolean internet, int cleaningFee, int refundType) {
         this.roomId = roomId;
         this.rentPrice = rentPrice;
@@ -38,4 +41,14 @@ public class RoomPrice {
         this.cleaningFee = cleaningFee;
         this.refundType = refundType;
     }
+
+
+    //RoomDao - search 에서 호출
+	public RoomPrice(long roomId, int rentPrice, int longTermDiscount, int earlyCheckInDiscount) {
+		super();
+		this.roomId = roomId;
+		this.rentPrice = rentPrice;
+		this.longTermDiscount = longTermDiscount;
+		this.earlyCheckInDiscount = earlyCheckInDiscount;
+	}
 }
