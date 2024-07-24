@@ -25,12 +25,12 @@
     <div class="container">
      
     <div class="container d-flex justify-content-center m-5">
-        <form action="/" method="post" class="col-12 col-lg-auto mb-3 mb-lg-0 w-50 " role="search">
-            <input type="search" id="search" class="form-control w-200" placeholder="지역 또는 건물명을 입력 하세요" aria-label="Search">
-        </form>
-        <button class="btn btn-outline-info btn-lg px-3 rounded-pill ms-2" type="button">
+        <form action="${pageContext.request.contextPath }/host/search" method="post" class="col-12 col-lg-auto mb-3 mb-lg-0 w-50 h- d-flex justify-content-center" role="search">
+            <input type="search" name="searchword" class="form-control w-200 h-70" placeholder="지역 또는 건물명을 입력 하세요" aria-label="Search">
+        <button class="btn btn-outline-info btn-lg px-3 rounded-pill mt-3 w-50 ms-5" type="submit">
             검색
         </button>
+        </form>
 </div>
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
