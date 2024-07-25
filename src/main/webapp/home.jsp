@@ -8,7 +8,7 @@
 </head>
 <body>
 <ul>
-	<li><a href="${pageContext.request.contextPath }/jsp/service/guestMain">게스트 메인페이지</a></li>
+	<li><a href="${pageContext.request.contextPath }/service/guestMain">게스트 메인페이지</a></li>
 </ul>
 </body>
 </html>
