@@ -1,4 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom" >
       <div class="col-md-3 mb-2 mb-md-0">
         <a href="${pageContext.request.contextPath}/main.jsp">
