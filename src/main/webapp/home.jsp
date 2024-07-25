@@ -8,7 +8,7 @@
 </head>
 <body>
 <ul>
-	<li><a href="${pageContext.request.contextPath }/jsp/service/guestMain">ï¿½Ô½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</a></li>
+	<li><a href="${pageContext.request.contextPath }/jsp/service/guestMain">°Ô½ºÆ® ¸ÞÀÎÆäÀÌÁö</a></li>
 </ul>
 </body>
 </html>

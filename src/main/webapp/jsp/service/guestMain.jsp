@@ -10,9 +10,9 @@
 <body>
 <table border="1" width="500">
 	<tr>
-		<th>О©╫О©╫О©╫л╦О©╫</th>
-		<th>О©╫О©╫О©╫н╦О©╫ О©╫ж╪О©╫</th>
-		<th>О©╫О©╫О©╫О©╫ О©╫ж╪О©╫</th>
+		<th>╧Фюл╦╖</th>
+		<th>╣╣╥н╦М аж╪р</th>
+		<th>аЖ╧Ь аж╪р</th>
 	</tr>
 	<c:forEach var="room" items="${requestScope.roomList }">
 		<tr>

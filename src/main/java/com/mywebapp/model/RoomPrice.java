@@ -12,7 +12,7 @@ public class RoomPrice {
     private int earlyCheckIn;
     private int earlyCheckInDiscount;
     private int maintenanceBill;
-    private int maintenanceBillDiscount;
+    private int maintenanceBillDetail;
     private boolean electricity;
     private boolean water;
     private boolean gas;
@@ -33,7 +33,7 @@ public class RoomPrice {
         this.earlyCheckIn = earlyCheckIn;
         this.earlyCheckInDiscount = earlyCheckInDiscount;
         this.maintenanceBill = maintenanceBill;
-        this.maintenanceBillDiscount = maintenanceBillDiscount;
+        this.maintenanceBillDetail = maintenanceBillDiscount;
         this.electricity = electricity;
         this.water = water;
         this.gas = gas;
