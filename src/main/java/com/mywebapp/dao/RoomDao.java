@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mywebapp.dto.RoomListItemDto;
 import com.mywebapp.model.Room;
@@ -12,9 +14,6 @@ import com.mywebapp.model.RoomImage;
 import com.mywebapp.model.RoomOption;
 import com.mywebapp.model.RoomPrice;
 import com.mywebapp.util.JdbcUtil;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RoomDao {
 
@@ -100,62 +99,10 @@ public class RoomDao {
         }
     }
 
-
-    public List<Room> findAll() throws SQLException {
-        List<Room> rooms = new ArrayList<>();
-        String sql = "SELECT * FROM room";
-        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                rooms.add(new Room(
-                        rs.getLong("id"),
-                        rs.getString("host_id"),
-                        rs.getString("jibun_address"),
-                        rs.getString("street_address"),
-                        rs.getInt("floor"),
-                        rs.getInt("usable_area"),
-                        rs.getInt("room_count"),
-                        rs.getInt("living_room_count"),
-                        rs.getInt("toilet_count"),
-                        rs.getInt("kitchen_count"),
-                        rs.getBoolean("duplex"),
-                        rs.getBoolean("elevator"),
-                        rs.getBoolean("park"),
-                        rs.getString("park_detail"),
-                        rs.getInt("room_type"),
-                        rs.getInt("minimum_contract"),
-                        rs.getInt("approve"),
-                        new ArrayList<>(), // Placeholder for roomImageList
-                        null, // Placeholder for roomOption
-                        null // Placeholder for roomPrice
-                ));
-            }
-        }
-        return rooms;
-    }
     
-    /* 게스트 페이지에서 보여줄 방 리스트 */
-    public List<RoomListItemDto> findAllRoomListItems() throws SQLException {
-    	List<RoomListItemDto> roomList = new ArrayList<RoomListItemDto>();
-        String sql = "SELECT ri.image_path, ri.image_name, r.room_name, r.street_address, rp.rent_price, ro.room_option " +
-                "FROM room r " +
-                "INNER JOIN room_image ri ON r.id = ri.room_id " +
-                "INNER JOIN room_option ro ON r.id = ro.room_id " +
-                "INNER JOIN room_price rp ON r.id = rp.room_id";
-        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-        	while (rs.next()) {
-        		roomList.add(new RoomListItemDto(
-        				rs.getString("image_path"),
-        				rs.getString("image_name"),
-        				rs.getString("room_name"),
-        				rs.getString("street_address"),
-        				rs.getInt("rent_price"),
-        				rs.getString("room_option")		
-        				));
-        	}
-        }
-        
-        return roomList;
-    }
+
+
+ 
 
     private int insertRoomPrice(long roomId, RoomPrice roomPrice)  {
         Connection con = null;
@@ -166,6 +113,7 @@ public class RoomDao {
         try {
             con = JdbcUtil.getCon();
             pstmt = con.prepareStatement(sql);
+
             pstmt.setLong(1, roomId);
             pstmt.setInt(2, roomPrice.getRentPrice());
             pstmt.setInt(3, roomPrice.getLongTerm());
@@ -210,6 +158,29 @@ public class RoomDao {
         }
     }
     
+    /* 게스트 페이지에서 보여줄 방 리스트 */
+    public List<RoomListItemDto> findAllRoomListItems() throws SQLException {
+    	List<RoomListItemDto> roomList = new ArrayList<RoomListItemDto>();
+        String sql = "SELECT ri.image_path, ri.image_name, r.room_name, r.street_address, rp.rent_price, ro.room_option " +
+                "FROM room r " +
+                "INNER JOIN room_image ri ON r.id = ri.room_id " +
+                "INNER JOIN room_option ro ON r.id = ro.room_id " +
+                "INNER JOIN room_price rp ON r.id = rp.room_id";
+        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        	while (rs.next()) {
+        		roomList.add(new RoomListItemDto(
+        				rs.getString("image_path"),
+        				rs.getString("image_name"),
+        				rs.getString("room_name"),
+        				rs.getString("street_address"),
+        				rs.getInt("rent_price"),
+        				rs.getString("room_option")		
+        				));
+        	}
+        }
+        
+        return roomList;
+    }
 
     
     

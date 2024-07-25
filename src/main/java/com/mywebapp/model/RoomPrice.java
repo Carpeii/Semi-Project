@@ -12,7 +12,7 @@ public class RoomPrice {
     private int earlyCheckIn;
     private int earlyCheckInDiscount;
     private int maintenanceBill;
-    private int maintenanceBillDetail;
+    private String maintenanceBillDetail;
     private boolean electricity;
     private boolean water;
     private boolean gas;
@@ -22,7 +22,7 @@ public class RoomPrice {
 
     public RoomPrice() {
     }
-    public RoomPrice(long roomId, int rentPrice, int longTerm, int longTermDiscount, int earlyCheckIn, int earlyCheckInDiscount, int maintenanceBill, int maintenanceBillDetail, boolean electricity, boolean water, boolean gas, boolean internet, int cleaningFee, int refundType) {
+    public RoomPrice(long roomId, int rentPrice, int longTerm, int longTermDiscount, int earlyCheckIn, int earlyCheckInDiscount, int maintenanceBill, String maintenanceBillDetail, boolean electricity, boolean water, boolean gas, boolean internet, int cleaningFee, int refundType) {
         this.roomId = roomId;
         this.rentPrice = rentPrice;
         this.longTerm = longTerm;
