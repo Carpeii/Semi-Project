@@ -17,7 +17,7 @@
 		<th>임대 가격</th>
 		<th>방 옵션</th>
 	</tr>
-	<c:forEach var="room" items="${requestScope.roomList }">
+	<c:forEach var="room" items="${roomList }">
 		<tr>
 			<td>${room.imagePath }</td>
 			<td>${room.imageName }</td>

@@ -180,7 +180,7 @@ public class RoomDao {
 				String streetAddress = rs.getString("street_address");
 				int rentPrice = rs.getInt("rent_price");
 				String roomOption = rs.getString("room_option");
-				RoomListItemDto dto = new RoomListItemDto(imagePath, imagePath, roomName, streetAddress, rentPrice, roomOption);
+				RoomListItemDto dto = new RoomListItemDto(imagePath, imageName, roomName, streetAddress, rentPrice, roomOption);
         		roomList.add(dto);
         	}
         	return roomList;
