@@ -1,9 +1,15 @@
 package com.mywebapp.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.mywebapp.dto.RoomListItemDto;
 import com.mywebapp.model.Room;
 import com.mywebapp.model.RoomPrice;
 import com.mywebapp.util.JdbcUtil;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +113,30 @@ public class RoomDao {
             }
         }
         return rooms;
+    }
+    
+    /* 게스트 페이지에서 보여줄 방 리스트 */
+    public List<RoomListItemDto> findAllRoomListItems() throws SQLException {
+    	List<RoomListItemDto> roomList = new ArrayList<RoomListItemDto>();
+        String sql = "SELECT ri.image_path, ri.image_name, r.room_name, r.street_address, rp.rent_price, ro.room_option " +
+                "FROM room r " +
+                "INNER JOIN room_image ri ON r.id = ri.room_id " +
+                "INNER JOIN room_option ro ON r.id = ro.room_id " +
+                "INNER JOIN room_price rp ON r.id = rp.room_id";
+        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        	while (rs.next()) {
+        		roomList.add(new RoomListItemDto(
+        				rs.getString("image_path"),
+        				rs.getString("image_name"),
+        				rs.getString("room_name"),
+        				rs.getString("street_address"),
+        				rs.getInt("rent_price"),
+        				rs.getString("room_option")		
+        				));
+        	}
+        }
+        
+        return roomList;
     }
 
     public void update(Room room) throws SQLException {
