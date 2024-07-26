@@ -8,6 +8,7 @@
 <body>
 <h1>Add New Room</h1>
 <form method="post" action="<%=request.getContextPath() %>/service/roomAdd">
+    <!-- 기본적인 Room 정보 넣기란 -->
     <label for="hostId">Host ID:</label>
     <input type="text" id="hostId" name="hostId" value="1" required /><br>
 
@@ -20,7 +21,7 @@
     <label for="streetAddress">Street Address:</label>
     <input type="text" id="streetAddress" name="streetAddress" value="defaultStreetAddress" required /><br>
 
-    <label for="streetAddress">Street Address detail:</label>
+    <label for="addressDetail">Street Address Detail:</label>
     <input type="text" id="addressDetail" name="addressDetail" value="defaultAddressDetail" required /><br>
 
     <label for="floor">Floor:</label>

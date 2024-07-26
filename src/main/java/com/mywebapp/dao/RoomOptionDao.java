@@ -9,20 +9,18 @@ import java.sql.SQLException;
 
 public class RoomOptionDao {
 
-    public void insert(RoomOption roomOption) throws SQLException {
-        Connection connection = null;
+    public void insert(Connection con, RoomOption roomOption) throws SQLException {
         PreparedStatement pstmt = null;
 
         try {
-            connection = JdbcUtil.getCon();
-            String sql = "INSERT INTO room_option (room_id, room_option) VALUES (?, ?)";
-            pstmt = connection.prepareStatement(sql);
-
+            String sql = "INSERT INTO room_option (room_id, room_options) VALUES (?, ?)";
+            pstmt = con.prepareStatement(sql);
+            System.out.println(roomOption.getRoomOptions());
             pstmt.setLong(1, roomOption.getRoomId());
-            pstmt.setString(2, roomOption.getRoomOption());
+            pstmt.setString(2, roomOption.getRoomOptions());
             pstmt.executeUpdate();
         } finally {
-            JdbcUtil.close(connection, pstmt, null);
+            JdbcUtil.close(pstmt);
         }
     }
 }

@@ -42,28 +42,11 @@
           <version>1.18.28</version>
           <scope>provided</scope>
       </dependency>
-      
-      <!-- mariadb client 설치 -->
-      <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
-	<dependency>
-	    <groupId>org.mariadb.jdbc</groupId>
-	    <artifactId>mariadb-java-client</artifactId>
-	    <version>3.4.0</version>
-	</dependency>
-	
-	<!-- jstl 추가 -->
-	<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-<!-- https://mvnrepository.com/artifact/org.apache.taglibs/taglibs-standard-impl -->
-	<dependency>
-	    <groupId>org.apache.taglibs</groupId>
-	    <artifactId>taglibs-standard-impl</artifactId>
-	    <version>1.2.5</version>
-	    <scope>runtime</scope>
-	</dependency>
+      <dependency>
+          <groupId>org.json</groupId>
+          <artifactId>json</artifactId>
+          <version>20210307</version> <!-- 최신 버전을 확인하여 사용할 것을 권장합니다 -->
+      </dependency>
 
   </dependencies>
 
