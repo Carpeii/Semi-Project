@@ -1,14 +1,15 @@
 package com.mywebapp.dao;
 
-import com.mywebapp.model.Room;
-import com.mywebapp.model.RoomImage;
-import com.mywebapp.model.RoomOption;
-import com.mywebapp.model.RoomPrice;
-import com.mywebapp.util.JdbcUtil;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mywebapp.dto.RoomListItemDto;
+import com.mywebapp.model.Room;
+import com.mywebapp.util.JdbcUtil;
 
 public class RoomDao {
 
@@ -62,5 +63,72 @@ public class RoomDao {
             JdbcUtil.close(con, pstmt, null);
         }
         return roomId;
+    }
+    
+    /* 게스트 페이지에서 보여줄 방 리스트 + 페이징 처리*/
+    public List<RoomListItemDto> findAllRoomListItems(int offset, int pageSize) {
+    	Connection con = null;
+    	PreparedStatement pstmt = null;
+    	ResultSet rs = null;
+    	
+    	// LIMIT은 페이지 크기(한 페이지에 보여줄 데이터의 수)
+    	// OFFSET은 데이터베이스에서 시작할 위치 (OFFSET은 0부터 시작)
+        String sql = "SELECT ri.image_path, ri.image_name, r.room_name, r.street_address, rp.rent_price, ro.room_option " +
+                "FROM room r " +
+                "INNER JOIN room_image ri ON r.id = ri.room_id " +
+                "INNER JOIN room_option ro ON r.id = ro.room_id " +
+                "INNER JOIN room_price rp ON r.id = rp.room_id " + 
+                "LIMIT ? OFFSET ?"; 
+                
+                
+        try {
+        	con = JdbcUtil.getCon();
+        	pstmt = con.prepareStatement(sql);
+        	pstmt.setInt(1,  pageSize);
+        	pstmt.setInt(2, offset);
+        	rs = pstmt.executeQuery();
+        	
+        	List<RoomListItemDto> roomList = new ArrayList<RoomListItemDto>();
+        	while (rs.next()) {
+				String imagePath = rs.getString("image_path");
+				String imageName = rs.getString("image_name");
+				String roomName = rs.getString("room_name");
+				String streetAddress = rs.getString("street_address");
+				int rentPrice = rs.getInt("rent_price");
+				String roomOption = rs.getString("room_option");
+				RoomListItemDto dto = new RoomListItemDto(imagePath, imageName, roomName, streetAddress, rentPrice, roomOption);
+        		roomList.add(dto);
+        	}
+        	return roomList;
+        } catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			JdbcUtil.close(con, pstmt, rs);
+		}
+        
+
+    }
+    
+    /* room 테이블에서 전체 행 수를 계산해 반환 */
+    public int getTotalRoomCount() {
+    	Connection con = null;
+    	PreparedStatement pstmt = null;
+    	ResultSet rs = null;
+    	String sql = "SELECT COUNT(*) FROM room";
+    	try {
+    		con = JdbcUtil.getCon();
+    		pstmt = con.prepareStatement(sql);
+    		rs = pstmt.executeQuery();
+    		if (rs.next()) {
+    			return rs.getInt(1); // 결과의 첫 번째 열(전체 행 수)을 정수로 반환
+    		}
+    		return 0; // 결과가 없다면 0을 반환
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+            return 0; // 예외 발생 시 기본값으로 0을 반환
+        } finally {
+            JdbcUtil.close(con, pstmt, rs); 
+        }
     }
 }
