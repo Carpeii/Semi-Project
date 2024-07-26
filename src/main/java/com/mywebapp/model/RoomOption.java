@@ -6,12 +6,12 @@ import lombok.Setter;
 @Getter @Setter
 public class RoomOption {
     private long roomId;
-    private String roomOption;
+    private String roomOptions;
 
     public RoomOption() {}
 
-    public RoomOption(long roomId, String roomOption) {
+    public RoomOption(long roomId, String roomOptions) {
         this.roomId = roomId;
-        this.roomOption = roomOption;
+        this.roomOptions = roomOptions;
     }
 }
