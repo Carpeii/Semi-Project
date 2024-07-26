@@ -11,6 +11,7 @@ public class Room {
     private String hostId;
     private String jibunAddress;
     private String streetAddress;
+    private String addressDetail;
     private int floor;
     private int usableArea;
     private int roomCount;
@@ -62,13 +63,14 @@ public class Room {
     }
     //사진// 호스트id, 지번 , 방 거실 화장실 주방 개수  -  임대료 장기계약 / 빠른입주 할인 
     //RoomDao - search 에서 호출
-	public Room(long id, String hostId, String jibunAddress,
+	public Room(long id, String hostId, String jibunAddress, String addressDetail,
 			int roomCount, int livingRoomCount, int toiletCount, int kitchenCount,
 			 int approve, RoomPrice roomPrice) {
 		super();
 		this.id = id;
 		this.hostId = hostId;
 		this.jibunAddress = jibunAddress;
+		this.addressDetail = addressDetail;
 		this.roomCount = roomCount;
 		this.livingRoomCount = livingRoomCount;
 		this.toiletCount = toiletCount;

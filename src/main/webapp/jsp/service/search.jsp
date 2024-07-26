@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +9,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- ╟к╩Ж╣х ╟А╟З╣И ╨╦юл╠Б -->
-
-<!-- ╟А╟Заъ гоЁ╙ ╪╠ец -->
-<button onclick="location.href='../service/detail.jsp'">юлеб©Ь╥Ггае╬ STAY</button>
+<!-- 
+ Й╡─Л┐┴К░° Й╡╟ЙЁ╪К⌠╓ КЁ╢Л²╢Й╦╟ 
+asdasdsadas
+ Й╡╟ЙЁ╪Л╓▒ М∙≤К┌≤ Л└═М┐² 
+<button onclick="location.href='../service/detail.jsp'">Л²╢М┐°Л⌡░Кё╗М■└М┐▒ STAY</button>
+ -->
+ <table>
+ <c:forEach var="room" items="${requestScope.rooms}">
+			<tr>
+			<td>К╟╘ Лё╪Л├▄ : ${room.jibunAddress }........${room.roomPrice.rentPrice}</td> 
+			
+			
+			</tr>
+		 </c:forEach>
+ </table>
+ 
 
 </body>
 </html>
