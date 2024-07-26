@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,33 +16,57 @@ import javax.servlet.http.HttpServletResponse;
 import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dto.RoomListItemDto;
 import com.mywebapp.model.Room;
+import com.mywebapp.service.RoomService;
+import com.mywebapp.service.RoomServiceImpl;
 import com.mywebapp.util.JdbcUtil;
 
 @WebServlet("/service/guestMain")
 public class RoomListController extends HttpServlet {
 	
+	private RoomService roomService = new RoomServiceImpl();
+	
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("utf-8");
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		int pageSize = 10; // 한 페이지에 보여줄 항목 수
 		
-		// 페이징 처리
-		String pNum = req.getParameter("pageNum");
+		List<RoomListItemDto> roomList = roomService.getRoomList(pageNum, pageSize);
+		int totalRoomCount = roomService.getTotalRoomCount();
+		Map<String, Object> paginationInfo = roomService.calculatePagination(pageNum, pageSize, totalRoomCount);
 		
-		int pageNum = 1;
-		if(pNum != null) {
-			pageNum = Integer.parseInt(pNum);
-		}
+		req.setAttribute("list", roomList);
+		req.setAttribute("pageCount", paginationInfo.get("pageCount"));
+		req.setAttribute("startPage", paginationInfo.get("startPage"));
+		req.setAttribute("endPage", paginationInfo.get("endPage"));
+		req.setAttribute("pageNum", paginationInfo.get("pageNum"));
 		
-		int startRow = (pageNum - 1) * 10 + 1;
-		int endRow = startRow + 9;
-
-		RoomDao dao = new RoomDao();
-		List<RoomListItemDto> roomList = dao.findAllRoomListItems();
-		req.setAttribute("roomList", roomList);
+		req.getRequestDispatcher("/jsp/service/guestMain.jsp").forward(req, resp);
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/service/guestMain.jsp");
-		dispatcher.forward(req, resp);
+		
 	}
+	
+//	@Override
+//	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		req.setCharacterEncoding("utf-8");
+//		
+//		// 페이징 처리
+//		String pNum = req.getParameter("pageNum");
+//		
+//		int pageNum = 1;
+//		if(pNum != null) {
+//			pageNum = Integer.parseInt(pNum);
+//		}
+//		
+//		int startRow = (pageNum - 1) * 10 + 1;
+//		int endRow = startRow + 9;
+//
+//		RoomDao dao = new RoomDao();
+//		List<RoomListItemDto> roomList = dao.findAllRoomListItems();
+//		req.setAttribute("roomList", roomList);
+//		
+//		RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/service/guestMain.jsp");
+//		dispatcher.forward(req, resp);
+//	}
 	
 
 	

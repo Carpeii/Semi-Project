@@ -11,12 +11,14 @@ public class RoomServiceImpl implements RoomService {
 	
 	private RoomDao roomDao = new RoomDao();
 
+	/* 한 페이지에 보여줄 방 목록 */
 	@Override
 	public List<RoomListItemDto> getRoomList(int pageNum, int pageSize) {
 		int offset = (pageNum - 1) * pageSize;
 		return roomDao.findAllRoomListItems(offset, pageSize);
 	}
 
+	/* 전체 방의 수 */
 	@Override
 	public int getTotalRoomCount() {
 		return roomDao.getTotalRoomCount();

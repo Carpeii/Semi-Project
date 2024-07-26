@@ -19,6 +19,9 @@
 	</tr>
 	<c:forEach var="room" items="${roomList }">
 		<tr>
+		<!--  
+            <td><img src="${room.imagePath}" alt="${room.imageName}" width="100"/></td>
+       -->
 			<td>${room.imagePath }</td>
 			<td>${room.imageName }</td>
 			<td>${room.roomName }</td>
@@ -31,7 +34,12 @@
 
 <div>
 <!-- 이전페이지 링크 -->
-<c:if test=""></c:if>
+<c:if test="${startPage>10 }">
+	<a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${startPage-1}">이전</a>
+</c:if>
+<!--  -->
+
+	
 </div>
 </body>
 </html>
