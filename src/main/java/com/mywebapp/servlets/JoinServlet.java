@@ -1,57 +1,56 @@
 package com.mywebapp.servlets;
 
+import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import com.mywebapp.dto.JoinDto;
+import com.mywebapp.service.UserValidator;
 
 @WebServlet("/joinOk")
 public class JoinServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        String pw = req.getParameter("pw");
-        String pwConfirm = req.getParameter("pwConfirm");
-        String name = req.getParameter("name");
-        String phone = req.getParameter("phone");
-        String guest = req.getParameter("guest");
-        String host = req.getParameter("host");
+    	JoinDto user = extractUserFromRequest(req);
 
-        // db 연결 전에 아이디, 비번 등 공백 확인
-        if(id.equals("") || id == null) {
-            req.setAttribute("errMsg", "아이디를 확인해주세요");
-            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
-        }
-        if((pw.equals("") || pw == null) || (pwConfirm.equals("") || pwConfirm == null)) {
-            req.setAttribute("errMsg", "비밀번호를 확인해주세요");
-            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
-        }
-        if(name.equals("") || name == null) {
-            req.setAttribute("errMsg", "이름을 확인해주세요");
-            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
-        }
-        if(phone.equals("") || phone == null) {
-            req.setAttribute("errMsg", "휴대전화 번호를 확인해주세요");
-            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+        // 입력값 검증
+        String errMsg = UserValidator.getErrorMessage(user);
+        if (errMsg != null) {
+            setErrorAndForward(req, resp, errMsg);
+            return;
         }
 
-        // 비밀번호 확인
-        if(!pw.equals(pwConfirm)) {
-            req.setAttribute("errMsg", "비밀번호와 확인이 맞지 않습니다.");
-            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+        // 회원 유형에 따른 페이지 이동
+        if (user.getGuest() != null) {
+            resp.sendRedirect(req.getContextPath() + "/jsp/auth/guestJoinOk.jsp");
+        } else if (user.getHost() != null) {
+            resp.sendRedirect(req.getContextPath() + "/jsp/auth/hostJoinOk.jsp");
         } else {
-            if (guest != null) {
-                resp.sendRedirect(req.getContextPath() + "/jsp/auth/guestJoinOk.jsp");
-            } else if (host != null) {
-                resp.sendRedirect(req.getContextPath() + "/jsp/auth/hostJoinOk.jsp");
-            }
+            setErrorAndForward(req, resp, "회원 유형을 선택해주세요.");
         }
 
+    }
+    
+    // 요청에서 UserDTO를 추출하는 메서드
+    private JoinDto extractUserFromRequest(HttpServletRequest req) {
+    	JoinDto user = new JoinDto();
+        user.setId(req.getParameter("id"));
+        user.setPw(req.getParameter("pw"));
+        user.setPwConfirm(req.getParameter("pwConfirm"));
+        user.setName(req.getParameter("name"));
+        user.setPhone(req.getParameter("phone"));
+        user.setGuest(req.getParameter("guest"));
+        user.setHost(req.getParameter("host"));
+        return user;
+    }
+    
+    // 에러 메시지 설정 후 포워딩 메서드
+    private void setErrorAndForward(HttpServletRequest req, HttpServletResponse resp, String errMsg) throws ServletException, IOException {
+        req.setAttribute("errMsg", errMsg);
+        req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
     }
 }

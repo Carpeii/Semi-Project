@@ -27,7 +27,11 @@
 			<td>${room.roomOption }</td>
 		</tr>
 	</c:forEach>
-	
 </table>
+
+<div>
+<!-- 이전페이지 링크 -->
+<c:if test=""></c:if>
+</div>
 </body>
 </html>

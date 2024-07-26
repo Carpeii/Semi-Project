@@ -165,7 +165,7 @@ public class RoomDao {
     	ResultSet rs = null;
     	
     	// LIMIT은 페이지 크기(한 페이지에 보여줄 데이터의 수)
-    	// OFFSET은 데이터베이스에서 시작할 위치
+    	// OFFSET은 데이터베이스에서 시작할 위치 (OFFSET은 0부터 시작)
         String sql = "SELECT ri.image_path, ri.image_name, r.room_name, r.street_address, rp.rent_price, ro.room_option " +
                 "FROM room r " +
                 "INNER JOIN room_image ri ON r.id = ri.room_id " +
