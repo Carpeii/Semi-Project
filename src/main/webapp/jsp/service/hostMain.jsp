@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<button onclick="location.href='../auth/roomAdd.jsp'">规包府</button>
+<button onclick="location.href='../service/roomAdd.jsp'">规包府</button>
 <button onclick="location.href='../auth/roomAdd.jsp'">拌距</button>
 <button onclick="location.href='../auth/roomAdd.jsp'">盲泼</button>
 <button onclick="location.href='../auth/roomAdd.jsp'">沥魂</button>

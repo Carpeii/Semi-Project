@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Add New Room</h1>
-<form method="post" action="<%=request.getContextPath() %>/service/roomAdd" enctype="multipart/form-data">
+<form method="post" action="<%=request.getContextPath() %>/service/roomAdd">
     <!-- 기본적인 Room 정보 넣기란 -->
     <label for="hostId">Host ID:</label>
     <input type="text" id="hostId" name="hostId" value="1" required /><br>
@@ -62,10 +62,6 @@
 
     <label for="approve">Approve:</label>
     <input type="number" id="approve" name="approve" value="1" required /><br>
-
-    <!-- 이미지 파일 추가 -->
-    <label for="imageFile">Upload Image:</label>
-    <input type="file" id="imageFile" name="imageFile" /><br>
 
     <input type="submit" value="Add Room" />
 </form>

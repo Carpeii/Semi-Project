@@ -28,7 +28,7 @@ public class RoomController extends HttpServlet {
 
         try {
             con = JdbcUtil.getCon();
-            con.setAutoCommit(false);
+
             // Create Room
             Room room = new Room();
             room.setHostId(req.getParameter("hostId"));
