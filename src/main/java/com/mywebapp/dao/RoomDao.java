@@ -43,11 +43,17 @@ public class RoomDao {
             pstmt.setInt(16, room.getRoomType());
             pstmt.setInt(17, room.getMinimumContract());
             pstmt.setInt(18, room.getApprove());
-            pstmt.executeUpdate();
+            int affectedRow = pstmt.executeUpdate();
+            if (affectedRow == 0) {
+                throw new SQLException("Insert failed");
+            }
 
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 roomId = rs.getLong(1);
+                System.out.println(roomId);
+            }else {
+                throw new SQLException("NO ID");
             }
         }catch (SQLException e){
             e.printStackTrace();

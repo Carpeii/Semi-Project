@@ -52,10 +52,10 @@ public class RoomController extends HttpServlet {
 
             RoomDao roomDao = new RoomDao();
             
-            if(roomDao.insert(room) != -1){
-                long roomId = Long.parseLong(req.getParameter("roomId"));
+            long roomId = roomDao.insert(room);
+            if(roomId != -1){
                 req.setAttribute("roomId", roomId);
-                req.getRequestDispatcher("/roomImageAdd.jsp").forward(req, resp);
+                req.getRequestDispatcher("/jsp/service/roomImageUpload.jsp").forward(req, resp);
             }else {
                 resp.sendRedirect("error.jsp");
             }
