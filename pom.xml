@@ -42,6 +42,12 @@
           <version>1.18.28</version>
           <scope>provided</scope>
       </dependency>
+      <dependency>
+          <groupId>org.json</groupId>
+          <artifactId>json</artifactId>
+          <version>20210307</version> <!-- 최신 버전을 확인하여 사용할 것을 권장합니다 -->
+      </dependency>
+
   </dependencies>
 
   <build>
