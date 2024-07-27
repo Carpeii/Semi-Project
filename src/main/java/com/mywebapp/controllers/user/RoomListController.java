@@ -23,6 +23,7 @@ import com.mywebapp.util.JdbcUtil;
 @WebServlet("/service/guestMain")
 public class RoomListController extends HttpServlet {
 	
+	//RoomServiceImpl 불러오기
 	private RoomService roomService = new RoomServiceImpl();
 	
 	@Override
@@ -37,10 +38,12 @@ public class RoomListController extends HttpServlet {
 		}
 		int pageSize = 10; // 한 페이지에 보여줄 항목 수
 		
+		// RoomServiceImpl의 메서드들 호출
 		List<RoomListItemDto> roomList = roomService.getRoomList(pageNum, pageSize);
 		int totalRoomCount = roomService.getTotalRoomCount();
 		Map<String, Object> paginationInfo = roomService.calculatePagination(pageNum, pageSize, totalRoomCount);
 		
+		// request 객체를 통해 guestMain.jsp로 데이터들 전달
 		req.setAttribute("roomList", roomList);
 		req.setAttribute("pageCount", paginationInfo.get("pageCount"));
 		req.setAttribute("startPage", paginationInfo.get("startPage"));
@@ -51,10 +54,6 @@ public class RoomListController extends HttpServlet {
 		
 		
 	}
-	
-	
-
-	
 	
 
 }

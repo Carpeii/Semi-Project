@@ -10,6 +10,7 @@ import com.mywebapp.dto.RoomListItemDto;
 
 public class RoomServiceImpl implements RoomService {
 	
+	// RoomDaoImpl 불러오기
 	private RoomDao roomDao = new RoomDaoImpl();
 
 	/* 한 페이지에 보여줄 방 목록 */
@@ -30,7 +31,7 @@ public class RoomServiceImpl implements RoomService {
 		Map<String, Object> paginationInfo = new HashMap<>();
 		int pageCount = (int) Math.ceil((double) totalCount / pageSize);
 		int startPage = ((pageNum - 1) / 10) * 10 + 1;
-		int endPage = Math.min(startPage + 9, pageCount);
+		int endPage  = Math.min(startPage + 9, pageCount);
 		
 		paginationInfo.put("pageCount", pageCount);
 		paginationInfo.put("startPage", startPage);
