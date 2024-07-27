@@ -30,7 +30,7 @@ public class RoomServiceImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-
+ 
     @Test
     void testGetRoomList() {
         // Arrange
@@ -63,6 +63,37 @@ public class RoomServiceImplTest {
         // Assert
         assertEquals(expectedCount, totalCount);
     }
+    
+    
+    @Test
+    void testGetRoomList_FailScenario() {
+        // Arrange
+        int pageNum = 1;
+        int pageSize = 10;
+        int offset = (pageNum - 1) * pageSize;
+
+        // 잘못된 mock 데이터 설정
+        List<RoomListItemDto> mockRoomList = Arrays.asList(
+            new RoomListItemDto("wrongPath", "wrongName", "wrongRoom", "wrongAddress", 999, "wrongOption"),
+            new RoomListItemDto("anotherWrongPath", "anotherWrongName", "anotherWrongRoom", "anotherWrongAddress", 888, "anotherWrongOption")
+        );
+
+        // Mock 설정
+        when(roomDao.findAllRoomListItems(offset, pageSize)).thenReturn(mockRoomList);
+
+        // 올바른 데이터 설정
+        List<RoomListItemDto> expectedRoomList = Arrays.asList(
+            new RoomListItemDto("path1", "name1", "room1", "address1", 1000, "option1"),
+            new RoomListItemDto("path2", "name2", "room2", "address2", 2000, "option2")
+        );
+
+        // Act
+        List<RoomListItemDto> roomList = roomService.getRoomList(pageNum, pageSize);
+
+        // Assert
+        assertEquals(expectedRoomList, roomList); // 실패 예상
+    }
+
 
     @Test
     void testCalculatePagination() {

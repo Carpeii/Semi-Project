@@ -33,16 +33,33 @@
 </table>
 
 <div>
+<!-- 이전페이지 링크 -->
+<c:if test="${startPage>10 }">
+	<a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${ startPage - 1}">이전</a>
+</c:if>
 <!--  -->
- <div>
-        <c:forEach var="i" begin="${startPage}" end="${endPage}">
-            <a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${i}">${i}</a>
-            <c:if test="${i < endPage}">
-                &nbsp;
-            </c:if>
-        </c:forEach>
-    </div>
+	<c:forEach var="num" begin="${startPage }" end="${endPage }" >
+		<c:choose>
+			<c:when test="${pageNum == num }"><!-- 현재 페이지 색 바꾸기 -->
+				<a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${num }">
+				<span style="color:red">${num }</span>
+				</a>
+			</c:when>
+			<c:otherwise>
+				<a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${num}">
+				<span style="color:gray">${num }</span>
+				</a>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
 	
+<!-- 다음페이지 링크 -->
+<c:if test="${endPage<pageCount }">
+	<a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${endPage + 1}">다음</a>
+</c:if>
+<!-- -->
 </div>
+ 
+
 </body>
 </html>
