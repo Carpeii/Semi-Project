@@ -1,4 +1,9 @@
-<%--
+<%@ page import="com.mywebapp.dao.MemberDao" %>
+<%@ page import="com.mywebapp.util.JdbcUtil" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %><%--
   Created by IntelliJ IDEA.
   User: now
   Date: 2024. 7. 23.
@@ -19,6 +24,10 @@
             <tr>
                 <td><label for="id">아이디</label></td>
                 <td><input type="text" name="id" id="id" /></td>
+                <td><button type="button" onclick="${pageContext.request.contextPath}/joinOk" method="get">아이디 중복 검사</button> </td>
+            </tr>
+            <tr>
+                <div>${idErrMsg}</div><br>
             </tr>
             <tr>
                 <td><label for="pw">비밀번호</label></td>
