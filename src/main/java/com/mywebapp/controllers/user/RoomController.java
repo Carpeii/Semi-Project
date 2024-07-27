@@ -1,6 +1,7 @@
 package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.RoomDao;
+import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dao.RoomImageDao;
 import com.mywebapp.dao.RoomOptionDao;
 import com.mywebapp.dao.RoomPriceDao;
@@ -21,6 +22,8 @@ import java.sql.SQLException;
 
 @WebServlet("/service/roomAdd")
 public class RoomController extends HttpServlet {
+	
+	private RoomDao roomDao = new RoomDaoImpl();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,8 +52,6 @@ public class RoomController extends HttpServlet {
             room.setRoomType(Integer.parseInt(req.getParameter("roomType")));
             room.setMinimumContract(Integer.parseInt(req.getParameter("minimumContract")));
             room.setApprove(Integer.parseInt(req.getParameter("approve")));
-
-            RoomDao roomDao = new RoomDao();
             
             long roomId = roomDao.insert(room);
             if(roomId != -1){

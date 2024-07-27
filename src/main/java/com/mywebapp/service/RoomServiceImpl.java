@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.mywebapp.dao.RoomDao;
+import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dto.RoomListItemDto;
 
 public class RoomServiceImpl implements RoomService {
 	
-	private RoomDao roomDao = new RoomDao();
+	private RoomDao roomDao = new RoomDaoImpl();
 
 	/* 한 페이지에 보여줄 방 목록 */
 	@Override
