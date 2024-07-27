@@ -1,4 +1,4 @@
-package service;
+package com.mywebapp.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 

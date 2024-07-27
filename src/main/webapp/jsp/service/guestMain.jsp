@@ -33,12 +33,15 @@
 </table>
 
 <div>
-<!-- 이전페이지 링크 -->
-<c:if test="${startPage>10 }">
-	<a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${startPage-1}">이전</a>
-</c:if>
 <!--  -->
-
+ <div>
+        <c:forEach var="i" begin="${startPage}" end="${endPage}">
+            <a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${i}">${i}</a>
+            <c:if test="${i < endPage}">
+                &nbsp;
+            </c:if>
+        </c:forEach>
+    </div>
 	
 </div>
 </body>
