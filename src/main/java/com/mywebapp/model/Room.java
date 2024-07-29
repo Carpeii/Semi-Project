@@ -9,6 +9,7 @@ import java.util.List;
 public class Room {
     private long id;
     private String hostId;
+    private String roomName;
     private String jibunAddress;
     private String streetAddress;
     private String addressDetail;
@@ -63,12 +64,12 @@ public class Room {
     }
     //사진// 호스트id, 지번 , 방 거실 화장실 주방 개수  -  임대료 장기계약 / 빠른입주 할인 
     //RoomDao - search 에서 호출
-	public Room(long id, String hostId, String jibunAddress, String addressDetail,
-			int roomCount, int livingRoomCount, int toiletCount, int kitchenCount,
+	public Room(long id, String hostId,String roomName, String jibunAddress, String addressDetail,
+			 int roomCount, int livingRoomCount, int toiletCount, int kitchenCount,
 			 int approve, RoomPrice roomPrice) {
-		super();
 		this.id = id;
 		this.hostId = hostId;
+		this.roomName = roomName;
 		this.jibunAddress = jibunAddress;
 		this.addressDetail = addressDetail;
 		this.roomCount = roomCount;
