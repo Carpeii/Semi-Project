@@ -20,8 +20,9 @@ import com.mywebapp.model.Room;
 import com.mywebapp.model.RoomPrice;
 @WebServlet("/host/search")
 public class SearchController  extends HttpServlet  {
+	
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		Action action = new SearchAction();
 		action.execute(req, resp);

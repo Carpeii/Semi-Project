@@ -15,6 +15,9 @@ asdasdsadas
  결과중 하나 선택 
 <button onclick="location.href='../service/detail.jsp'">이태원루프탑 STAY</button>
  -->
+ <c:if test="">
+ <a href="">이전페이지</a>
+ </c:if>
  <table>
  <c:forEach var="room" items="${requestScope.rooms}">
 			<tr>
@@ -24,6 +27,9 @@ asdasdsadas
 			</tr>
 		 </c:forEach>
  </table>
+ <c:if test="">
+ <a href="">이전페이지</a>
+ </c:if>
  
 
 </body>
