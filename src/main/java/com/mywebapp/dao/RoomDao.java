@@ -23,6 +23,38 @@ public class RoomDao {
         this.connection = connection;
     }
 
+    public List<Room> findAll() throws SQLException {
+        List<Room> rooms = new ArrayList<>();
+        String sql = "SELECT * FROM room";
+        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                rooms.add(new Room(
+                        rs.getLong("id"),
+                        rs.getString("host_id"),
+                        rs.getString("jibun_address"),
+                        rs.getString("street_address"),
+                        rs.getInt("floor"),
+                        rs.getInt("usable_area"),
+                        rs.getInt("room_count"),
+                        rs.getInt("living_room_count"),
+                        rs.getInt("toilet_count"),
+                        rs.getInt("kitchen_count"),
+                        rs.getBoolean("duplex"),
+                        rs.getBoolean("elevator"),
+                        rs.getBoolean("park"),
+                        rs.getString("park_detail"),
+                        rs.getInt("room_type"),
+                        rs.getInt("minimum_contract"),
+                        rs.getInt("approve"),
+                        new ArrayList<>(), // Placeholder for roomImageList
+                        null, // Placeholder for roomOption
+                        null // Placeholder for roomPrice
+                ));
+            }
+        }
+        return rooms;
+    }
+    
     //승인여부도 확인해야됨 applove -> 1정상
     public ArrayList<Room> search(String searchWord) {
 		PreparedStatement pstmt = null;
