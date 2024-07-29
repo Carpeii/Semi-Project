@@ -9,6 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomListItemDto {
+	private Long id; 
 	private String imagePath;
 	private String imageName;
 	private String roomName;

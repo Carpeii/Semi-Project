@@ -12,7 +12,7 @@ public class Booking {
     private long roomId;
     private Date checkInDate;
     private Date checkOutDate;
-    private int bookingStatus;
+    private int bookingStatus; // 0: 미확인, 1: 승인, 2: 거절
 
     private Member member;
     private Room room;

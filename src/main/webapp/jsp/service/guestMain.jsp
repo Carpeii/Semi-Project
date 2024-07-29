@@ -16,6 +16,7 @@
 		<th>도로명 주소</th>
 		<th>임대 가격</th>
 		<th>방 옵션</th>
+		<th>방 선택</th>
 	</tr>
 	<c:forEach var="room" items="${roomList }">
 		<tr>
@@ -28,6 +29,7 @@
 			<td>${room.streetAddress }</td>
 			<td>${room.rentPrice }</td>
 			<td>${room.roomOption }</td>
+			<td><a href="<%=request.getContextPath()%>/bookRoom?roomId=${room.id}">방 선택</a>
 		</tr>
 	</c:forEach>
 </table>

@@ -24,6 +24,8 @@ public class RoomDaoImpl implements RoomDao {
 
 	        try {
 	            con = JdbcUtil.getCon();
+	            // PreparedStatement.RETURN_GENERATED_KEYS란?
+	            // 데이터베이스에서 AUTO_INCREMENT와 같은 자동 생성 키를 가진 열에 대해 사용
 	            pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
 	            pstmt.setString(1, room.getHostId());
@@ -74,7 +76,7 @@ public class RoomDaoImpl implements RoomDao {
 	    	
 	    	// LIMIT은 페이지 크기(한 페이지에 보여줄 데이터의 수)
 	    	// OFFSET은 데이터베이스에서 시작할 위치 (OFFSET은 0부터 시작)
-	        String sql = "SELECT ri.image_path, ri.image_name, r.room_name, r.street_address, rp.rent_price, ro.room_option " +
+	        String sql = "SELECT r.id, ri.image_path, ri.image_name, r.room_name, r.street_address, rp.rent_price, ro.room_option " +
 	                "FROM room r " +
 	                "INNER JOIN room_image ri ON r.id = ri.room_id " +
 	                "INNER JOIN room_option ro ON r.id = ro.room_id " +
@@ -91,13 +93,14 @@ public class RoomDaoImpl implements RoomDao {
 	        	
 	        	List<RoomListItemDto> roomList = new ArrayList<RoomListItemDto>();
 	        	while (rs.next()) {
+	        		Long id = rs.getLong("id");
 					String imagePath = rs.getString("image_path");
 					String imageName = rs.getString("image_name");
 					String roomName = rs.getString("room_name");
 					String streetAddress = rs.getString("street_address");
 					int rentPrice = rs.getInt("rent_price");
 					String roomOption = rs.getString("room_option");
-					RoomListItemDto dto = new RoomListItemDto(imagePath, imageName, roomName, streetAddress, rentPrice, roomOption);
+					RoomListItemDto dto = new RoomListItemDto(id, imagePath, imageName, roomName, streetAddress, rentPrice, roomOption);
 	        		roomList.add(dto);
 	        	}
 	        	return roomList;
