@@ -65,10 +65,11 @@ public class RoomDao {
 			connection = JdbcUtil.getCon();
 			String sql = "select distinct * from room r "
 					+"LEFT JOIN room_price rp ON r.id = rp.room_id "
-					+ "where (r.approve=1) "
-					+ "and (r.jibun_address like ? "
-					+ "or r.street_address like ? "
-					+ "or r.room_name like ?) ";
+					+"where (r.approve=1) "
+					+"and (r.jibun_address like ? "
+					+"or r.street_address like ? "
+					+"or r.room_name like ?) "
+					+"order by r.id desc";
 			pstmt = connection.prepareStatement(sql);
 			pstmt.setString(1,"%"+searchWord+"%");
 			pstmt.setString(2,"%"+searchWord+"%");

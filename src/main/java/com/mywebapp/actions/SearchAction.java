@@ -14,11 +14,11 @@ public class SearchAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
-		String searchword = req.getParameter("searchword");
-		System.out.println(searchword);
+		String searchWord = req.getParameter("searchWord");
+		System.out.println(searchWord);
 		
 	RoomDao dao = new RoomDao(); 
-	ArrayList<Room> rooms = (ArrayList<Room>)dao.search(searchword);
+	ArrayList<Room> rooms = (ArrayList<Room>)dao.search(searchWord);
 	for(Room r : rooms) {
 		int price = r.getRoomPrice().getRentPrice();
 		int approve = r.getApprove();
@@ -30,6 +30,8 @@ public class SearchAction implements Action {
 	}
 	//클라이언트에 보여줄 값으로 가공 후 dto에 넣어서 보내기
 	req.setAttribute("rooms", rooms);
+	
+	
 	
 	try {
 		
