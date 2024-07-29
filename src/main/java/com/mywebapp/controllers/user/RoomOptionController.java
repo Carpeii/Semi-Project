@@ -53,7 +53,7 @@ public class RoomOptionController extends HttpServlet {
             roomOptionDao.insert(con, roomOption); // Pass connection to the DAO method
 
             con.commit();
-            resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+            resp.sendRedirect(req.getContextPath() + "/jsp/service/roomPriceAdd.jsp");
 
         } catch (SQLException e) {
             e.printStackTrace();
