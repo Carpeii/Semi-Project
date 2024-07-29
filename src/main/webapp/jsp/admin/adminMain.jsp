@@ -13,6 +13,6 @@
 <body>
 <!-- 매물 승인 요청 후 대기 매물 리스트 -->
 <!-- 매물 리스트 해당 클릭하면 해당 매물 상태 관리하는 페이지 나오도록 -->
-<a href="./admin/roomManage">Go To Admin Page</a>
+<a href="./admin/roomManagement">Go To Admin Page</a>
 </body>
 </html>
