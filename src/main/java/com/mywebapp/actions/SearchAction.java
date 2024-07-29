@@ -13,7 +13,6 @@ import com.mywebapp.model.Room;
 public class SearchAction implements Action {
 	private int viewCount = 15;
 	private String searchUrl = "/jsp/service/search.jsp";
-	private int startPage = 1;
 	
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -24,35 +23,34 @@ public class SearchAction implements Action {
 		}
 		System.out.println(searchWord);
 		
-	RoomDao dao = new RoomDao(); 
-	//검색 결과의 총 수
-	int totalRecord = dao.searchTotalRecord(searchWord);
-	//총페이지    =  ((총 행수-1)/15)+1) 한페이지에 15개
-	int totalPage = ((totalRecord-1)/viewCount)+1;
-	//보여줄 페이지의 데이터 1= 2페이지
-	int viewRecord = (pageNum-1)*totalRecord;
-	System.out.println("viewRecord"+viewRecord);
-	
-	ArrayList<Room> rooms = (ArrayList<Room>)dao.getRoomList(searchWord,viewRecord);
-	for(Room r : rooms) {
-		int price = r.getRoomPrice().getRentPrice();
-		int approve = r.getApprove();
-		String address = r.getJibunAddress();
-		String addressDetail = r.getAddressDetail();
-		String roomName = r.getRoomName();
-		
-		System.out.println(approve +"   " + address +" "+roomName+" " +addressDetail+" "+ price );
-	}
-	System.out.println("totalPage"+totalPage);
-	System.out.println("pageNum"+pageNum);
-	//클라이언트에 보여줄 값으로 가공 후 dto에 넣어서 보내기
-	req.setAttribute("totalPage",totalPage);
-	req.setAttribute("pageNum",pageNum);
-	req.setAttribute("rooms", rooms);
-	
-	
-	
 	try {
+		RoomDao dao = new RoomDao(); 
+		//검색 결과의 총 수
+		int totalRecord = dao.searchTotalRecord(searchWord);
+		//총페이지    =  ((총 행수-1)/15)+1) 한페이지에 15개
+		int totalPage = ((totalRecord-1)/viewCount)+1;
+		//보여줄 페이지의 데이터 1= 2페이지
+		int viewRecord = (pageNum-1)*viewCount;
+		System.out.println("viewRecord"+viewRecord);
+		
+		ArrayList<Room> rooms = (ArrayList<Room>)dao.getRoomList(searchWord,viewRecord);
+		for(Room r : rooms) {
+			int price = r.getRoomPrice().getRentPrice();
+			int approve = r.getApprove();
+			String address = r.getJibunAddress();
+			String addressDetail = r.getAddressDetail();
+			String roomName = r.getRoomName();
+			
+			System.out.println(approve +"   " + address +" "+roomName+" " +addressDetail+" "+ price );
+		}
+		System.out.println("totalPage"+totalPage);
+		System.out.println("pageNum"+pageNum);
+		//클라이언트에 보여줄 값으로 가공 후 dto에 넣어서 보내기
+		req.setAttribute("totalpage",totalPage);
+		req.setAttribute("pagenum",pageNum);
+		req.setAttribute("rooms", rooms);
+		req.setAttribute("searchWord", searchWord);
+		
 		req.getRequestDispatcher(searchUrl).forward(req, resp);
 	} catch (ServletException e) {
 		
