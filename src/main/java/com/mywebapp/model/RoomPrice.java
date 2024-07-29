@@ -18,7 +18,7 @@ public class RoomPrice {
     private boolean gas;
     private boolean internet;
     private int cleaningFee;
-    private int refundType;
+    private int refundType;;;
 
     public RoomPrice() {
     }
