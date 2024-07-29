@@ -1,6 +1,7 @@
 package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.MemberDao;
+import com.mywebapp.service.UserVO;
 import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,9 +27,6 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         String pw = req.getParameter("pw");
-
-        //System.out.println(id);
-        //System.out.println(pw);
 
         String guestLogin = req.getParameter("guestLogin");
         String hostLogin = req.getParameter("hostLogin");
@@ -51,6 +50,15 @@ public class LoginController extends HttpServlet {
                     rs = pstmt.executeQuery();
 
                     if (rs.next()) {
+                        //user 로그인 정보를 담기 위한 객체 생성
+                        UserVO vo = new UserVO();
+                        vo.setId(rs.getString("id"));
+                        vo.setPassword(rs.getString("password"));
+
+                        // 세션에 사용자 정보 저장
+                        HttpSession session = req.getSession();
+                        session.setAttribute("user", vo);
+
                         // 아이디 비번 일치 일치
                         if (guestLogin != null) {
                             // 게스트 로그인
