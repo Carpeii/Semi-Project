@@ -1,11 +1,13 @@
 package com.mywebapp.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class Room {
     private long id;
     private String hostId;
@@ -31,52 +33,5 @@ public class Room {
     private RoomOption roomOption;
     private RoomPrice roomPrice;
 
-    public Room() {}
-  
-    
-    
 
-    public Room(long id, String hostId, String jibunAddress, String streetAddress,
-                int floor, int usableArea, int roomCount, int livingRoomCount,
-                int toiletCount, int kitchenCount, boolean duplex, boolean elevator,
-                boolean park, String parkDetail, int roomType, int minimumContract,
-                int approve, List<RoomImage> roomImageList, RoomOption roomOption, RoomPrice roomPrice) {
-        this.id = id;
-        this.hostId = hostId;
-        this.jibunAddress = jibunAddress;
-        this.streetAddress = streetAddress;
-        this.floor = floor;
-        this.usableArea = usableArea;
-        this.roomCount = roomCount;
-        this.livingRoomCount = livingRoomCount;
-        this.toiletCount = toiletCount;
-        this.kitchenCount = kitchenCount;
-        this.duplex = duplex;
-        this.elevator = elevator;
-        this.park = park;
-        this.parkDetail = parkDetail;
-        this.roomType = roomType;
-        this.minimumContract = minimumContract;
-        this.approve = approve;
-        this.roomImageList = roomImageList;
-        this.roomOption = roomOption;
-        this.roomPrice = roomPrice;
-    }
-    //사진// 호스트id, 지번 , 방 거실 화장실 주방 개수  -  임대료 장기계약 / 빠른입주 할인 
-    //RoomDao - search 에서 호출
-	public Room(long id, String hostId,String roomName, String jibunAddress, String addressDetail,
-			 int roomCount, int livingRoomCount, int toiletCount, int kitchenCount,
-			 int approve, RoomPrice roomPrice) {
-		this.id = id;
-		this.hostId = hostId;
-		this.roomName = roomName;
-		this.jibunAddress = jibunAddress;
-		this.addressDetail = addressDetail;
-		this.roomCount = roomCount;
-		this.livingRoomCount = livingRoomCount;
-		this.toiletCount = toiletCount;
-		this.kitchenCount = kitchenCount;
-		this.approve = approve;
-		this.roomPrice = roomPrice;
-	}
 }
