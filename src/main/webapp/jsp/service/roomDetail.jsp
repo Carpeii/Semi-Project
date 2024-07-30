@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -55,7 +55,13 @@
         
         <form action="${pageContext.request.contextPath}/service/bookRoom" method="post">
         	<input type="hidden" name="roomId" value="${room.id }">
-        	<input type="submit" value="¹æ °è¾à ½ÃÀÛÇÏ±â">
+        	<label for="checkInDate">Check-in Date:</label>
+        	<input type="date" id="checkInDate" name="checkInDate" required><br><br>
+        	
+        	<label for="checkOutDate">Check-out Date:</label>
+        	<input type="date" id="checkOutDate" name="checkOutDate" required><br><br>
+        	
+        	<input type="submit" value="ë°© ê³„ì•½ ì‹œì‘í•˜ê¸°">
         </form>
         
         

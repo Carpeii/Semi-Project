@@ -147,6 +147,7 @@ public class RoomDaoImpl implements RoomDao {
 			
 			RoomDetailDto room = null;
 			String sql = "SELECT " +
+					"	 m.id, " + 
                     "    m.name AS host_name, " +
                     "    r.room_name, " +
                     "    r.jibun_address, " +
@@ -203,6 +204,7 @@ public class RoomDaoImpl implements RoomDao {
 				
 				if (rs.next()) {
 					room = new RoomDetailDto();
+					room.setId(rs.getInt("id"));
 				    room.setHostName(rs.getString("host_name"));
 				    room.setRoomName(rs.getString("room_name"));
 				    room.setJibunAddress(rs.getString("jibun_address"));
