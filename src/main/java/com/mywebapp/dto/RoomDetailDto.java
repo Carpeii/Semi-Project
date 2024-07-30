@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class RoomDetailDto {
+    private long id;
     private String hostName;
     private String roomName;
     private String jibunAddress;
