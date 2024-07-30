@@ -29,8 +29,32 @@
             <p><strong>Park Detail:</strong> ${room.parkDetail}</p>
             <p><strong>Room Type:</strong> ${room.roomType}</p>
             <p><strong>Minimum Contract:</strong> ${room.minimumContract}</p>
+            <p><strong>Image Name:</strong> ${room.imageName}</p>
+	        <p><strong>Image Path:</strong> ${room.imagePath}</p>
+	        <p><strong>Image Order:</strong> ${room.imageOrder}</p>
+	        <p><strong>Room Option:</strong> ${room.roomOption}</p>
+	        <p><strong>Rent Price:</strong> ${room.rentPrice}</p>
+	        <p><strong>Long Term:</strong> ${room.longTerm}</p>
+	        <p><strong>Long Term Discount:</strong> ${room.longTermDiscount}</p>
+	        <p><strong>Early Check-In:</strong> ${room.earlyCheckIn}</p>
+	        <p><strong>Early Check-In Discount:</strong> ${room.earlyCheckInDiscount}</p>
+	        <p><strong>Maintenance Bill:</strong> ${room.maintenanceBill}</p>
+	        <p><strong>Maintenance Bill Detail:</strong> ${room.maintenanceBillDetail}</p>
+	        <p><strong>Electricity:</strong> ${room.electricity ? 'Yes' : 'No'}</p>
+	        <p><strong>Water:</strong> ${room.water ? 'Yes' : 'No'}</p>
+	        <p><strong>Gas:</strong> ${room.gas ? 'Yes' : 'No'}</p>
+	        <p><strong>Internet:</strong> ${room.internet ? 'Yes' : 'No'}</p>
+	        <p><strong>Cleaning Fee:</strong> ${room.cleaningFee}</p>
+	        <p><strong>Refund Type:</strong> ${room.refundType}</p>
+	        <p><strong>Check-In Date:</strong> ${room.checkInDate}</p>
+	        <p><strong>Check-Out Date:</strong> ${room.checkOutDate}</p>
+	        <p><strong>Review Message:</strong> ${room.reviewMessage}</p>
+	        <p><strong>Rating:</strong> ${room.rating}</p>
+	        <p><strong>Review Created At:</strong> ${room.reviewCreatedAt}</p>
             <!-- 이하 필요한 정보들을 출력합니다. -->
         </div>
+        
+        
     </c:if>
 
 </body>
