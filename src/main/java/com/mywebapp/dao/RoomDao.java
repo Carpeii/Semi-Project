@@ -23,37 +23,37 @@ public class RoomDao {
         this.connection = connection;
     }
 
-    public List<Room> findAll() throws SQLException {
-        List<Room> rooms = new ArrayList<>();
-        String sql = "SELECT * FROM room";
-        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                rooms.add(new Room(
-                        rs.getLong("id"),
-                        rs.getString("host_id"),
-                        rs.getString("jibun_address"),
-                        rs.getString("street_address"),
-                        rs.getInt("floor"),
-                        rs.getInt("usable_area"),
-                        rs.getInt("room_count"),
-                        rs.getInt("living_room_count"),
-                        rs.getInt("toilet_count"),
-                        rs.getInt("kitchen_count"),
-                        rs.getBoolean("duplex"),
-                        rs.getBoolean("elevator"),
-                        rs.getBoolean("park"),
-                        rs.getString("park_detail"),
-                        rs.getInt("room_type"),
-                        rs.getInt("minimum_contract"),
-                        rs.getInt("approve"),
-                        new ArrayList<>(), // Placeholder for roomImageList
-                        null, // Placeholder for roomOption
-                        null // Placeholder for roomPrice
-                ));
-            }
-        }
-        return rooms;
-    }
+//    public List<Room> findAll() throws SQLException {
+//        List<Room> rooms = new ArrayList<>();
+//        String sql = "SELECT * FROM room";
+//        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+//            while (rs.next()) {
+//                rooms.add(new Room(
+//                        rs.getLong("id"),
+//                        rs.getString("host_id"),
+//                        rs.getString("jibun_address"),
+//                        rs.getString("street_address"),
+//                        rs.getInt("floor"),
+//                        rs.getInt("usable_area"),
+//                        rs.getInt("room_count"),
+//                        rs.getInt("living_room_count"),
+//                        rs.getInt("toilet_count"),
+//                        rs.getInt("kitchen_count"),
+//                        rs.getBoolean("duplex"),
+//                        rs.getBoolean("elevator"),
+//                        rs.getBoolean("park"),
+//                        rs.getString("park_detail"),
+//                        rs.getInt("room_type"),
+//                        rs.getInt("minimum_contract"),
+//                        rs.getInt("approve"),
+//                        new ArrayList<>(), // Placeholder for roomImageList
+//                        null, // Placeholder for roomOption
+//                        null // Placeholder for roomPrice
+//                ));
+//            }
+//        }
+//        return rooms;
+//    }
     
     //승인여부도 확인해야됨 applove -> 1정상
     public ArrayList<Room> getRoomList(String searchWord,int viewRecord) {
@@ -77,25 +77,27 @@ public class RoomDao {
 			pstmt.setInt(4,viewRecord);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				long id              = rs.getLong("id");
-				String hostId        = rs.getString("host_id");
-				String roomName      = rs.getString("room_name");
-				String jibunAddress  = rs.getString("jibun_address");
-				String addressDetail = rs.getString("address_detail");
-				int roomCount        = rs.getInt("room_count");
-				int livingRoomCount  = rs.getInt("living_room_count");
-				int toiletCount      = rs.getInt("toilet_count");
-				int kitchenCount     = rs.getInt("kitchen_count");
-				int approve          = rs.getInt("approve");
 				
-				long roomId              = rs.getLong("room_id");
-				int rentPrice            =  rs.getInt("rent_price");
-				int longTermDiscount     = rs.getInt("long_term_discount");
-				int earlyCheckInDiscount = rs.getInt("early_check_in_discount");
+				Room room = new Room(rs.getLong("id"),rs.getString("host_id"),
+						rs.getString("room_name"),rs.getString("jibun_address"),
+						rs.getString("street_address"),rs.getString("address_detail"),
+						rs.getInt("floor"),rs.getInt(" usable_area"),
+						rs.getInt("room_count"),rs.getInt("living_room_count"),
+						rs.getInt("toilet_count"),rs.getInt("kitchen_count"),
+						rs.getBoolean("duplex"),rs.getBoolean("elevator"),
+						rs.getBoolean("park"),rs.getString("park_detail"),
+						rs.getInt("room_type"),rs.getInt("minimum_contract"),
+						rs.getInt("approve"),
+						
+						null,
+						null,
+						new RoomPrice(
+								rs.getLong("room_id"),rs.getInt("rent_price"),
+								rs.getInt("long_term_discount"),rs.getInt("early_check_in_discount")
+								)
+						);
 				
-				Room room = new Room(id, hostId,roomName, jibunAddress, addressDetail,
-						roomCount, livingRoomCount, toiletCount, kitchenCount,
-						approve, new RoomPrice(roomId,rentPrice,longTermDiscount,earlyCheckInDiscount));
+				
 				rooms.add(room);
 			}
 		}catch(SQLException s) {

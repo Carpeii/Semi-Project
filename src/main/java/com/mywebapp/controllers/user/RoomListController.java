@@ -21,23 +21,23 @@ public class RoomListController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		try {
-			RoomDao dao = new RoomDao(JdbcUtil.getCon());
-			List<Room> roomList = dao.findAll();
-			req.setAttribute("roomList", roomList);
-			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/service/guestMain.jsp");
-			dispatcher.forward(req, resp);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			RoomDao dao = new RoomDao(JdbcUtil.getCon());
+//			List<Room> roomList = dao.findAll();
+//			req.setAttribute("roomList", roomList);
+//			
+//			RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/service/guestMain.jsp");
+//			dispatcher.forward(req, resp);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ServletException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	@Override
