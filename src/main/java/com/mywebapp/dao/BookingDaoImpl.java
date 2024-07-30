@@ -1,6 +1,7 @@
 package com.mywebapp.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,32 +12,33 @@ import com.mywebapp.util.JdbcUtil;
 
 public class BookingDaoImpl implements BookingDao {
 
-	// 예약 상태 업데이트
 	@Override
-	public void updateBookingStatus(long bookingId, int bookingStatus) {
+	public void insertBooking(long guestId, long roomId, Date checkInDate, Date checkOutDate) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		
+		//booking_status는 0으로 설정(승인 요청) 
+		String sql = "INSERT INTO booking (guest_id, room_id, check_in_date, check_out_date, booking_status) VALUES (?, ?, ?, ?, 0)";
+		
 		try {
 			con = JdbcUtil.getCon();
-			String sql = "UPDATE booking SET booking_status = ? WHERE id = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, bookingStatus);
-			pstmt.setLong(2, bookingId);
+			pstmt.setLong(1, guestId);
+			pstmt.setLong(2, roomId);
+			pstmt.setDate(3, checkInDate);
+			pstmt.setDate(4, checkOutDate);
+			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JdbcUtil.close(con, pstmt, null);
+
 		}
+		
 	}
 
-	@Override
-	public List<Booking> getAllBookings() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 
 }

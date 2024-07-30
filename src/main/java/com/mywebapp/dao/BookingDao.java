@@ -1,10 +1,10 @@
 package com.mywebapp.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.mywebapp.model.Booking;
 
 public interface BookingDao {
-	void updateBookingStatus(long bookingId, int bookingStatus);
-	List<Booking> getAllBookings();
+	void insertBooking(long guestId, long roomId, Date checkInDate, Date checkOutDate);
 }

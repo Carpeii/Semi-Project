@@ -1,3 +1,4 @@
+
 package com.mywebapp.dto;
 
 import lombok.Getter;
@@ -11,5 +12,6 @@ public class UserDto {
 	
 	  public UserDto() {}
 	
+
 
 }
