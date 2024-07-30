@@ -63,4 +63,37 @@ public class RoomDao {
         }
         return roomId;
     }
+
+    public List<Room> getRoomsByHostId(long hostId) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        List<Room> rooms = new ArrayList<>();
+
+        String sql = "SELECT id, host_id, room_name FROM room WHERE host_id = ? AND approve = 1";
+
+        try {
+            con = JdbcUtil.getCon();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setLong(1, hostId);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Room room = new Room();
+                room.setId(rs.getLong("id"));
+                room.setHostId(rs.getString("host_id"));
+                room.setRoomName(rs.getString("room_name"));
+
+                rooms.add(room);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            JdbcUtil.close(con, pstmt, rs);
+        }
+        return rooms;
+    }
 }

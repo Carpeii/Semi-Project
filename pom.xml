@@ -47,6 +47,11 @@
           <artifactId>json</artifactId>
           <version>20210307</version> <!-- 최신 버전을 확인하여 사용할 것을 권장합니다 -->
       </dependency>
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>jstl</artifactId>
+          <version>1.2</version>
+      </dependency>
 
   </dependencies>
 
