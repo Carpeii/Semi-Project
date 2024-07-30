@@ -13,14 +13,23 @@
         <thead>
         <tr>
             <th>Room Name</th>
-            <th></th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="room" items="${rooms}">
             <tr>
-                <td> </td>
                 <td>${room.roomName}</td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/editRoom" method="post" class="d-inline">
+                        <input type="hidden" name="roomId" value="${room.id}">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </form>
+                    <form action="${pageContext.request.contextPath}/manageContract" method="post" class="d-inline">
+                        <input type="hidden" name="roomId" value="${room.id}">
+                        <button type="submit" class="btn btn-secondary">Manage Contract</button>
+                    </form>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
