@@ -1,6 +1,7 @@
 package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.MemberDao;
+import com.mywebapp.dto.UserDto;
 import com.mywebapp.service.UserVO;
 import com.mywebapp.util.JdbcUtil;
 
@@ -51,7 +52,7 @@ public class LoginController extends HttpServlet {
 
                     if (rs.next()) {
                         //user 로그인 정보를 담기 위한 객체 생성
-                        UserVO vo = new UserVO();
+                        UserDto vo = new UserDto();
                         vo.setId(rs.getString("id"));
                         vo.setPassword(rs.getString("password"));
 
