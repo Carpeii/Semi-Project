@@ -14,7 +14,7 @@ public class RoomPrice {
     private int earlyCheckIn;
     private int earlyCheckInDiscount;
     private int maintenanceBill;
-    private int maintenanceBillDetail;
+    private String maintenanceBillDetail;
     private boolean electricity;
     private boolean water;
     private boolean gas;
