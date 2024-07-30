@@ -36,7 +36,6 @@ public class RoomBookingController extends HttpServlet {
 			
 	        // 선택한 방의 ID 가져오기
 			long roomId = Long.parseLong(req.getParameter("roomId"));
-			System.out.println(roomId);
 			// 체크인 날짜와 체크아웃 날짜 가져오기
 			Date checkInDate = Date.valueOf(req.getParameter("checkInDate"));
 			Date checkOutDate = Date.valueOf(req.getParameter("checkOutDate"));
