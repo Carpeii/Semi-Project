@@ -1,8 +1,10 @@
 package com.mywebapp.controllers.user;
 
-import com.mywebapp.dao.MemberDao;
-import com.mywebapp.service.UserVO;
-import com.mywebapp.util.JdbcUtil;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,11 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import com.mywebapp.dao.MemberDao;
+import com.mywebapp.dto.UserDto;
+import com.mywebapp.util.JdbcUtil;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
@@ -51,7 +52,7 @@ public class LoginController extends HttpServlet {
 
                     if (rs.next()) {
                         //user 로그인 정보를 담기 위한 객체 생성
-                        UserVO vo = new UserVO();
+                        UserDto vo = new UserDto();
                         vo.setId(rs.getString("id"));
                         vo.setPassword(rs.getString("password"));
 

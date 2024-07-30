@@ -13,6 +13,11 @@
 <button onclick="location.href='../service/searchByMap.jsp'">지도로 검색</button>
 <button onclick="location.href='../service/search.jsp'">검색</button>
 
+<!-- RoomListController에서 세션 받아와서 구현 -->
+<c:if test="${not empty userId }">
+	<p>${userId }님 환영합니다</p>
+</c:if>
+
 
 <table border="1" width="1500">
 	<tr>

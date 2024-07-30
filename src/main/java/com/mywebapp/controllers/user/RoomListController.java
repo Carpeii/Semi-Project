@@ -1,24 +1,19 @@
 package com.mywebapp.controllers.user;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dto.RoomListItemDto;
-import com.mywebapp.model.Room;
+import com.mywebapp.dto.UserDto;
 import com.mywebapp.service.RoomService;
 import com.mywebapp.service.RoomServiceImpl;
-import com.mywebapp.util.JdbcUtil;
 
 @WebServlet("/service/guestMain")
 public class RoomListController extends HttpServlet {
@@ -30,6 +25,7 @@ public class RoomListController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		
+		// 페이지 번호 처리
 		String pNum = req.getParameter("pageNum");
 		
 		int pageNum = 1;
@@ -49,6 +45,12 @@ public class RoomListController extends HttpServlet {
 		req.setAttribute("startPage", paginationInfo.get("startPage"));
 		req.setAttribute("endPage", paginationInfo.get("endPage"));
 		req.setAttribute("pageNum", paginationInfo.get("pageNum"));
+		
+		// 세션에 사용자 정보가 있는 경우만 사용자 정보를 가져와서 전달
+		Object userObj = req.getSession().getAttribute("user");
+		if (userObj != null) {
+			req.setAttribute("userId" , ((UserDto) userObj).getId());
+		}
 		
 		req.getRequestDispatcher("/jsp/service/guestMain.jsp").forward(req, resp);
 		
