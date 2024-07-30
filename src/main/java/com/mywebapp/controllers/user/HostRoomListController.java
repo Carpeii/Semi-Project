@@ -1,9 +1,7 @@
 package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.RoomDao;
-import com.mywebapp.model.Booking;
 import com.mywebapp.model.Room;
-import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,15 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/service/hostContractManagement")
-public class HostContractManagementController extends HttpServlet {
+@WebServlet("/service/hostRoomList")
+public class HostRoomListController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -37,6 +30,6 @@ public class HostContractManagementController extends HttpServlet {
         List<Room> rooms = roomDao.getRoomsByHostId(hostId);
 
         req.setAttribute("rooms", rooms);
-        req.getRequestDispatcher("/jsp/service/hostContractManagement.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/service/hostRoomList.jsp").forward(req, resp);
     }
 }
