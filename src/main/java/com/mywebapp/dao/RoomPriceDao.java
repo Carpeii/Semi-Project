@@ -24,7 +24,7 @@ public class RoomPriceDao {
             stmt.setInt(5, roomPrice.getEarlyCheckIn());
             stmt.setInt(6, roomPrice.getEarlyCheckInDiscount());
             stmt.setInt(7, roomPrice.getMaintenanceBill());
-            stmt.setInt(8, roomPrice.getMaintenanceBillDetail());
+            stmt.setString(8, roomPrice.getMaintenanceBillDetail());
             stmt.setBoolean(9, roomPrice.isElectricity());
             stmt.setBoolean(10, roomPrice.isWater());
             stmt.setBoolean(11, roomPrice.isGas());

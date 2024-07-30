@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import com.mywebapp.dto.RoomListItemDto;
 import com.mywebapp.model.Room;
+import com.mywebapp.model.RoomImage;
+import com.mywebapp.model.RoomOption;
 import com.mywebapp.model.RoomPrice;
 import com.mywebapp.util.JdbcUtil;
 import java.sql.*;
@@ -56,7 +58,7 @@ public class RoomDao {
 //    }
     
     //승인여부도 확인해야됨 applove -> 1정상
-    public ArrayList<Room> getRoomList(String searchWord,int viewRecord) {
+    public ArrayList<Room> searchRoomList(String searchWord,int viewRecord) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Room> rooms = new ArrayList<Room>();
@@ -64,6 +66,7 @@ public class RoomDao {
 			connection = JdbcUtil.getCon();
 			String sql = "select distinct * from room r "
 					+"LEFT JOIN room_price rp ON r.id = rp.room_id "
+					+"LEFT JOIN room_option ro ON r.id = ro.room_id "
 					+"where (r.approve=1) "
 					+"and (r.jibun_address like ? "
 					+"or r.street_address like ? "
@@ -81,7 +84,7 @@ public class RoomDao {
 				Room room = new Room(rs.getLong("id"),rs.getString("host_id"),
 						rs.getString("room_name"),rs.getString("jibun_address"),
 						rs.getString("street_address"),rs.getString("address_detail"),
-						rs.getInt("floor"),rs.getInt(" usable_area"),
+						rs.getInt("floor"),rs.getInt("usable_area"),
 						rs.getInt("room_count"),rs.getInt("living_room_count"),
 						rs.getInt("toilet_count"),rs.getInt("kitchen_count"),
 						rs.getBoolean("duplex"),rs.getBoolean("elevator"),
@@ -89,11 +92,20 @@ public class RoomDao {
 						rs.getInt("room_type"),rs.getInt("minimum_contract"),
 						rs.getInt("approve"),
 						
-						null,
-						null,
+						getRoomListSampleImage(rs.getLong("id")),
+						
+						new RoomOption(
+								rs.getLong("room_id"),rs.getString("room_option")
+								),
+						
 						new RoomPrice(
 								rs.getLong("room_id"),rs.getInt("rent_price"),
-								rs.getInt("long_term_discount"),rs.getInt("early_check_in_discount")
+								rs.getInt("long_term"),rs.getInt("long_term_discount"),
+								rs.getInt("early_check_in"),rs.getInt("early_check_in_discount"),
+								rs.getInt("maintenance_bill"),rs.getString("maintenance_bill_detail"),
+								rs.getBoolean("electricity"),rs.getBoolean("water"),
+								rs.getBoolean("gas"),rs.getBoolean("internet"),
+								rs.getInt("cleaning_fee"),rs.getInt("refund_type")
 								)
 						);
 				
@@ -105,7 +117,7 @@ public class RoomDao {
 		}
 		return rooms;
 	}
-    
+    //페이징처리 메소드
     public int searchTotalRecord(String searchWord) {
     	PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -132,5 +144,30 @@ public class RoomDao {
 		}
 		return totalRecord;
 	}
+    //getRoomList 메소드 RoomImage얻어오는 메소드
+    public ArrayList<RoomImage> getRoomListSampleImage(Long id) {
+    	ArrayList<RoomImage> roomImageList = new ArrayList<RoomImage>();
+    	PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			connection = JdbcUtil.getCon();
+			String sql = "select * from room_image where room_id=?";
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setLong(1,id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				RoomImage roomImage = new RoomImage(
+						rs.getLong("id"),rs.getLong("room_id"),
+						rs.getString("image_name"),rs.getString("image_path"),
+						rs.getInt("image_order")
+						);
+				roomImageList.add(roomImage);
+			}
+		}catch(SQLException s) {
+			s.printStackTrace();
+		}
+    	
+    	return roomImageList;
+    }
 }
 

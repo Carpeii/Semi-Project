@@ -23,6 +23,24 @@ asdasdsadas
 			<tr>
 			<td>방 주소 : ${room.jibunAddress }....${room.roomName}....${room.roomPrice.rentPrice}...............${pagenum}...</td> 
 			</tr>
+			<td>
+			<div class="col-md">
+         <div class="card shadow-sm">
+          <a href="해당 페이지">
+        <c:if test="${not empty rooms}">
+        <c:set var="firstRoom" value="${rooms[0]}" />
+        <c:if test="${not empty firstRoom.roomImageList}">
+            <c:set var="firstImage" value="${firstRoom.roomImageList[0]}" />
+            <div>
+                <p>First Image Path: ${pageContext.request.contextPath}/upload/img.jpg</p>
+                <img src="${pageContext.request.contextPath}/upload/img.jpg" alt="Image" />
+            </div>
+        </c:if>
+    </c:if>
+          </a>
+          </div>
+        </div>
+			</td>
 		 </c:forEach>
 		 
 		 <tr>
@@ -37,6 +55,7 @@ asdasdsadas
 		 </td>
 		 </c:if>
  </table>
+
  
 
 </body>

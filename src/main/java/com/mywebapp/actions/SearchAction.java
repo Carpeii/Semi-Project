@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mywebapp.dao.RoomDao;
 import com.mywebapp.model.Room;
+import com.mywebapp.model.RoomImage;
 
 public class SearchAction implements Action {
 	private int viewCount = 15;
@@ -33,13 +34,17 @@ public class SearchAction implements Action {
 		int viewRecord = (pageNum-1)*viewCount;
 		System.out.println("viewRecord"+viewRecord);
 		
-		ArrayList<Room> rooms = (ArrayList<Room>)dao.getRoomList(searchWord,viewRecord);
+		ArrayList<Room> rooms = (ArrayList<Room>)dao.searchRoomList(searchWord,viewRecord);
 		for(Room r : rooms) {
 			int price = r.getRoomPrice().getRentPrice();
 			int approve = r.getApprove();
 			String address = r.getJibunAddress();
 			String addressDetail = r.getAddressDetail();
 			String roomName = r.getRoomName();
+			for(RoomImage i : r.getRoomImageList()) {
+				String imageName = i.getImageName();
+				System.out.println(imageName);
+			}
 			
 			System.out.println(approve +"   " + address +" "+roomName+" " +addressDetail+" "+ price );
 		}
