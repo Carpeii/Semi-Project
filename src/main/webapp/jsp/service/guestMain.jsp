@@ -8,6 +8,12 @@
 <title>jsp/service/guestMain.jsp</title>
 </head>
 <body>
+
+<h2>단기임대, 1평에서 찾아보세요</h2>
+<button onclick="location.href='../service/searchByMap.jsp'">지도로 검색</button>
+<button onclick="location.href='../service/search.jsp'">검색</button>
+
+
 <table border="1" width="1500">
 	<tr>
 		<th>이미지 경로</th>
