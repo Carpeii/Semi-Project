@@ -29,7 +29,7 @@
 			<td>${room.streetAddress }</td>
 			<td>${room.rentPrice }</td>
 			<td>${room.roomOption }</td>
-			<td><a href="<%=request.getContextPath()%>/bookRoom?roomId=${room.id}">방 선택</a>
+			<td><a href="<%=request.getContextPath()%>/service/roomDetail?roomId=${room.id}">방 상세보기</a>
 		</tr>
 	</c:forEach>
 </table>

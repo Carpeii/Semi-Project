@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mywebapp.dto.RoomDetailDto;
+import com.mywebapp.dto.RoomDto;
 import com.mywebapp.dto.RoomListItemDto;
 import com.mywebapp.model.Room;
 import com.mywebapp.util.JdbcUtil;
@@ -136,4 +138,117 @@ public class RoomDaoImpl implements RoomDao {
 	            JdbcUtil.close(con, pstmt, rs); 
 	        }
 	    }
+
+		@Override
+		public RoomDetailDto getRoomById(int roomId) {
+			Connection con = null;
+	    	PreparedStatement pstmt = null;
+	    	ResultSet rs = null;
+			
+			RoomDetailDto room = null;
+			String sql = "SELECT " +
+                    "    m.name AS host_name, " +
+                    "    r.room_name, " +
+                    "    r.jibun_address, " +
+                    "    r.street_address, " +
+                    "    r.address_detail, " +
+                    "    r.floor, " +
+                    "    r.usable_area, " +
+                    "    r.room_count, " +
+                    "    r.living_room_count, " +
+                    "    r.toilet_count, " +
+                    "    r.kitchen_count, " +
+                    "    r.duplex, " +
+                    "    r.elevator, " +
+                    "    r.park, " +
+                    "    r.park_detail, " +
+                    "    r.room_type, " +
+                    "    r.minimum_contract, " +
+                    "    ri.image_name, " +
+                    "    ri.image_path, " +
+                    "    ri.image_order, " +
+                    "    rop.room_option, " +
+                    "    rp.rent_price, " +
+                    "    rp.long_term, " +
+                    "    rp.long_term_discount, " +
+                    "    rp.early_check_in, " +
+                    "    rp.early_check_in_discount, " +
+                    "    rp.maintenance_bill, " +
+                    "    rp.maintenance_bill_detail, " +
+                    "    rp.electricity, " +
+                    "    rp.water, " +
+                    "    rp.gas, " +
+                    "    rp.internet, " +
+                    "    rp.cleaning_fee, " +
+                    "    rp.refund_type, " +
+                    "    b.check_in_date, " +
+                    "    b.check_out_date, " +
+                    "    rv.message, " +
+                    "    rv.rating, " +
+                    "    rv.created_at " +
+                    "FROM member m " +
+                    "INNER JOIN booking b ON m.id = b.id " +
+                    "INNER JOIN room r ON b.id = r.id " +
+                    "INNER JOIN room_image ri ON r.id = ri.room_id " +
+                    "INNER JOIN room_option rop ON r.id = rop.room_id " +
+                    "INNER JOIN room_price rp ON r.id = rp.room_id " +
+                    "INNER JOIN review rv ON r.id = rv.id " +
+                    "WHERE r.id = ?";
+			
+			try {
+				con = JdbcUtil.getCon();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, roomId);
+				rs = pstmt.executeQuery();
+				
+				if (rs.next()) {
+					room = new RoomDetailDto();
+				    room.setHostName(rs.getString("host_name"));
+				    room.setRoomName(rs.getString("room_name"));
+				    room.setJibunAddress(rs.getString("jibun_address"));
+				    room.setStreetAddress(rs.getString("street_address"));
+				    room.setAddressDetail(rs.getString("address_detail"));
+				    room.setFloor(rs.getInt("floor"));
+				    room.setUsableArea(rs.getDouble("usable_area"));
+				    room.setRoomCount(rs.getInt("room_count"));
+				    room.setLivingRoomCount(rs.getInt("living_room_count"));
+				    room.setToiletCount(rs.getInt("toilet_count"));
+				    room.setKitchenCount(rs.getInt("kitchen_count"));
+				    room.setDuplex(rs.getBoolean("duplex"));
+				    room.setElevator(rs.getBoolean("elevator"));
+				    room.setPark(rs.getBoolean("park"));
+				    room.setParkDetail(rs.getString("park_detail"));
+				    room.setRoomType(rs.getString("room_type"));
+				    room.setMinimumContract(rs.getInt("minimum_contract"));
+				    room.setImageName(rs.getString("image_name"));
+				    room.setImagePath(rs.getString("image_path"));
+				    room.setImageOrder(rs.getInt("image_order"));
+				    room.setRoomOption(rs.getString("room_option"));
+				    room.setRentPrice(rs.getInt("rent_price"));
+				    room.setLongTerm(rs.getInt("long_term"));
+				    room.setLongTermDiscount(rs.getInt("long_term_discount"));
+				    room.setEarlyCheckIn(rs.getInt("early_check_in"));
+				    room.setEarlyCheckInDiscount(rs.getInt("early_check_in_discount"));
+				    room.setMaintenanceBill(rs.getInt("maintenance_bill"));
+				    room.setMaintenanceBillDetail(rs.getString("maintenance_bill_detail"));
+				    room.setElectricity(rs.getBoolean("electricity"));
+				    room.setWater(rs.getBoolean("water"));
+				    room.setGas(rs.getBoolean("gas"));
+				    room.setInternet(rs.getBoolean("internet"));
+				    room.setCleaningFee(rs.getInt("cleaning_fee"));
+				    room.setRefundType(rs.getInt("refund_type"));
+				    room.setCheckInDate(rs.getDate("check_in_date"));
+				    room.setCheckOutDate(rs.getDate("check_out_date"));
+				    room.setReviewMessage(rs.getString("message"));
+				    room.setRating(rs.getInt("rating"));
+				    room.setReviewCreatedAt(rs.getDate("created_at"));
+				}
+		        return room;
+		    } catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			} finally {
+				JdbcUtil.close(con, pstmt, rs);
+			}
+		}
 }
