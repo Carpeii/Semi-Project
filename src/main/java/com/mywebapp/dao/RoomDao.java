@@ -71,7 +71,7 @@ public class RoomDao {
 
         List<Room> rooms = new ArrayList<>();
 
-        String sql = "SELECT id, host_id, room_name FROM room WHERE host_id = ? AND approve = 1";
+        String sql = "SELECT * FROM room WHERE host_id = ? AND approve = 1";
 
         try {
             con = JdbcUtil.getCon();
@@ -85,6 +85,9 @@ public class RoomDao {
                 room.setId(rs.getLong("id"));
                 room.setHostId(rs.getString("host_id"));
                 room.setRoomName(rs.getString("room_name"));
+                room.setJibunAddress(rs.getString("jibun_address"));
+                room.setStreetAddress(rs.getString("street_address"));
+                room.setAddressDetail(rs.getString("address_detail"));
 
                 rooms.add(room);
             }
