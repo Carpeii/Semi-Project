@@ -1,3 +1,9 @@
+<%@ page import="com.mywebapp.dao.MemberDao" %>
+<%@ page import="com.mywebapp.util.JdbcUtil" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %>
 <%--
   Created by IntelliJ IDEA.
   User: now
@@ -6,6 +12,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>joinForm.jsp</title>
@@ -19,14 +27,21 @@
             <tr>
                 <td><label for="id">아이디</label></td>
                 <td><input type="text" name="id" id="id" /></td>
+                <!--<td>아이디 중복 검사 기능</td>-->
             </tr>
             <tr>
-                <td><label for="pw">비밀번호</label></td>
-                <td><input type="password" name="pw" id="pw" /></td>
+                <div>${idErrMsg}</div><br>
+            </tr>
+            <tr>
+                <td><label for="password">비밀번호</label></td>
+                <td><input type="password" name="password" id="password" /></td>
             </tr>
             <tr>
                 <td><label for="pwConfirm">비밀번호 확인</label></td>
                 <td><input type="password" name="pwConfirm" id="pwConfirm" /></td>
+            </tr>
+            <tr>
+                <div>${pwErrMsg}</div><br>
             </tr>
             <tr>
                 <td><label for="name">이름</label></td>
