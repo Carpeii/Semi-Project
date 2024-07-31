@@ -19,7 +19,7 @@ public class BookingDao {
 
         List<Booking> bookings = new ArrayList<>();
 
-        String sql = "SELECT * FROM bookings WHERE room_id = ? AND booking_status = ?";
+        String sql = "SELECT * FROM booking WHERE room_id = ? AND booking_status = ?";
         try {
             con = JdbcUtil.getCon();
             pstmt = con.prepareStatement(sql);
@@ -32,7 +32,7 @@ public class BookingDao {
             while (rs.next()){
                 Booking booking = new Booking();
                 booking.setId(rs.getLong("id"));
-                booking.setGuestId(rs.getLong("guestId"));
+                booking.setGuestId(rs.getLong("guest_id"));
                 booking.setRoomId(rs.getLong("room_id"));
                 booking.setCheckInDate(rs.getDate("check_in_date"));
                 booking.setCheckOutDate(rs.getDate("check_out_date"));

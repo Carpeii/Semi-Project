@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,21 +13,26 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Room Name</th>
-            <th>Actions</th>
+            <th>Room ID</th>
+            <th>Guset ID</th>
+            <th>CheckIn Date</th>
+            <th>CheckOut Date</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="room" items="${rooms}">
+        <c:forEach var="booking" items="${bookings}">
             <tr>
-                <td>${room.roomName}</td>
+                <td>${booking.roomId}</td>
+                <td>${booking.guestId}</td>
+                <td>${booking.checkInDate}</td>
+                <td>${booking.checkOutDate}</td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/editRoom" method="post" class="d-inline">
-                        <input type="hidden" name="roomId" value="${room.id}">
+                    <form action="${pageContext.request.contextPath}/editBooking" method="post" class="d-inline">
+                        <input type="hidden" name="bookingId" value="${booking.id}">
                         <button type="submit" class="btn btn-primary">Edit</button>
                     </form>
                     <form action="${pageContext.request.contextPath}/service/hostContractManagement" method="post" class="d-inline">
-                        <input type="hidden" name="roomId" value="${room.id}">
+                        <input type="hidden" name="bookingId" value="${booking.id}">
                         <button type="submit" class="btn btn-secondary">Manage Contract</button>
                     </form>
                 </td>
