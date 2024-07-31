@@ -207,8 +207,8 @@ public class RoomDao {
             if(rs.next()) {
                 RoomImage roomImage = new RoomImage(
                         rs.getLong("id"),rs.getLong("room_id"),
-                        rs.getString("image_name"),rs.getString("image_path"),
-                        rs.getInt("image_order")
+                        rs.getString("image_name"),rs.getString("save_file_name"),
+                        rs.getString("image_path"),rs.getInt("image_order")
                 );
                 roomImageList.add(roomImage);
             }

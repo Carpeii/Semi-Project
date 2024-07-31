@@ -8,7 +8,5 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class RoomOption {
     private long roomId;
-    private String roomOption;
-
-   
+    private String roomOptions;
 }
