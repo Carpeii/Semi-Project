@@ -11,13 +11,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath }/calendar" method="post">
-<input type="submit" name="movemonth" value="달력 호출"/>
-</form>
 	<c:out value="${sb}" escapeXml="false"/>
-<form action="${pageContext.request.contextPath }/calendar" method="post">
+<form action="${pageContext.request.contextPath }/calendar/move" method="post">
+<button value="before" name="moveMonth">이전달</button>
+<button value="next" name="moveMonth">다음달</button>
+<!-- 
 <input type="submit" name="movemonth" value="back"/>
 <input type="submit" name="movemonth" value="post"/>
+ -->
 </form>
 
 </body>

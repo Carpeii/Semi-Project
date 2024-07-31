@@ -1,9 +1,6 @@
 package com.mywebapp.controllers.user;
 
 import java.io.IOException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,13 +9,40 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mywebapp.actions.Action;
 import com.mywebapp.actions.CalendarAction;
-@WebServlet("/calendar")
+@WebServlet("/calendar/*")
 public class Calendar extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("달력Controller 호출");
+		String requestUrl  = req.getPathInfo();
+		System.out.println(requestUrl);
+		//main페이지 -> 제어변수 초기화 후 session에 저장
+		//popup페이지 -> 제어변수 업데이트 다음달 ->+1  ,  이전달 -> -1
+		int monthControll  = 0;
+		if(requestUrl.equals("/call")) {
+			req.getSession().setAttribute("monthControll", monthControll);
 		Action action = new CalendarAction();
 		action.execute(req, resp);
+		} else if(requestUrl.equals("/move")) {
+			
+			String moveMonth = req.getParameter("moveMonth");
+			if(moveMonth.equals("next")) {
+				monthControll = (Integer)req.getSession().getAttribute("monthControll");
+				monthControll ++;
+				req.getSession().setAttribute("monthControll", monthControll);
+				Action action = new CalendarAction();
+				action.execute(req, resp);
+				
+			} else if(moveMonth.equals("before")) {
+				monthControll = (Integer)req.getSession().getAttribute("monthControll");
+				monthControll --;
+				req.getSession().setAttribute("monthControll", monthControll);
+				Action action = new CalendarAction();
+				action.execute(req, resp);
+				
+			}
+			
+		}
 		
 	}
 }

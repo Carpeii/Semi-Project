@@ -1,5 +1,6 @@
 package com.mywebapp.actions;
 
+import java.awt.PageAttributes;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -19,24 +20,31 @@ public class CalendarAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
+		int monthControll = 0;
+		monthControll =(Integer)req.getSession().getAttribute("monthControll"); 
+		System.out.println(monthControll);
 		System.out.println("달력Action 호출");
-		String moveMonth = req.getParameter("movemonth");
-		System.out.println(moveMonth);
 		Long roomId = 1l;
+		
+		//booking table에서 가져온 값 
 		BookingDaoImpl dao = new BookingDaoImpl();
 		List<Booking> scheduleList = dao.rentalSchedule(roomId);
-	
 		for(Booking b : scheduleList) {
 			LocalDate in = b.getCheckInDate().toLocalDate();
 			LocalDate out = b.getCheckOutDate().toLocalDate();
 			System.out.println("Local : "+in+"  "+out);
 		}
 		
-				//if req의 값이 있다면 ->now말고 다른 달
-				//달력의 오늘 날짜
-				LocalDate today = LocalDate.now();
-				//요일
-				int todaynum = today.getDayOfMonth();
+				LocalDate today = null;
+				int todayNum = 0;
+				//최초에 호출 했을 때 이번달 달력 + 이번달의 오늘날짜 마킹[]
+				if(monthControll == 0) {
+					today = LocalDate.now();
+					todayNum = today.getDayOfMonth();
+					//이전달 , 다음달 을 눌렀을 때 0이 되면 다시 이번달
+				} else if(monthControll != 0) {
+					today = LocalDate.now().plusMonths(monthControll);
+				}
 				//이번달의 첫날
 				LocalDate firstDay = today.withDayOfMonth(1);
 				int firstDayOfWeek = firstDay.getDayOfWeek().getValue();
@@ -46,7 +54,7 @@ public class CalendarAction implements Action {
 				 
 				try {
 				System.out.println("오늘 :" + today );
-				System.out.println("이번달 오늘 일자 : "+ todaynum);
+				System.out.println("이번달 오늘 일자 : "+ todayNum);
 				System.out.println("이번달의 첫 날: "+ firstDay);
 				System.out.println("이번달의 첫 날의 요일 : "+ firstDayOfWeek);
 				System.out.println("");
@@ -76,7 +84,7 @@ public class CalendarAction implements Action {
 			        // 날짜 추가
 			        for (int i = 1; i <= endDay; i++) {
 			        	//오늘 일자 표시 [1] 표시
-			        	if(todaynum == i) {
+			        	if(todayNum == i) {
 			        		sb.append("<td>").append("["+i+"]").append("</td>\n");
 			        	} else {
 			        		sb.append("<td>").append(i).append("</td>\n");
