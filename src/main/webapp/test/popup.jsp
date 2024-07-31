@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+  <link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.css">
+  <script src="webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -16,4 +18,4 @@
 	<c:out value="${sb}" escapeXml="false"/>
 
 </body>
-</html>
+</html>	
