@@ -1,11 +1,8 @@
 package com.mywebapp.controllers.user;
 
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.mywebapp.dao.MemberDao;
+import com.mywebapp.dto.UserDto;
+import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,10 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.mywebapp.dao.MemberDao;
-import com.mywebapp.dto.UserDto;
-import com.mywebapp.util.JdbcUtil;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
@@ -39,8 +37,8 @@ public class LoginController extends HttpServlet {
         ResultSet rs = null;
 
         try {
-            conn = JdbcUtil.getCon();
-            //if (id != null && pw != null) {
+            // conn = JdbcUtil.getCon();
+            // if (id != null && pw != null) {
             if (id != null && !id.isEmpty() && pw != null && !pw.isEmpty()) {
                 // 아이디, 비밀번호가 공백이 아닌 경우
                 // db 연결해서 아이디 비밀번호 일치 확인
@@ -64,7 +62,7 @@ public class LoginController extends HttpServlet {
                         // 아이디 비번 일치 일치
                         if (guestLogin != null) {
                             // 게스트 로그인
-                            resp.sendRedirect(req.getContextPath() + "/service/guestMain");
+                            resp.sendRedirect(req.getContextPath() + "/jsp/service/main.jsp");
                         } else if (hostLogin != null) {
                             // 호스트 로그인
                             resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
