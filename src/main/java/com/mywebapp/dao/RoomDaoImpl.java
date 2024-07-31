@@ -82,7 +82,7 @@ public class RoomDaoImpl implements RoomDao {
 
 		// LIMIT은 페이지 크기(한 페이지에 보여줄 데이터의 수)
 		// OFFSET은 데이터베이스에서 시작할 위치 (OFFSET은 0부터 시작)
-		String sql = "SELECT r.id, ri.image_path, ri.image_name, r.room_name, r.street_address, rp.rent_price, ro.room_option " +
+		String sql = "SELECT r.id, ri.image_path, ri.image_name, r.room_name, r.street_address, rp.rent_price, ro.room_options " +
 				"FROM room r " +
 				"INNER JOIN room_image ri ON r.id = ri.room_id " +
 				"INNER JOIN room_option ro ON r.id = ro.room_id " +
@@ -105,9 +105,9 @@ public class RoomDaoImpl implements RoomDao {
 				String roomName = rs.getString("room_name");
 				String streetAddress = rs.getString("street_address");
 				int rentPrice = rs.getInt("rent_price");
-				String roomOption = rs.getString("room_option");
+				String roomOptions = rs.getString("room_options");
 				String saveFileName = rs.getString("save_file_name");
-				RoomListItemDto dto = new RoomListItemDto(id, imagePath, imageName,saveFileName, roomName, streetAddress, rentPrice, roomOption);
+				RoomListItemDto dto = new RoomListItemDto(id, imagePath, imageName,saveFileName, roomName, streetAddress, rentPrice, roomOptions);
 				roomList.add(dto);
 			}
 			return roomList;
@@ -174,7 +174,7 @@ public class RoomDaoImpl implements RoomDao {
 				"    ri.image_path, " +
 				"    ri.save_file_name, " +
 				"    ri.image_order, " +
-				"    rop.room_option, " +
+				"    rop.room_options, " +
 				"    rp.rent_price, " +
 				"    rp.long_term, " +
 				"    rp.long_term_discount, " +
@@ -230,7 +230,7 @@ public class RoomDaoImpl implements RoomDao {
 				room.setImagePath(rs.getString("image_path"));
 				room.setSaveFileName(rs.getString("save_file_name"));
 				room.setImageOrder(rs.getInt("image_order"));
-				room.setRoomOption(rs.getString("room_option"));
+				room.setRoomOption(rs.getString("room_options"));
 				room.setRentPrice(rs.getInt("rent_price"));
 				room.setLongTerm(rs.getInt("long_term"));
 				room.setLongTermDiscount(rs.getInt("long_term_discount"));
@@ -380,7 +380,7 @@ public class RoomDaoImpl implements RoomDao {
 						getRoomListSampleImage(rs.getLong("id")),
 
 						new RoomOption(
-								rs.getLong("room_id"),rs.getString("room_option")
+								rs.getLong("room_id"),rs.getString("room_options")
 						),
 
 						new RoomPrice(
