@@ -16,4 +16,5 @@ public interface BookingDao {
     List<Booking> getBookingsByRoomId(long roomId, int bookingStatus);
     void approveBooking(long bookingId);
     void declineBooking(long bookingId);
+    List<Booking> rentalSchedule(Long roomId);
 }

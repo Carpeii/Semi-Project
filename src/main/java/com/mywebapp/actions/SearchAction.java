@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mywebapp.dao.CalendarDao;
 import com.mywebapp.dao.RoomDao;
 import com.mywebapp.model.Booking;
 import com.mywebapp.dao.RoomDaoImpl;

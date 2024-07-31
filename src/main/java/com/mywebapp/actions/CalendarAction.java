@@ -5,12 +5,13 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mywebapp.dao.CalendarDao;
+import com.mywebapp.dao.BookingDaoImpl;
 import com.mywebapp.model.Booking;
 
 public class CalendarAction implements Action {
@@ -22,8 +23,8 @@ public class CalendarAction implements Action {
 		int moveMonth = Integer.parseInt(req.getParameter("movemonth"));
 		System.out.println(moveMonth);
 		Long roomId = 1l;
-		CalendarDao dao = new CalendarDao();
-		ArrayList<Booking> scheduleList = dao.rentalSchedule(roomId);
+		BookingDaoImpl dao = new BookingDaoImpl();
+		List<Booking> scheduleList = dao.rentalSchedule(roomId);
 	
 		for(Booking b : scheduleList) {
 			LocalDate in = b.getCheckInDate().toLocalDate();

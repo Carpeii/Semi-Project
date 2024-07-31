@@ -98,4 +98,27 @@ public class BookingDaoImpl implements BookingDao {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	 public List<Booking> rentalSchedule(Long roomId) {
+			List<Booking> scheduleList = new ArrayList<Booking>();
+			String sql = "select * from booking where room_id = ? and curdate() <= check_out_date";
+			try {
+				Connection con = JdbcUtil.getCon();
+				
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setLong(1,roomId);
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					Booking booking = new Booking();
+							booking.setCheckInDate(rs.getDate("check_in_date"));
+							booking.setCheckOutDate(rs.getDate("check_out_date"));
+					scheduleList.add(booking);
+				}
+			}catch(SQLException s) {
+				s.printStackTrace();
+			}
+			return scheduleList;
+		}
 }
