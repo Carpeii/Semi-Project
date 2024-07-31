@@ -1,16 +1,62 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<!-- °Ë»öµÈ °á°úµé º¸ÀÌ±â -->
+<!-- 
+ ê²€ìƒ‰ëœ ê²°ê³¼ë“¤ ë³´ì´ê¸° 
+asdasdsadas
+ ê²°ê³¼ì¤‘ í•˜ë‚˜ ì„ íƒ 
+<button onclick="location.href='../service/detail.jsp'">ì´íƒœì›ë£¨í”„íƒ‘ STAY</button>
+ -->
+ <p>Total Page: ${totalpage}</p>
+<p>Page Number: ${pagenum}</p>
+<p>searchWord: ${searchWord}</p>
+ <table>
+ <c:forEach var="room" items="${requestScope.rooms}">
+			<tr>
+			<td>ë°© ì£¼ì†Œ : ${room.jibunAddress }....${room.roomName}....${room.roomPrice.rentPrice}...............${pagenum}...</td> 
+			</tr>
+			<td>
+			<div class="col-md">
+         <div class="card shadow-sm">
+          <a href="í•´ë‹¹ í˜ì´ì§€">
+        <c:if test="${not empty rooms}">
+        <c:set var="firstRoom" value="${rooms[0]}" />
+        <c:if test="${not empty firstRoom.roomImageList}">
+            <c:set var="firstImage" value="${firstRoom.roomImageList[0]}" />
+            <div>
+                <p>First Image Path: ${pageContext.request.contextPath}/upload/img.jpg</p>
+                <img src="${pageContext.request.contextPath}/upload/img.jpg" alt="Image" />
+            </div>
+        </c:if>
+    </c:if>
+          </a>
+          </div>
+        </div>
+			</td>
+		 </c:forEach>
+		 
+		 <tr>
+		 <c:if test="${pagenum > 1 }">
+		 <td>
+ <a href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum-1}">ì´ì „í˜ì´ì§€</a>
+		 </td>
+		 </c:if>
+		 <c:if test="${totalpage > pagenum }">
+		 <td>
+ <a href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+1}">ë‹¤ìŒí˜ì´ì§€</a>
+		 </td>
+		 </c:if>
+ </table>
 
-<!-- °á°úÁß ÇÏ³ª ¼±ÅÃ -->
-<button onclick="location.href='../service/detail.jsp'">ÀÌÅÂ¿ø·çÇÁÅ¾ STAY</button>
+ 
 
 </body>
 </html>

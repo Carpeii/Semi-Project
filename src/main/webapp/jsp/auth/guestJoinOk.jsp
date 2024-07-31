@@ -1,3 +1,4 @@
+<%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="javax.naming.Context" %>
@@ -17,7 +18,7 @@
     String id = request.getParameter("id");
     String pw = request.getParameter("pw");
 
-    connection conn = null;
+    Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
 
