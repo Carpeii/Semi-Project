@@ -16,8 +16,8 @@
 </form>
 	<c:out value="${sb}" escapeXml="false"/>
 <form action="${pageContext.request.contextPath }/calendar" method="post">
-<input type="submit" name="movemonth" value="-1"/>
-<input type="submit" name="movemonth" value="1"/>
+<input type="submit" name="movemonth" value="back"/>
+<input type="submit" name="movemonth" value="post"/>
 </form>
 
 </body>

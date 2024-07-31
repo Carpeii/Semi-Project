@@ -20,7 +20,7 @@ public class CalendarAction implements Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
 		System.out.println("달력Action 호출");
-		int moveMonth = Integer.parseInt(req.getParameter("movemonth"));
+		String moveMonth = req.getParameter("movemonth");
 		System.out.println(moveMonth);
 		Long roomId = 1l;
 		BookingDaoImpl dao = new BookingDaoImpl();
