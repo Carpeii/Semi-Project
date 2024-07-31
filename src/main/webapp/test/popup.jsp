@@ -12,7 +12,8 @@
 <form action="${pageContext.request.contextPath }/calendar" method="post">
 <input type="submit" value="달력 호출"/>
 </form>
-	<c:out value="${sb }" escapeXml="false"/>
+	<p>${test }</p>
+	<c:out value="${sb}" escapeXml="false"/>
 
 </body>
 </html>

@@ -9,11 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CalendarAction implements Action {
-	private String calendarUrl = "/jsp/test/popup.jsp";
+	private String calendarUrl = "/test/popup.jsp";
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
 		System.out.println("달력Action 호출");
+		String test = "test";
 				//달력의 오늘 날짜
 				LocalDate today = LocalDate.now();
 				//요일
@@ -26,16 +27,17 @@ public class CalendarAction implements Action {
 				int endDay = today.getDayOfMonth();
 				StringBuilder sb = new StringBuilder();
 				
-				System.out.println("오늘 :" + today );
-				System.out.println("요일 : "+ dayOfWeek+dayOfWeekNum);
-				System.out.println("이번달의 첫 날: "+ firstDay);
-				System.out.println("이번달의 첫 날의 요일 : "+ firstDayOfWeek);
-				System.out.println("");
-				System.out.println("이번달의 마지막 날 : "+ endDay);
-				
-				System.out.println();
-				System.out.println();
-				 sb.append("<table border='1' width='200' height='200'>\n");
+				try {
+//				System.out.println("오늘 :" + today );
+//				System.out.println("요일 : "+ dayOfWeek+dayOfWeekNum);
+//				System.out.println("이번달의 첫 날: "+ firstDay);
+//				System.out.println("이번달의 첫 날의 요일 : "+ firstDayOfWeek);
+//				System.out.println("");
+//				System.out.println("이번달의 마지막 날 : "+ endDay);
+//				
+//				System.out.println();
+//				System.out.println();
+				 sb.append("<table border='1' width='400' height='600'>\n");
 			        
 			        // 요일 헤더
 			        sb.append("<tr>\n");
@@ -67,9 +69,9 @@ public class CalendarAction implements Action {
 			        
 			        // 테이블의 끝
 			        sb.append("</table>\n");
-			        req.setAttribute("sb", sb);
 			        
-			        try {
+			        	req.setAttribute("sb", sb);
+			        	req.setAttribute("test", test);
 			        	
 						req.getRequestDispatcher(calendarUrl).forward(req, resp);
 						
