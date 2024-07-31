@@ -6,6 +6,22 @@
     <meta charset="UTF-8">
     <title>Host Contract Management</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function approveBooking(bookingId) {
+            $.post('${pageContext.request.contextPath}/approveBooking', { bookingId: bookingId }, function(response) {
+                alert('Booking approved');
+                location.reload();
+            });
+        }
+
+        function declineBooking(bookingId) {
+            $.post('${pageContext.request.contextPath}/declineBooking', { bookingId: bookingId }, function(response) {
+                alert('Booking declined');
+                location.reload();
+            });
+        }
+    </script>
 </head>
 <body>
 <div class="container mt-5">
@@ -14,9 +30,10 @@
         <thead>
         <tr>
             <th>Room ID</th>
-            <th>Guset ID</th>
-            <th>CheckIn Date</th>
-            <th>CheckOut Date</th>
+            <th>Guest ID</th>
+            <th>Check-In Date</th>
+            <th>Check-Out Date</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -27,14 +44,8 @@
                 <td>${booking.checkInDate}</td>
                 <td>${booking.checkOutDate}</td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/editBooking" method="post" class="d-inline">
-                        <input type="hidden" name="bookingId" value="${booking.id}">
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                    </form>
-                    <form action="${pageContext.request.contextPath}/service/hostContractManagement" method="post" class="d-inline">
-                        <input type="hidden" name="bookingId" value="${booking.id}">
-                        <button type="submit" class="btn btn-secondary">Manage Contract</button>
-                    </form>
+                    <button type="button" class="btn btn-primary" onclick="approveBooking(${booking.id})">½ÂÀÎ</button>
+                    <button type="button" class="btn btn-secondary" onclick="declineBooking(${booking.id})">°ÅÀý</button>
                 </td>
             </tr>
         </c:forEach>

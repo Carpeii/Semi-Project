@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingDao {
-    public List<Booking> getBookingsByRoomId(long roomId, int bookingStatus){
+    public List<Booking> getBookingsByRoomId(long roomId, int bookingStatus) {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -29,7 +29,7 @@ public class BookingDao {
 
             rs = pstmt.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 Booking booking = new Booking();
                 booking.setId(rs.getLong("id"));
                 booking.setGuestId(rs.getLong("guest_id"));
@@ -43,9 +43,31 @@ public class BookingDao {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             JdbcUtil.close(con, pstmt, rs);
         }
         return bookings;
+    }
+
+    public void approveBooking(long bookingId) {
+        String sql = "UPDATE booking SET booking_status = 1 WHERE id = ?";
+        try (Connection con = JdbcUtil.getCon();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setLong(1, bookingId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void declineBooking(long bookingId) {
+        String sql = "UPDATE booking SET booking_status = 2 WHERE id = ?";
+        try (Connection con = JdbcUtil.getCon();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setLong(1, bookingId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
