@@ -46,13 +46,12 @@
 	        <p><strong>Internet:</strong> ${room.internet ? 'Yes' : 'No'}</p>
 	        <p><strong>Cleaning Fee:</strong> ${room.cleaningFee}</p>
 	        <p><strong>Refund Type:</strong> ${room.refundType}</p>
-	        <p><strong>Check-In Date:</strong> ${room.checkInDate}</p>
-	        <p><strong>Check-Out Date:</strong> ${room.checkOutDate}</p>
 	        <p><strong>Review Message:</strong> ${room.reviewMessage}</p>
 	        <p><strong>Rating:</strong> ${room.rating}</p>
 	        <p><strong>Review Created At:</strong> ${room.reviewCreatedAt}</p>
         </div>
-        
+
+<!--    
         <form action="${pageContext.request.contextPath}/service/bookRoom" method="post">
         	<input type="hidden" name="roomId" value="${room.id }">
         	<label for="checkInDate">Check-in Date:</label>
@@ -63,7 +62,18 @@
         	
         	<input type="submit" value="방 계약 시작하기">
         </form>
-        
+      
+-->
+        <form action="${pageContext.request.contextPath}/service/bookingInfo" method="post">
+        	<input type="hidden" name="roomId" value="${room.id }">
+        	<label for="checkInDate">Check-in Date:</label>
+        	<input type="date" id="checkInDate" name="checkInDate" required><br><br>
+        	
+        	<label for="checkOutDate">Check-out Date:</label>
+        	<input type="date" id="checkOutDate" name="checkOutDate" required><br><br>
+        	
+        	<input type="submit" value="방 계약 시작하기">
+        </form>
         
     </c:if>
 

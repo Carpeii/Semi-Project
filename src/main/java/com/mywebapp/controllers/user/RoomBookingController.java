@@ -50,7 +50,7 @@ public class RoomBookingController extends HttpServlet {
 //			RequestDispatcher dispatcher = req.getRequestDispatcher(req.getContextPath() + "/jsp/service/bookingOk.jsp");
 //			dispatcher.forward(req, resp);
 			
-	        req.getRequestDispatcher("/jsp/service/bookingOk.jsp").forward(req, resp);
+	        req.getRequestDispatcher("/jsp/service/bookingStart.jsp").forward(req, resp);
 
 			
 		} else {

@@ -42,8 +42,6 @@ public class RoomDetailDto {
     private boolean internet;
     private int cleaningFee;
     private int refundType;
-    private Date checkInDate;
-    private Date checkOutDate;
     private String reviewMessage;
     private int rating;
     private Date reviewCreatedAt;

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mywebapp.dto.BookingInfoDto;
 import com.mywebapp.dto.RoomDetailDto;
 import com.mywebapp.dto.RoomDto;
 import com.mywebapp.dto.RoomListItemDto;
@@ -182,8 +183,6 @@ public class RoomDaoImpl implements RoomDao {
                     "    rp.internet, " +
                     "    rp.cleaning_fee, " +
                     "    rp.refund_type, " +
-                    "    b.check_in_date, " +
-                    "    b.check_out_date, " +
                     "    rv.message, " +
                     "    rv.rating, " +
                     "    rv.created_at " +
@@ -239,8 +238,6 @@ public class RoomDaoImpl implements RoomDao {
 				    room.setInternet(rs.getBoolean("internet"));
 				    room.setCleaningFee(rs.getInt("cleaning_fee"));
 				    room.setRefundType(rs.getInt("refund_type"));
-				    room.setCheckInDate(rs.getDate("check_in_date"));
-				    room.setCheckOutDate(rs.getDate("check_out_date"));
 				    room.setReviewMessage(rs.getString("message"));
 				    room.setRating(rs.getInt("rating"));
 				    room.setReviewCreatedAt(rs.getDate("created_at"));
@@ -252,5 +249,54 @@ public class RoomDaoImpl implements RoomDao {
 			} finally {
 				JdbcUtil.close(con, pstmt, rs);
 			}
+		}
+
+		@Override
+		public BookingInfoDto getBookingInfoById(long roomId) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			BookingInfoDto bookingInfo = null;
+            String sql = "SELECT r.room_name, r.jibun_address, r.street_address, r.address_detail, r.floor, " +
+                    "m.name AS member_name, m.phone, b.check_in_date, b.check_out_date, " +
+                    "rp.rent_price, rp.long_term_discount, rp.early_check_in_discount, rp.maintenance_bill, rp.cleaning_fee " +
+                    "FROM room r " +
+                    "INNER JOIN member m ON r.host_id = m.id " +
+                    "INNER JOIN booking b ON r.id = b.room_id " +
+                    "INNER JOIN room_price rp ON r.id = rp.room_id " +
+                    "WHERE r.id = ?";
+			
+            try {
+				con = JdbcUtil.getCon();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setLong(1, roomId);
+				rs = pstmt.executeQuery();
+				
+				if (rs.next()) {
+					bookingInfo = new BookingInfoDto();
+					bookingInfo.setRoomName(rs.getString("room_name"));
+					bookingInfo.setJibunAddress(rs.getString("jibun_address"));
+					bookingInfo.setStreetAddress(rs.getString("street_address"));
+					bookingInfo.setAddressDetail(rs.getString("address_detail"));
+					bookingInfo.setFloor(rs.getInt("floor"));
+					bookingInfo.setMemberName(rs.getString("member_name"));
+					bookingInfo.setPhone(rs.getString( "phone"));
+					bookingInfo.setCheckInDate(rs.getDate("check_in_date"));
+					bookingInfo.setCheckOutDate(rs.getDate("check_out_date"));
+					bookingInfo.setRentPrice(rs.getInt("rent_price"));
+					bookingInfo.setLongTermDiscount(rs.getInt("long_term_discount"));
+					bookingInfo.setEarlyCheckInDiscount(rs.getInt("early_check_in_discount"));
+					bookingInfo.setMaintenanceBill(rs.getInt("maintenance_bill"));
+					bookingInfo.setCleaningFee(rs.getInt("cleaning_fee"));
+				}
+				return bookingInfo;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			} finally {
+				JdbcUtil.close(con, pstmt, rs);
+			}
+            
 		}
 }
