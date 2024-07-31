@@ -1,6 +1,7 @@
 package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.BookingDao;
+import com.mywebapp.dao.BookingDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +17,7 @@ public class DeclineBookingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long bookingId = Long.parseLong(req.getParameter("bookingId"));
-        BookingDao bookingDao = new BookingDao();
+        BookingDao bookingDao = new BookingDaoImpl();
         bookingDao.declineBooking(bookingId);
         resp.getWriter().write("Success");
     }

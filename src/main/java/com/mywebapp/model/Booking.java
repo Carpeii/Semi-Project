@@ -1,11 +1,13 @@
 package com.mywebapp.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
 
-@Getter @Setter
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Booking {
     private long id;
     private long guestId;
@@ -16,16 +18,4 @@ public class Booking {
 
     private Member member;
     private Room room;
-
-    public Booking() {
-    }
-
-    public Booking(long id, long guestId, long roomId, Date checkInDate, Date checkOutDate, int bookingStatus) {
-        this.id = id;
-        this.guestId = guestId;
-        this.roomId = roomId;
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
-        this.bookingStatus = bookingStatus;
-    }
 }

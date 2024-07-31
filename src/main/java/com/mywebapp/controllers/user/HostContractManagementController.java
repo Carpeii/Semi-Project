@@ -1,6 +1,7 @@
 package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.BookingDao;
+import com.mywebapp.dao.BookingDaoImpl;
 import com.mywebapp.model.Booking;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,7 @@ public class HostContractManagementController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BookingDao bookingDao = new BookingDao();
+        BookingDao bookingDao = new BookingDaoImpl();
         long roomId= Long.parseLong(req.getParameter("roomId"));
         List<Booking> bookings = bookingDao.getBookingsByRoomId(roomId, 0);
         req.setAttribute("bookings", bookings);

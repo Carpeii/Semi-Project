@@ -27,6 +27,7 @@ public class RoomDetailDto {
     private int minimumContract;
     private String imageName;
     private String imagePath;
+    private String saveFileName;
     private int imageOrder;
     private String roomOption;
     private int rentPrice;
@@ -45,8 +46,4 @@ public class RoomDetailDto {
     private String reviewMessage;
     private int rating;
     private Date reviewCreatedAt;
-
-
-
-
 }

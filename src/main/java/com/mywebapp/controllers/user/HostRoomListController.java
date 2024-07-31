@@ -1,6 +1,7 @@
 package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.RoomDao;
+import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.model.Room;
 
 import javax.servlet.ServletException;
@@ -26,7 +27,7 @@ public class HostRoomListController extends HttpServlet {
 //            return;
 //        }
         System.out.println(hostId);
-        RoomDao roomDao = new RoomDao();
+        RoomDao roomDao = new RoomDaoImpl();
         List<Room> rooms = roomDao.getRoomsByHostId(hostId);
 
         req.setAttribute("rooms", rooms);

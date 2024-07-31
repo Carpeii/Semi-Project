@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.mywebapp.dao.BookingDao;
 import com.mywebapp.dao.BookingDaoImpl;
 import com.mywebapp.dto.UserDto;
+import com.mywebapp.model.Booking;
 
 @WebServlet("/service/bookRoom")
 public class RoomBookingController extends HttpServlet {
@@ -39,8 +40,14 @@ public class RoomBookingController extends HttpServlet {
 			// 체크인 날짜와 체크아웃 날짜 가져오기
 			Date checkInDate = Date.valueOf(req.getParameter("checkInDate"));
 			Date checkOutDate = Date.valueOf(req.getParameter("checkOutDate"));
-			
-			bookingDao.insertBooking(guestId, roomId, checkInDate, checkOutDate);
+
+			Booking booking = new Booking();
+			booking.setGuestId(guestId);
+			booking.setRoomId(roomId);
+			booking.setCheckInDate(checkInDate);
+			booking.setCheckOutDate(checkOutDate);
+
+			bookingDao.insertBooking(booking);
 			
 		      // 예약된 방 정보 가져오기 (예시)
             //Room bookedRoom = bookingDAO.getBookedRoom(roomId); // 예약된 방 정보를 DB에서 가져오는 예시 메서드

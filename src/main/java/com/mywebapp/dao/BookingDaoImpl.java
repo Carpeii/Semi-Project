@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mywebapp.model.Booking;
@@ -13,7 +14,7 @@ import com.mywebapp.util.JdbcUtil;
 public class BookingDaoImpl implements BookingDao {
 
 	@Override
-	public void insertBooking(long guestId, long roomId, Date checkInDate, Date checkOutDate) {
+	public void insertBooking(Booking booking) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -23,10 +24,10 @@ public class BookingDaoImpl implements BookingDao {
 		try {
 			con = JdbcUtil.getCon();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setLong(1, guestId);
-			pstmt.setLong(2, roomId);
-			pstmt.setDate(3, checkInDate);
-			pstmt.setDate(4, checkOutDate);
+			pstmt.setLong(1, booking.getGuestId());
+			pstmt.setLong(2, booking.getRoomId());
+			pstmt.setDate(3, booking.getCheckInDate());
+			pstmt.setDate(4, booking.getCheckOutDate());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -34,11 +35,67 @@ public class BookingDaoImpl implements BookingDao {
 			e.printStackTrace();
 		} finally {
 			JdbcUtil.close(con, pstmt, null);
-
 		}
-		
+	}
+	@Override
+	public List<Booking> getBookingsByRoomId(long roomId, int bookingStatus) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<Booking> bookings = new ArrayList<>();
+
+		String sql = "SELECT * FROM booking WHERE room_id = ? AND booking_status = ?";
+		try {
+			con = JdbcUtil.getCon();
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setLong(1, roomId);
+			pstmt.setInt(2, bookingStatus);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Booking booking = new Booking();
+				booking.setId(rs.getLong("id"));
+				booking.setGuestId(rs.getLong("guest_id"));
+				booking.setRoomId(rs.getLong("room_id"));
+				booking.setCheckInDate(rs.getDate("check_in_date"));
+				booking.setCheckOutDate(rs.getDate("check_out_date"));
+				booking.setBookingStatus(rs.getInt("booking_status"));
+
+				bookings.add(booking);
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			JdbcUtil.close(con, pstmt, rs);
+		}
+		return bookings;
 	}
 
-	
+	@Override
+	public void approveBooking(long bookingId) {
+		String sql = "UPDATE booking SET booking_status = 1 WHERE id = ?";
+		try (Connection con = JdbcUtil.getCon();
+			 PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setLong(1, bookingId);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
+	@Override
+	public void declineBooking(long bookingId) {
+		String sql = "UPDATE booking SET booking_status = 2 WHERE id = ?";
+		try (Connection con = JdbcUtil.getCon();
+			 PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setLong(1, bookingId);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

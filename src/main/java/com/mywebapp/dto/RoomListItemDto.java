@@ -12,6 +12,7 @@ public class RoomListItemDto {
 	private Long id; 
 	private String imagePath;
 	private String imageName;
+	private String saveFileName;
 	private String roomName;
 	private String streetAddress;
 	private int rentPrice;

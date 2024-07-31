@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mywebapp.dao.RoomDao;
+import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.model.Room;
 import com.mywebapp.model.RoomImage;
 
@@ -25,7 +26,7 @@ public class SearchAction implements Action {
 		System.out.println(searchWord);
 		
 	try {
-		RoomDao dao = new RoomDao(); 
+		RoomDao dao = new RoomDaoImpl();
 		//검색 결과의 총 수
 		int totalRecord = dao.searchTotalRecord(searchWord);
 		//총페이지    =  ((총 행수-1)/15)+1) 한페이지에 15개
