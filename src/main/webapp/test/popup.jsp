@@ -5,12 +5,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Popup Page</title>
-     <script src="${pageContext.request.contextPath}/test/popup.js"></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-    <h1>Popup Page</h1>
-    <input type="text" id="inputData" placeholder="Enter some data">
-    <button onclick="sendData()">Send Data</button>
+<form action="${pageContext.request.contextPath }/calendar" method="post">
+<input type="submit" value="달력 호출"/>
+</form>
+	<c:out value="${sb }" escapeXml="false"/>
+
 </body>
 </html>

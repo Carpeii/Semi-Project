@@ -58,7 +58,7 @@ public class RoomDao {
 //    }
     
     //승인여부도 확인해야됨 applove -> 1정상
-    public ArrayList<Room> searchRoomList(String searchWord,int viewRecord) {
+    public ArrayList<Room> searchRoomList(String searchWord,int viewPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Room> rooms = new ArrayList<Room>();
@@ -77,7 +77,7 @@ public class RoomDao {
 			pstmt.setString(1,"%"+searchWord+"%");
 			pstmt.setString(2,"%"+searchWord+"%");
 			pstmt.setString(3,"%"+searchWord+"%");
-			pstmt.setInt(4,viewRecord);
+			pstmt.setInt(4,viewPage);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				
