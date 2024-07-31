@@ -37,7 +37,7 @@ public class LoginController extends HttpServlet {
         ResultSet rs = null;
 
         try {
-            // conn = JdbcUtil.getCon();
+             conn = JdbcUtil.getCon();
             // if (id != null && pw != null) {
             if (id != null && !id.isEmpty() && pw != null && !pw.isEmpty()) {
                 // 아이디, 비밀번호가 공백이 아닌 경우
