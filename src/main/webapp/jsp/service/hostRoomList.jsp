@@ -29,6 +29,10 @@
                         <input type="hidden" name="roomId" value="${room.id}">
                         <button type="submit" class="btn btn-secondary">Manage Contract</button>
                     </form>
+                    <form action="${pageContext.request.contextPath}/service/hostBookingHistory" method="post" class="d-inline">
+                        <input type="hidden" name="roomId" value="${room.id}">
+                        <button type="submit" class="btn btn-secondary">view History</button>
+                    </form>
                 </td>
             </tr>
         </c:forEach>
