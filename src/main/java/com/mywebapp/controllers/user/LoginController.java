@@ -2,7 +2,6 @@ package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.MemberDao;
 import com.mywebapp.dto.UserDto;
-import com.mywebapp.service.UserVO;
 import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
@@ -38,8 +37,8 @@ public class LoginController extends HttpServlet {
         ResultSet rs = null;
 
         try {
-            conn = JdbcUtil.getCon();
-            //if (id != null && pw != null) {
+            // conn = JdbcUtil.getCon();
+            // if (id != null && pw != null) {
             if (id != null && !id.isEmpty() && pw != null && !pw.isEmpty()) {
                 // 아이디, 비밀번호가 공백이 아닌 경우
                 // db 연결해서 아이디 비밀번호 일치 확인

@@ -21,13 +21,14 @@
 <body>
 <h1>1평 회원가입</h1>
 <form action="${pageContext.request.contextPath}/joinOk" method="post">
+    <input type="hidden" name="isDuplicate" value="true">
     <fieldset>
         <legend>회원가입 폼을 작성해주세요.</legend>
         <table>
             <tr>
-                <td><label for="id">아이디</label></td>
-                <td><input type="text" name="id" id="id" /></td>
-                <!--<td>아이디 중복 검사 기능</td>-->
+                <td><label for="userId">아이디</label></td>
+                <td><input type="text" name="userId" id="userId" value="${param.userId != null ? param.userId : ''}"/></td>
+                <td><button type="submit" name="action" value="checkId">아이디 중복 검사</button></td>
             </tr>
             <tr>
                 <div>${idErrMsg}</div><br>
@@ -58,8 +59,8 @@
         </table>
         <table>
             회원 타입을 선택해주세요<br>
-            <input type="submit" name="guest" value="게스트로 가입하기"><br>
-            <input type="submit" name="host" value="호스트로 가입하기">
+            <button type="submit" name="action" value="guest">게스트로그인</button><br>
+            <button type="submit" name="action" value="host">호스트로그인</button>
         </table>
     </fieldset>
 </form>
