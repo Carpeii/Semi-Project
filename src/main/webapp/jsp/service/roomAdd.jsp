@@ -60,8 +60,8 @@
     <label for="minimumContract">Minimum Contract:</label>
     <input type="number" id="minimumContract" name="minimumContract" value="12" required /><br>
 
-    <label for="approve">Approve:</label>
-    <input type="number" id="approve" name="approve" value="1" required /><br>
+    <%--hidden 필드--%>
+    <input type="hidden" id="approve" name="approve" value="0" required /><br>
 
     <input type="submit" value="Add Room" />
 </form>
