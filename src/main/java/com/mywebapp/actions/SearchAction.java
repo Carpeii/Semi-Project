@@ -7,7 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mywebapp.dao.CalendarDao;
 import com.mywebapp.dao.RoomDao;
+import com.mywebapp.model.Booking;
 import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.model.Room;
 import com.mywebapp.model.RoomImage;
@@ -32,10 +34,10 @@ public class SearchAction implements Action {
 		//총페이지    =  ((총 행수-1)/15)+1) 한페이지에 15개
 		int totalPage = ((totalRecord-1)/viewCount)+1;
 		//보여줄 페이지의 데이터 1= 2페이지
-		int viewRecord = (pageNum-1)*viewCount;
-		System.out.println("viewRecord"+viewRecord);
+		int viewPage = (pageNum-1)*viewCount;
+		System.out.println("viewRecord"+viewPage);
 		
-		ArrayList<Room> rooms = (ArrayList<Room>)dao.searchRoomList(searchWord,viewRecord);
+		ArrayList<Room> rooms = (ArrayList<Room>)dao.searchRoomList(searchWord,viewPage);
 		for(Room r : rooms) {
 			int price = r.getRoomPrice().getRentPrice();
 			int approve = r.getApprove();
