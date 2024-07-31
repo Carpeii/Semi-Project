@@ -14,20 +14,29 @@ import com.mywebapp.util.JdbcUtil;
 
 public class CalendarDao {
 	private Connection connection;
-	
+	//달력을 호출 할 때 이미 계약된 날짜를 검색 
 	 public ArrayList<Booking> rentalSchedule(Long roomId) {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			ArrayList<Room> rentalList = new ArrayList<Room>();
-			Booking booking = new Booking();
+			ArrayList<Booking> scheduleList = new ArrayList<Booking>();
 			
 			try {
-			
-				rentalList.add(booking);
+				connection = JdbcUtil.getCon();
+				
+				String sql = "select * from booking where room_id = ? and curdate() <= check_out_date";
+				pstmt = connection.prepareStatement(sql);
+				pstmt.setLong(1,roomId);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					Booking booking = new Booking(
+							rs.getDate("check_in_date"),
+							rs.getDate("check_out_date"));
+					scheduleList.add(booking);
 				}
 			}catch(SQLException s) {
 				s.printStackTrace();
 			}
-			return rentalList;
+			return scheduleList;
 		}
 }

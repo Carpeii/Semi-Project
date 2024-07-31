@@ -12,10 +12,13 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath }/calendar" method="post">
-<input type="submit" value="달력 호출"/>
+<input type="submit" name="movemonth" value="달력 호출"/>
 </form>
-	<p>${test }</p>
 	<c:out value="${sb}" escapeXml="false"/>
+<form action="${pageContext.request.contextPath }/calendar" method="post">
+<input type="submit" name="movemonth" value="-1"/>
+<input type="submit" name="movemonth" value="1"/>
+</form>
 
 </body>
 </html>	

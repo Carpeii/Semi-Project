@@ -3,10 +3,15 @@ package com.mywebapp.actions;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mywebapp.dao.CalendarDao;
+import com.mywebapp.model.Booking;
 
 public class CalendarAction implements Action {
 	private String calendarUrl = "/test/popup.jsp";
@@ -14,7 +19,18 @@ public class CalendarAction implements Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
 		System.out.println("달력Action 호출");
-		String test = "test";
+		int moveMonth = Integer.parseInt(req.getParameter("movemonth"));
+		System.out.println(moveMonth);
+		Long roomId = 1l;
+		CalendarDao dao = new CalendarDao();
+		ArrayList<Booking> scheduleList = dao.rentalSchedule(roomId);
+	
+		for(Booking b : scheduleList) {
+			LocalDate in = b.getCheckInDate().toLocalDate();
+			LocalDate out = b.getCheckOutDate().toLocalDate();
+			System.out.println("Local : "+in+"  "+out);
+		}
+		
 				//if req의 값이 있다면 ->now말고 다른 달
 				//달력의 오늘 날짜
 				LocalDate today = LocalDate.now();
@@ -58,7 +74,12 @@ public class CalendarAction implements Action {
 
 			        // 날짜 추가
 			        for (int i = 1; i <= endDay; i++) {
-			            sb.append("<td>").append(i).append("</td>\n");
+			        	//오늘 일자 표시 [1] 표시
+			        	if(todaynum == i) {
+			        		sb.append("<td>").append("["+i+"]").append("</td>\n");
+			        	} else {
+			        		sb.append("<td>").append(i).append("</td>\n");
+			        	}
 			            
 			            // 일요일에 줄 바꿈
 			            if ((i + firstDayOfWeek - 1) % 7 == 0) {
@@ -66,6 +87,7 @@ public class CalendarAction implements Action {
 			            }
 			        }
 
+			        
 			        // 마지막 행의 끝을 추가
 			        if ((endDay + firstDayOfWeek - 1) % 7 != 0) {
 			        	sb.append("<td> </td>\n");
@@ -76,7 +98,6 @@ public class CalendarAction implements Action {
 			        sb.append("</table>\n");
 			        
 			        	req.setAttribute("sb", sb);
-			        	req.setAttribute("test", test);
 			        	
 						req.getRequestDispatcher(calendarUrl).forward(req, resp);
 						
