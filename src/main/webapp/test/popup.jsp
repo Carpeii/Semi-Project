@@ -15,10 +15,6 @@
 <form action="${pageContext.request.contextPath }/calendar/move" method="post">
 <button value="before" name="moveMonth">이전달</button>
 <button value="next" name="moveMonth">다음달</button>
-<!-- 
-<input type="submit" name="movemonth" value="back"/>
-<input type="submit" name="movemonth" value="post"/>
- -->
 </form>
 
 </body>

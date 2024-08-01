@@ -37,7 +37,7 @@ public class CalendarAction implements Action {
 		
 				LocalDate today = null;
 				int todayNum = 0;
-				//최초에 호출 했을 때 이번달 달력 + 이번달의 오늘날짜 마킹[]
+				//최초 호출시 이번달 달력 + 이번달의 오늘날짜 마킹[]
 				if(monthControll == 0) {
 					today = LocalDate.now();
 					todayNum = today.getDayOfMonth();
@@ -59,14 +59,12 @@ public class CalendarAction implements Action {
 				System.out.println("이번달의 첫 날의 요일 : "+ firstDayOfWeek);
 				System.out.println("");
 				System.out.println("이번달의 마지막 날 : "+ endDay);
-				
-				//선택한 달력의 연 월 일 얻기
-					
-					
+				int year = today.getYear();
+				int month = today.getMonthValue();
 					
 				 sb.append("<table border='1' cellspacing='1' width='300px' height='400px' style='text-align: center'>\n");
 				 sb.append("<div>");
-				 sb.append(today);
+				 sb.append(year+"-"+month);
 				 sb.append("</div>");
 			        
 			        // 요일 헤더
