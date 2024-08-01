@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<div class="container mt-5">q
+<div class="container mt-5">
     <h1>JSP 팝업창 예제</h1>
     <button type="button" onclick="openPopup()" value="today">팝업창 열기</button>
 </div>

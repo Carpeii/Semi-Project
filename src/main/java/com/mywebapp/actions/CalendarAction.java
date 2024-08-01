@@ -99,24 +99,22 @@ public class CalendarAction implements Action {
 			        LocalDate checkIn = b.getCheckInDate().toLocalDate();
 			        LocalDate checkOut = b.getCheckOutDate().toLocalDate();
 			        // 날짜 추가
-			        System.out.println("f");
 			        do{	
 			        	if(!scheduleList.isEmpty()) {
 			        	b = scheduleList.get(i);
 			        	checkIn = b.getCheckInDate().toLocalDate();
 			        	checkOut = b.getCheckOutDate().toLocalDate();
 			        	}
-			        	System.out.println("ff");
 				      	while ( j <= endDay) {
 				      		LocalDate notSelectedDay = LocalDate.of(today.getYear(),today.getMonthValue(),j);
 				        	System.out.println("한달의 날짜 값 얻기 : " + notSelectedDay);
 				        	//true일시 마킹
 				        	System.out.println("i : " + i);
 				        	System.out.println("j : " + j);
-				        	System.out.println("f1");
-				        	if((checkIn.isBefore(notSelectedDay) && checkOut.isAfter(notSelectedDay))) {
+				        	LocalDate in = checkIn.plusDays(-1);
+				        	LocalDate out = checkOut.plusDays(1);
+				        	if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))) {
 				        		
-				        		System.out.println("f2");
 				        		
 				        		if(todayNum == j) {
 				        			sb.append("<td>").append("[m"+j+"]").append("</td>\n");
@@ -133,11 +131,9 @@ public class CalendarAction implements Action {
 				        	}
 				            
 				            // 일요일에 줄 바꿈
-				        	System.out.println("f3");
 				            if ((j + firstDayOfWeek - 1) % 7 == 0) {
 				                sb.append("</tr>\n<tr>\n");
 				            }
-				            System.out.println("f4");
 				            if(notSelectedDay.isEqual(checkOut)) {
 				            	i++;
 				            	System.out.println("i : " + i);
@@ -148,16 +144,13 @@ public class CalendarAction implements Action {
 				            	}
 				            }
 				            j++;
-				            System.out.println("f5");
 				        }
-				      	System.out.println("f6");
 				      	
 				      	if(!scheduleList.isEmpty()) {
 				      		i++;
 				      		System.out.println("aaaaaaaaa");
 				      	}
 			        }while(i < scheduleList.size());
-			        System.out.println("f7");
 			        
 			        
 			        
