@@ -17,7 +17,6 @@
             return;
         }
         Member user = (Member) session.getAttribute("user");
-        System.out.println(user.getId());
         if(user.getMemberType() == 0) {
             response.sendRedirect(request.getContextPath()+"/jsp/auth/loginMain");
             return;

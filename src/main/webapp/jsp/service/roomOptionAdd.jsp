@@ -9,7 +9,6 @@
 <body>
 <h1>Add Room Options</h1>
 <form id="optionForm" method="post" action="<%=request.getContextPath() %>/service/roomOptionAdd">
-    <input type="hidden" name="roomId" value="<%= request.getAttribute("roomId") %>">
     <input type="hidden" name="optionsJson" id="optionsJson">
 
     <h2>Basic Options</h2>
