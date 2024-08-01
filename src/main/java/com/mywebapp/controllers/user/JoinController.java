@@ -118,7 +118,7 @@ public class JoinController extends HttpServlet {
 
                 // 회원가입 성공 -> 메인 페이지로 이동
                 if ("guest".equals(action)) { // 게스트 회원가입
-                    req.getRequestDispatcher("/jsp/service/main.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/jsp/service/guestMain.jsp").forward(req, resp);
                 } else { // 호스트 회원가입
                     req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
                 }
