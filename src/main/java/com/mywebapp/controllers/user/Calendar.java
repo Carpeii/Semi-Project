@@ -13,19 +13,20 @@ import com.mywebapp.actions.CalendarAction;
 public class Calendar extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("달력Controller 호출");
+//		System.out.println("달력Controller 호출");
 		String requestUrl  = req.getPathInfo();
-		System.out.println("requestUrl : "+requestUrl);
+//		System.out.println("requestUrl : "+requestUrl);
 		//main페이지 -> 제어변수 초기화 후 session에 저장
 		//popup페이지 -> 제어변수 업데이트 다음달 ->+1  ,  이전달 -> -1
 		//팝업창을 닫았을 때 날짜 값을 받고 session을 삭제하는 코드 추가해야함
 		int monthControll  = 0;
+		//최초 호출 
 		if(requestUrl.equals("/call")) {
 			req.getSession().setAttribute("monthControll", monthControll);
 		Action action = new CalendarAction();
 		action.execute(req, resp);
+		//이전달 , 다음달 이동
 		} else if(requestUrl.equals("/move")) {
-			
 			String moveMonth = req.getParameter("moveMonth");
 			if(moveMonth.equals("next")) {
 				monthControll = (Integer)req.getSession().getAttribute("monthControll");

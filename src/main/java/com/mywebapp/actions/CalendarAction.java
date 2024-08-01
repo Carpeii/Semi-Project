@@ -25,6 +25,7 @@ public class CalendarAction implements Action {
 		System.out.println(monthControll);
 		System.out.println("달력Action 호출");
 		Long roomId = 1l;
+		LocalDate defaultDay = LocalDate.now();
 		
 		//booking table에서 가져온 값 
 		BookingDaoImpl dao = new BookingDaoImpl();
@@ -53,12 +54,12 @@ public class CalendarAction implements Action {
 				StringBuilder sb = new StringBuilder();
 				 
 				try {
-				System.out.println("오늘 :" + today );
-				System.out.println("이번달 오늘 일자 : "+ todayNum);
-				System.out.println("이번달의 첫 날: "+ firstDay);
-				System.out.println("이번달의 첫 날의 요일 : "+ firstDayOfWeek);
-				System.out.println("");
-				System.out.println("이번달의 마지막 날 : "+ endDay);
+//				System.out.println("오늘 :" + today );
+//				System.out.println("이번달 오늘 일자 : "+ todayNum);
+//				System.out.println("이번달의 첫 날: "+ firstDay);
+//				System.out.println("이번달의 첫 날의 요일 : "+ firstDayOfWeek);
+//				System.out.println("");
+//				System.out.println("이번달의 마지막 날 : "+ endDay);
 				int year = today.getYear();
 				int month = today.getMonthValue();
 					
@@ -77,6 +78,7 @@ public class CalendarAction implements Action {
 			        sb.append("<tr>\n");
 
 			        // 빈 칸 추가 (첫째 주의 시작일까지)
+			       
 			        for (int i = 1; i < firstDayOfWeek; i++) {
 			            sb.append("<td> </td>\n");
 			        }
@@ -88,7 +90,12 @@ public class CalendarAction implements Action {
 			        	//단순하게 In < 선택 ㄱㄴ < out 하고싶어도  계약 건수가  복수임
 			        	//if(b[0].In < (i)선택 ㄱㄴ < b.[0]out) 로 찍고  i의 값이 out과 같아지면 Booking b의 인덱스 값을 하나 올리기?
 			        	//이중 for문으로 가능할듯함
+			        /*
+			        문제발견  if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay)))
+			        달이 바껴도 달력을 조회한 날짜를 기준으로 조건을 검사해야하는데 검사의 기준이 되는 변수의 값이 달을 이동하면 달의 값이 올라감
+			        체크아웃날짜가 비교하는 날짭보다 년월이 적으면
 			        
+			        */
 			        
 			        
 			        int i = 0;
@@ -97,23 +104,43 @@ public class CalendarAction implements Action {
 			        LocalDate checkIn = b.getCheckInDate().toLocalDate();
 			        LocalDate checkOut = b.getCheckOutDate().toLocalDate();
 			        // 날짜 추가
+			        System.out.println("-------------do while 시작---------------");
+			        System.out.println("-------------in/out리스트 반복 시작---------------");
 			        do{	
+			        	
 			        	if(!scheduleList.isEmpty()) {
 			        	b = scheduleList.get(i);
 			        	checkIn = b.getCheckInDate().toLocalDate();
 			        	checkOut = b.getCheckOutDate().toLocalDate();
 			        	}
+			        	
+			        	System.out.println("-------------날짜 찍기while 시작---------------");
 				      	while ( j <= endDay) {
 				      		LocalDate notSelectedDay = LocalDate.of(today.getYear(),today.getMonthValue(),j);
-				        	System.out.println("한달의 날짜 값 얻기 : " + notSelectedDay);
+				        	System.out.println("현재 날짜 : " + notSelectedDay);
 				        	//true일시 마킹
-				        	System.out.println("i : " + i);
-				        	System.out.println("j : " + j);
+				        	System.out.println("리스트의 인덱스 번째 i : " + i);
+				        	System.out.println("현재일 j : " + j);
+				        	//마킹을 in out날짜도 포함시킴
 				        	LocalDate in = checkIn.plusDays(-1);
 				        	LocalDate out = checkOut.plusDays(1);
+				        	 System.out.println("-------------if분기---------------");
+				        	 System.out.println("(in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))");
+				        	 // 체크인 날짜보다 높으면서 체크아웃날짜와 년 월이 다를때
+				        	 System.out.println("---------if-----------------");
+				        	 
+				        	 while((notSelectedDay.getYear() > checkOut.getYear()) || 
+				        			 
+				        		       (notSelectedDay.getYear() == checkOut.getYear() && 
+				        		       notSelectedDay.getMonthValue() > checkOut.getMonthValue())) {
+				        		 
+				        		 System.out.println("while true   i++");
+				        		 i++;
+				        		 System.out.println(i);
+				        		 
+				        	 }
 				        	if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))) {
-				        		
-				        		
+				        		System.out.println("-------------true---------------");
 				        		if(todayNum == j) {
 				        			sb.append("<td>").append("[m"+j+"]").append("</td>\n");
 				        		}else {
@@ -121,6 +148,7 @@ public class CalendarAction implements Action {
 					        	}
 				        		
 				        	} else {
+				        		System.out.println("-------------false---------------");
 				        		if(todayNum == j) {
 				        			sb.append("<td>").append("["+j+"]").append("</td>\n");
 				        		} else {
@@ -133,23 +161,33 @@ public class CalendarAction implements Action {
 				                sb.append("</tr>\n<tr>\n");
 				            }
 				            if(notSelectedDay.isEqual(checkOut)) {
+				            	System.out.println("if문  notSelectedDay.isEqual(checkOut) ");
+				            	 System.out.println("-------------if문true---------------");
+				            	 System.out.println("i++");
 				            	i++;
 				            	System.out.println("i : " + i);
+				            	
 				            	if(i < scheduleList.size()) {
+				            		System.out.println("if문     i < scheduleList.size()      ");
+				            		 System.out.println("-------------if문true ---------------");
 				            		 b = scheduleList.get(i);
 							         checkIn = b.getCheckInDate().toLocalDate();
 							         checkOut = b.getCheckOutDate().toLocalDate();
 				            	}
 				            }
+				            System.out.println("j++");
 				            j++;
 				        }
 				      	
 				      	if(!scheduleList.isEmpty()) {
+				      		System.out.println("-------------if문---------------");
+				      		System.out.println("    !scheduleList.isEmpty()    ");
+				      		System.out.println("i++");
 				      		i++;
-				      		System.out.println("aaaaaaaaa");
 				      	}
+				      	
 			        }while(i < scheduleList.size());
-			        
+			        System.out.println("-------------do while 끝 ---------------");
 			        
 			        
 			        // 마지막 행의 끝을 추가
