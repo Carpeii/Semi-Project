@@ -62,7 +62,7 @@ public class LoginController extends HttpServlet {
                         // 아이디 비번 일치 일치
                         if (guestLogin != null) {
                             // 게스트 로그인
-                            resp.sendRedirect(req.getContextPath() + "/jsp/service/main.jsp");
+                            resp.sendRedirect(req.getContextPath() + "/service/guestMain");
                         } else if (hostLogin != null) {
                             // 호스트 로그인
                             resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");

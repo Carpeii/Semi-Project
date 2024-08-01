@@ -82,7 +82,7 @@ public class RoomDaoImpl implements RoomDao {
 
 		// LIMIT은 페이지 크기(한 페이지에 보여줄 데이터의 수)
 		// OFFSET은 데이터베이스에서 시작할 위치 (OFFSET은 0부터 시작)
-		String sql = "SELECT r.id, ri.image_path, ri.image_name, ri.save_file_name, r.room_name, r.street_address, rp.rent_price, ro.room_option " +
+		String sql = "SELECT r.id, ri.image_path, ri.image_name, ri.save_file_name, r.room_name, r.street_address, rp.rent_price, ro.room_options " +
 				"FROM room r " +
 				"INNER JOIN room_image ri ON r.id = ri.room_id " +
 				"INNER JOIN room_option ro ON r.id = ro.room_id " +
@@ -106,7 +106,7 @@ public class RoomDaoImpl implements RoomDao {
 				String roomName = rs.getString("room_name");
 				String streetAddress = rs.getString("street_address");
 				int rentPrice = rs.getInt("rent_price");
-				String roomOption = rs.getString("room_option");
+				String roomOption = rs.getString("room_options");
 				
 				RoomListItemDto dto = new RoomListItemDto(id, imagePath, imageName,saveFileName, roomName, streetAddress, rentPrice, roomOption);
 				roomList.add(dto);
@@ -153,53 +153,61 @@ public class RoomDaoImpl implements RoomDao {
 
 		RoomDetailDto room = null;
 		String sql = "SELECT " +
-				"	 m.id, " +
-				"    m.name AS host_name, " +
-				"    r.room_name, " +
-				"    r.jibun_address, " +
-				"    r.street_address, " +
-				"    r.address_detail, " +
-				"    r.floor, " +
-				"    r.usable_area, " +
-				"    r.room_count, " +
-				"    r.living_room_count, " +
-				"    r.toilet_count, " +
-				"    r.kitchen_count, " +
-				"    r.duplex, " +
-				"    r.elevator, " +
-				"    r.park, " +
-				"    r.park_detail, " +
-				"    r.room_type, " +
-				"    r.minimum_contract, " +
-				"    ri.image_name, " +
-				"    ri.image_path, " +
-				"    ri.save_file_name, " +
-				"    ri.image_order, " +
-				"    rop.room_option, " +
-				"    rp.rent_price, " +
-				"    rp.long_term, " +
-				"    rp.long_term_discount, " +
-				"    rp.early_check_in, " +
-				"    rp.early_check_in_discount, " +
-				"    rp.maintenance_bill, " +
-				"    rp.maintenance_bill_detail, " +
-				"    rp.electricity, " +
-				"    rp.water, " +
-				"    rp.gas, " +
-				"    rp.internet, " +
-				"    rp.cleaning_fee, " +
-				"    rp.refund_type, " +
-				"    rv.message, " +
-				"    rv.rating, " +
-				"    rv.created_at " +
-				"FROM member m " +
-				"INNER JOIN booking b ON m.id = b.id " +
-				"INNER JOIN room r ON b.id = r.id " +
-				"INNER JOIN room_image ri ON r.id = ri.room_id " +
-				"INNER JOIN room_option rop ON r.id = rop.room_id " +
-				"INNER JOIN room_price rp ON r.id = rp.room_id " +
-				"INNER JOIN review rv ON r.id = rv.id " +
-				"WHERE r.id = ?";
+	             "    m.id AS member_id, " +
+	             "    m.name AS host_name, " +
+	             "    r.room_name, " +
+	             "    r.jibun_address, " +
+	             "    r.street_address, " +
+	             "    r.address_detail, " +
+	             "    r.floor, " +
+	             "    r.usable_area, " +
+	             "    r.room_count, " +
+	             "    r.living_room_count, " +
+	             "    r.toilet_count, " +
+	             "    r.kitchen_count, " +
+	             "    r.duplex, " +
+	             "    r.elevator, " +
+	             "    r.park, " +
+	             "    r.park_detail, " +
+	             "    r.room_type, " +
+	             "    r.minimum_contract, " +
+	             "    ri.image_name, " +
+	             "    ri.image_path, " +
+	             "    ri.save_file_name, " +
+	             "    ri.image_order, " +
+	             "    rop.room_options, " +
+	             "    rp.rent_price, " +
+	             "    rp.long_term, " +
+	             "    rp.long_term_discount, " +
+	             "    rp.early_check_in, " +
+	             "    rp.early_check_in_discount, " +
+	             "    rp.maintenance_bill, " +
+	             "    rp.maintenance_bill_detail, " +
+	             "    rp.electricity, " +
+	             "    rp.water, " +
+	             "    rp.gas, " +
+	             "    rp.internet, " +
+	             "    rp.cleaning_fee, " +
+	             "    rp.refund_type, " +
+	             "    rv.message, " +
+	             "    rv.rating, " +
+	             "    rv.created_at " +
+	             "FROM " +
+	             "    room r " +
+	             "INNER JOIN " +
+	             "    member m ON r.host_id = m.id " +
+	             "INNER JOIN " +
+	             "    room_image ri ON r.id = ri.room_id " +
+	             "INNER JOIN " +
+	             "    room_option rop ON r.id = rop.room_id " +
+	             "INNER JOIN " +
+	             "    room_price rp ON r.id = rp.room_id " +
+	             "INNER JOIN " +
+	             "    booking b ON r.id = b.room_id " +
+	             "INNER JOIN " +
+	             "    review rv ON b.id = rv.booking_id " +
+	             "WHERE r.id = ?";
+
 
 		try {
 			con = JdbcUtil.getCon();
@@ -209,7 +217,7 @@ public class RoomDaoImpl implements RoomDao {
 
 			if (rs.next()) {
 				room = new RoomDetailDto();
-				room.setId(rs.getLong("id"));
+				room.setId(rs.getLong("member_id"));
 				room.setHostName(rs.getString("host_name"));
 				room.setRoomName(rs.getString("room_name"));
 				room.setJibunAddress(rs.getString("jibun_address"));
@@ -231,7 +239,7 @@ public class RoomDaoImpl implements RoomDao {
 				room.setImagePath(rs.getString("image_path"));
 				room.setSaveFileName(rs.getString("save_file_name"));
 				room.setImageOrder(rs.getInt("image_order"));
-				room.setRoomOption(rs.getString("room_option"));
+				room.setRoomOption(rs.getString("room_options"));
 				room.setRentPrice(rs.getInt("rent_price"));
 				room.setLongTerm(rs.getInt("long_term"));
 				room.setLongTermDiscount(rs.getInt("long_term_discount"));
