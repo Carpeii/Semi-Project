@@ -37,8 +37,8 @@ public class RoomListController extends HttpServlet {
 		
 		// RoomServiceImpl의 메서드들 호출
 		List<RoomListItemDto> roomList = roomService.getRoomList(pageNum, pageSize);
-		int totalRoomCount = roomService.getTotalRoomCount();
-		Map<String, Object> paginationInfo = roomService.calculatePagination(pageNum, pageSize, totalRoomCount);
+		int totalCount = roomService.getTotalRoomCount();
+		Map<String, Object> paginationInfo = roomService.calculatePagination(pageNum, pageSize, totalCount);
 		
 		// request 객체를 통해 guestMain.jsp로 데이터들 전달
 		req.setAttribute("roomList", roomList);

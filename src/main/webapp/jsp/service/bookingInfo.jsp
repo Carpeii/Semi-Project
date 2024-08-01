@@ -4,6 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Booking Information</title>
+    <script type="text/javascript">
+    	function confirmBooking() {
+    		var result = confirm("계약 승인 요청을 하시겠습니까?");
+    		if (result) {
+                // 사용자가 확인을 클릭하면 폼을 제출합니다.
+				document.getElementById("bookingForm").submit();
+    		} else {
+                // 사용자가 취소를 클릭하면 아무 동작도 하지 않습니다.
+				return false;
+    		}
+    	}
+    </script>
 </head>
 <body>
     <h1>계약 시작하기</h1>
@@ -29,12 +41,12 @@
         <p style="color: red;">${errorMessage}</p>
     </c:if>
     
-    <form action="${pageContext.request.contextPath}/service/bookRoom" method="post">
+    <form id ="bookingForm" action="${pageContext.request.contextPath}/service/bookRoom" method="post">
         <input type="hidden" name="roomId" value="${roomBookingInfo.id}">
         <input type="hidden" name="checkInDate" value="${roomBookingInfo.checkInDate}">
         <input type="hidden" name="checkOutDate" value="${roomBookingInfo.checkOutDate}">
         <!-- 필요한 추가 hidden 필드들도 여기에 포함할 수 있습니다. -->
-        <input type="submit" value="계약 승인 요청하기">
+        <input type="button" value="계약 승인 요청하기" onclick="confirmBooking()">
     </form>
 </body>
 </html>
