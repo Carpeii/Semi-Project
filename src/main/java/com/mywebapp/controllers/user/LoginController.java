@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class LoginController extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/jsp/service/main.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/service/loginMain.jsp").forward(request, response);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class LoginController extends HttpServlet {
                             int memberType = rs.getInt("member_type");
 
                             if(memberType == 0) { // 게스트로 로그인
-                                resp.sendRedirect(req.getContextPath() + "/jsp/service/main.jsp");
+                                resp.sendRedirect(req.getContextPath() + "/service/guestMain");
                             } else if (memberType == 1) { // 호스트로 로그인
                                 resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
                             }

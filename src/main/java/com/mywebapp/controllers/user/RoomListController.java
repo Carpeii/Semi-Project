@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mywebapp.dto.RoomListItemDto;
 import com.mywebapp.dto.UserDto;
@@ -46,10 +47,11 @@ public class RoomListController extends HttpServlet {
 		req.setAttribute("endPage", paginationInfo.get("endPage"));
 		req.setAttribute("pageNum", paginationInfo.get("pageNum"));
 		
-		// 세션에 사용자 정보가 있는 경우만 사용자 정보를 가져와서 전달
-		Object userObj = req.getSession().getAttribute("user");
-		if (userObj != null) {
-			req.setAttribute("userId" , ((UserDto) userObj).getId());
+		// LoginController에서 세션 받아오기
+		HttpSession session = req.getSession();
+		String userId = (String) session.getAttribute("user");
+		if (userId != null) {
+			req.setAttribute("userId" , userId);
 		}
 		
 		req.getRequestDispatcher("/jsp/service/guestMain.jsp").forward(req, resp);
