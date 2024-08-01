@@ -30,9 +30,9 @@ public class CalendarAction implements Action {
 		BookingDaoImpl dao = new BookingDaoImpl();
 		List<Booking> scheduleList = dao.rentalSchedule(roomId);
 		for(Booking b : scheduleList) {
-			LocalDate in = b.getCheckInDate().toLocalDate();
-			LocalDate out = b.getCheckOutDate().toLocalDate();
-			System.out.println("Local : "+in+"  "+out);
+			LocalDate checkIn = b.getCheckInDate().toLocalDate();
+			LocalDate checkOut = b.getCheckOutDate().toLocalDate();
+			System.out.println("Local : "+checkIn+"  "+checkOut);
 		}
 		
 				LocalDate today = null;
@@ -41,7 +41,7 @@ public class CalendarAction implements Action {
 				if(monthControll == 0) {
 					today = LocalDate.now();
 					todayNum = today.getDayOfMonth();
-					//이전달 , 다음달 을 눌렀을 때 0이 되면 다시 이번달
+					//이전달 , 다음달 을 눌렀을 때 0이 되면 다시 이번달 -> 달력의 년 , 월을 바꾸는 컨트롤러 변수
 				} else if(monthControll != 0) {
 					today = LocalDate.now().plusMonths(monthControll);
 				}
@@ -59,9 +59,11 @@ public class CalendarAction implements Action {
 				System.out.println("이번달의 첫 날의 요일 : "+ firstDayOfWeek);
 				System.out.println("");
 				System.out.println("이번달의 마지막 날 : "+ endDay);
-//				
-//				System.out.println();
-//				System.out.println();
+				
+				//선택한 달력의 연 월 일 얻기
+					
+					
+					
 				 sb.append("<table border='1' cellspacing='1' width='300px' height='400px' style='text-align: center'>\n");
 				 sb.append("<div>");
 				 sb.append(today);
@@ -81,26 +83,88 @@ public class CalendarAction implements Action {
 			            sb.append("<td> </td>\n");
 			        }
 
+			        
+			        	//notSelectedDay = 한달의 날짜를 하나씩 순서대로 반환 연 월도 같이 받아옴 다음달이나 다음년도로 이어지는 계약도 ㄱㄴ
+			        	//db에서 체크인 날짜를 정렬해서 받아옴
+			        	//받아오는 값은 (In)localDate~(Out)localDate 범위를 가진 날짜의 배열 list임
+			        	//단순하게 In < 선택 ㄱㄴ < out 하고싶어도  계약 건수가  복수임
+			        	//if(b[0].In < (i)선택 ㄱㄴ < b.[0]out) 로 찍고  i의 값이 out과 같아지면 Booking b의 인덱스 값을 하나 올리기?
+			        	//이중 for문으로 가능할듯함
+			        
+			        
+			        
+			        int i = 0;
+			        int j = 1;
+			        Booking b = scheduleList.get(0);
+			        LocalDate checkIn = b.getCheckInDate().toLocalDate();
+			        LocalDate checkOut = b.getCheckOutDate().toLocalDate();
 			        // 날짜 추가
-			        for (int i = 1; i <= endDay; i++) {
-			        	//오늘 일자 표시 [1] 표시
-			        	if(todayNum == i) {
-			        		sb.append("<td>").append("["+i+"]").append("</td>\n");
-			        	} else {
-			        		sb.append("<td>").append(i).append("</td>\n");
+			        System.out.println("f");
+			        do{	
+			        	if(!scheduleList.isEmpty()) {
+			        	b = scheduleList.get(i);
+			        	checkIn = b.getCheckInDate().toLocalDate();
+			        	checkOut = b.getCheckOutDate().toLocalDate();
 			        	}
-			            
-			            // 일요일에 줄 바꿈
-			            if ((i + firstDayOfWeek - 1) % 7 == 0) {
-			                sb.append("</tr>\n<tr>\n");
-			            }
-			        }
-
+			        	System.out.println("ff");
+				      	while ( j <= endDay) {
+				      		LocalDate notSelectedDay = LocalDate.of(today.getYear(),today.getMonthValue(),j);
+				        	System.out.println("한달의 날짜 값 얻기 : " + notSelectedDay);
+				        	//true일시 마킹
+				        	System.out.println("i : " + i);
+				        	System.out.println("j : " + j);
+				        	System.out.println("f1");
+				        	if((checkIn.isBefore(notSelectedDay) && checkOut.isAfter(notSelectedDay))) {
+				        		
+				        		System.out.println("f2");
+				        		
+				        		if(todayNum == j) {
+				        			sb.append("<td>").append("[m"+j+"]").append("</td>\n");
+				        		}else {
+					        		sb.append("<td>").append("m"+j).append("</td>\n");
+					        	}
+				        		
+				        	} else {
+				        		if(todayNum == j) {
+				        			sb.append("<td>").append("["+j+"]").append("</td>\n");
+				        		} else {
+				        			sb.append("<td>").append(j).append("</td>\n");
+				        		}
+				        	}
+				            
+				            // 일요일에 줄 바꿈
+				        	System.out.println("f3");
+				            if ((j + firstDayOfWeek - 1) % 7 == 0) {
+				                sb.append("</tr>\n<tr>\n");
+				            }
+				            System.out.println("f4");
+				            if(notSelectedDay.isEqual(checkOut)) {
+				            	i++;
+				            	System.out.println("i : " + i);
+				            	if(i < scheduleList.size()) {
+				            		 b = scheduleList.get(i);
+							         checkIn = b.getCheckInDate().toLocalDate();
+							         checkOut = b.getCheckOutDate().toLocalDate();
+				            	}
+				            }
+				            j++;
+				            System.out.println("f5");
+				        }
+				      	System.out.println("f6");
+				      	
+				      	if(!scheduleList.isEmpty()) {
+				      		i++;
+				      		System.out.println("aaaaaaaaa");
+				      	}
+			        }while(i < scheduleList.size());
+			        System.out.println("f7");
+			        
+			        
 			        
 			        // 마지막 행의 끝을 추가
-			        if ((endDay + firstDayOfWeek - 1) % 7 != 0) {
-			        	sb.append("<td> </td>\n");
-			        }
+			        	if ((endDay + firstDayOfWeek - 1) % 7 != 0) {
+			        		sb.append("<td> </td>\n");
+			        	}
 			        sb.append("</tr>\n");
 			        
 			        // 테이블의 끝
@@ -121,3 +185,4 @@ public class CalendarAction implements Action {
 	}
 
 }
+

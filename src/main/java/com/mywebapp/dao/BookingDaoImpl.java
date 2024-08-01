@@ -98,11 +98,13 @@ public class BookingDaoImpl implements BookingDao {
 			e.printStackTrace();
 		}
 	}
-	
+	//방계약 달력의 계약된 날짜 가져오는 메소드ㅜ
 	@Override
 	 public List<Booking> rentalSchedule(Long roomId) {
 			List<Booking> scheduleList = new ArrayList<Booking>();
-			String sql = "select * from booking where room_id = ? and curdate() <= check_out_date";
+			//curdate() -> 오늘의 연 월 일 반환 -> 체크아웃 날짜가 오늘과 같거나 이후인 모든 행 오름차순으로 정렬 가장 옛날부터 -> 최신
+			String sql = "select * from booking where room_id = ? and curdate() <= check_out_date"
+					+ " order by check_in_date asc";
 			try {
 				Connection con = JdbcUtil.getCon();
 				

@@ -15,9 +15,10 @@ public class Calendar extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("달력Controller 호출");
 		String requestUrl  = req.getPathInfo();
-		System.out.println(requestUrl);
+		System.out.println("requestUrl : "+requestUrl);
 		//main페이지 -> 제어변수 초기화 후 session에 저장
 		//popup페이지 -> 제어변수 업데이트 다음달 ->+1  ,  이전달 -> -1
+		//팝업창을 닫았을 때 날짜 값을 받고 session을 삭제하는 코드 추가해야함
 		int monthControll  = 0;
 		if(requestUrl.equals("/call")) {
 			req.getSession().setAttribute("monthControll", monthControll);
