@@ -27,17 +27,16 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         String pw = req.getParameter("pw");
+        String errMsg = null;
 
-        String guestLogin = req.getParameter("guestLogin");
-        String hostLogin = req.getParameter("hostLogin");
+        String login = req.getParameter("login");
 
-        MemberDao member = new MemberDao(JdbcUtil.getCon());
         PreparedStatement pstmt = null;
         Connection conn = null;
         ResultSet rs = null;
 
         try {
-             conn = JdbcUtil.getCon();
+            conn = JdbcUtil.getCon();
             // if (id != null && pw != null) {
             if (id != null && !id.isEmpty() && pw != null && !pw.isEmpty()) {
                 // 아이디, 비밀번호가 공백이 아닌 경우
@@ -57,15 +56,24 @@ public class LoginController extends HttpServlet {
 
                         // 세션에 사용자 정보 저장
                         HttpSession session = req.getSession();
-                        session.setAttribute("user", vo);
+                        session.setAttribute("user", vo.getId()); // session에 아이디만 저장
+                        session.setMaxInactiveInterval(30*60); // session 유지시간 30분으로 설정
 
                         // 아이디 비번 일치 일치
-                        if (guestLogin != null) {
-                            // 게스트 로그인
-                            resp.sendRedirect(req.getContextPath() + "/service/guestMain");
-                        } else if (hostLogin != null) {
-                            // 호스트 로그인
-                            resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+                        if (login != null) {
+//                            // db 조회하기 -> guest, host 분리
+//                            String searchSql = "select member_type from member where user_id = ?";
+//                            pstmt = conn.prepareStatement(searchSql);
+//                            pstmt.setString(1, id);
+//                            rs = pstmt.executeQuery();
+
+                            int memberType = rs.getInt("member_type");
+
+                            if(memberType == 0) { // 게스트로 로그인
+                                resp.sendRedirect(req.getContextPath() + "/jsp/service/main.jsp");
+                            } else if (memberType == 1) { // 호스트로 로그인
+                                resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+                            }
                         }
                     } else {
                         // 아이디 비밀번호 불일치
@@ -73,7 +81,8 @@ public class LoginController extends HttpServlet {
                         req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
                     }
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
                 }
             } else {
                 // 아이디 비밀번호에 null 값이 있는 경우
@@ -81,19 +90,16 @@ public class LoginController extends HttpServlet {
                 req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
         } catch (ServletException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
         } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
         } finally {
-            try {
-                if (rs != null) rs.close();
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            JdbcUtil.close(conn, pstmt, rs);
         }
     }
 }

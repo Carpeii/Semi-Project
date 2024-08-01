@@ -24,14 +24,18 @@ public class HostJoinController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String memberId = req.getParameter("memberId");
         String bankName = req.getParameter("bankName");
         String account = req.getParameter("account");
         String accountHolder = req.getParameter("accountHolder");
+        String errMsg = null;
 
         // 앞에서 기재한 아이디 가져오기
         HttpSession session = req.getSession();
-        String id = (String) session.getAttribute("id");
+        String userId = (String) session.getAttribute("userId");
+
+        PreparedStatement pstmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
 
         // 유효성 검사
         if(bankName.equals("") || bankName == null) {
@@ -47,48 +51,53 @@ public class HostJoinController extends HttpServlet {
             req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
         }
 
-        //Dto
-
-        MemberDao member = new MemberDao(JdbcUtil.getCon());
-        PreparedStatement pstmt = null;
-        Connection conn = null;
-        ResultSet rs = null;
-
-
-
+        // session으로 가져온 memberId로 id조회
         try {
             conn = JdbcUtil.getCon();
 
+            String selectSql = "select id from member where user_id=?";
+            pstmt = conn.prepareStatement(selectSql);
+            pstmt.setString(1, userId); //session으로 가져온 userId 값 넣어서 조회
+            rs = pstmt.executeQuery();
 
+            int memberId = -1; // userId가  존재하지 않는 경우 -1을 리턴
 
-            String sql = "INSERT INTO host (member_id, bank_name, account, account_holder) VALUES (?, ?, ?, ?)";
+            if(rs.next()){
+                memberId = rs.getInt("id"); // member 테이블에서 조회된 id값 찾아서 변수에 넣어줌
 
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id);
-            pstmt.setString(2, bankName);
-            pstmt.setString(3, account);
-            pstmt.setString(4, accountHolder);
-            pstmt.executeUpdate();
+                String insertSql = "INSERT INTO host (member_id, bank_name, account, account_holder) VALUES (?, ?, ?, ?)";
+                pstmt.close(); // 기존 prepatredStatement 닫고 새로운 Pstmt 생성
+                pstmt = conn.prepareStatement(insertSql);
+                pstmt.setLong(1, memberId); // 조회한 id값 insert
+                pstmt.setString(2, bankName);
+                pstmt.setString(3, account);
+                pstmt.setString(4, accountHolder);
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                // 로그인 성공 -> 로그인 페이지로 리다이렉트
-                resp.sendRedirect(req.getContextPath() + "/jsp/auth/loginMain.jsp");
-            } else {
-                req.setAttribute("errMsg", "회원가입에 실패했습니다. 다시 시도해주세요.");
+                int rowsAffected = pstmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // 로그인 성공 -> 로그인 페이지로 리다이렉트
+                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+                } else {
+                    // 로그인 실패 -> 다시 회원가입 폼으로
+                    req.setAttribute("errMsg", "회원가입에 실패했습니다. 다시 시도해주세요.");
+                    req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
+                }
+            } else { // userId를 가져오지 못한 경우
+                req.setAttribute("errMsg", "userId를 찾지 못했습니다. 회원가입을 다시 시도해주세요.");
+                System.out.println("userId를 찾지 못했습니다." + userId);
                 req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
             }
         } catch (SQLException e) {
+            // hostJoinForm에서 데이터 베이스 오류인경우
+            // joinForm은 거쳤기 때문에 member테이블에 회원정보 있음 - 세션존재?
+            // 존재하는 경우, 리다이렉트 해준 페이지에서 그대로 진행 가능
+            // 존재하지 않는 경우 member테이블에서 기존의 정보 지워주고 처음부터 다시 실행해야 함
             e.printStackTrace();
-            req.setAttribute("errMsg", "데이터베이스 오류가 발생했습니다. 관리자에게 문의하세요.");
+            req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
             req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
         } finally {
-            try {
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+            JdbcUtil.close(conn, pstmt, rs);
         }
     }
 }
