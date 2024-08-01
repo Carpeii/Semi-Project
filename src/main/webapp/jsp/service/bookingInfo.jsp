@@ -6,7 +6,7 @@
     <title>Booking Information</title>
 </head>
 <body>
-    <h1>Booking Information</h1>
+    <h1>계약 시작하기</h1>
     
     <c:if test="${not empty roomBookingInfo}">
         <h2>Room Details</h2>
@@ -28,5 +28,13 @@
     <c:if test="${not empty errorMessage}">
         <p style="color: red;">${errorMessage}</p>
     </c:if>
+    
+    <form action="${pageContext.request.contextPath}/service/bookRoom" method="post">
+        <input type="hidden" name="roomId" value="${roomBookingInfo.id}">
+        <input type="hidden" name="checkInDate" value="${roomBookingInfo.checkInDate}">
+        <input type="hidden" name="checkOutDate" value="${roomBookingInfo.checkOutDate}">
+        <!-- 필요한 추가 hidden 필드들도 여기에 포함할 수 있습니다. -->
+        <input type="submit" value="계약 승인 요청하기">
+    </form>
 </body>
 </html>
