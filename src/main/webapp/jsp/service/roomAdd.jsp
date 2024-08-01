@@ -1,3 +1,4 @@
+<%@ page import="com.mywebapp.model.Member" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -9,8 +10,20 @@
 <h1>Add New Room</h1>
 <form method="post" action="<%=request.getContextPath() %>/service/roomAdd">
     <!-- 기본적인 Room 정보 넣기란 -->
-    <label for="hostId">Host ID:</label>
-    <input type="text" id="hostId" name="hostId" value="1" required /><br>
+<%--    <label for="hostId">Host ID:</label>--%>
+    <%
+        if(session == null) {
+            response.sendRedirect(request.getContextPath()+"/jsp/auth/loginMain");
+            return;
+        }
+        Member user = (Member) session.getAttribute("user");
+        System.out.println(user.getId());
+        if(user.getMemberType() == 0) {
+            response.sendRedirect(request.getContextPath()+"/jsp/auth/loginMain");
+            return;
+        }
+    %>
+    <input type="hidden" id="hostId" name="hostId" value="<%=user.getId()%>" required /><br>
 
     <label for="roomName">Room Name:</label>
     <input type="text" id="roomName" name="roomName" value="defaultRoomName" required /><br>

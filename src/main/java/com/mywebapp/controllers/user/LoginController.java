@@ -2,6 +2,7 @@ package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.MemberDao;
 import com.mywebapp.dto.UserDto;
+import com.mywebapp.model.Member;
 import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
@@ -43,7 +44,7 @@ public class LoginController extends HttpServlet {
                 // 아이디, 비밀번호가 공백이 아닌 경우
                 // db 연결해서 아이디 비밀번호 일치 확인
                 try {
-                    String sql = "select * from member where user_id = ? and password = ?";
+                    String sql = "select id, user_id, name, member_type from member where user_id = ? and password = ?";
                     pstmt = conn.prepareStatement(sql);
                     pstmt.setString(1, id);
                     pstmt.setString(2, pw);
@@ -51,13 +52,15 @@ public class LoginController extends HttpServlet {
 
                     if (rs.next()) {
                         //user 로그인 정보를 담기 위한 객체 생성
-                        UserDto vo = new UserDto();
-                        vo.setId(rs.getString("id"));
-                        vo.setPassword(rs.getString("password"));
+                        Member to = new Member();
+                        to.setId(rs.getLong("id"));
+                        to.setUserId(rs.getString("user_id"));
+                        to.setName(rs.getString("name"));
+                        to.setMemberType(rs.getInt("member_type"));
 
                         // 세션에 사용자 정보 저장
                         HttpSession session = req.getSession();
-                        session.setAttribute("user", vo);
+                        session.setAttribute("user", to);
 
                         // 아이디 비번 일치 일치
                         if (guestLogin != null) {
