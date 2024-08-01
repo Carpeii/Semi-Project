@@ -46,4 +46,6 @@ public class RoomDetailDto {
     private String reviewMessage;
     private int rating;
     private Date reviewCreatedAt;
+    private Date checkInDate;
+    private Date checkOutDate;
 }
