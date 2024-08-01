@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class LoginController extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/jsp/service/main.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/service/guestMain.jsp").forward(request, response);
     }
 
     @Override
@@ -52,11 +52,14 @@ public class LoginController extends HttpServlet {
                         //user 로그인 정보를 담기 위한 객체 생성
                         UserDto vo = new UserDto();
                         vo.setId(rs.getString("id"));
+                        vo.setUserId(rs.getString("user_id"));
                         vo.setPassword(rs.getString("password"));
 
                         // 세션에 사용자 정보 저장
                         HttpSession session = req.getSession();
-                        session.setAttribute("user", vo.getId()); // session에 아이디만 저장
+                        session.setAttribute("user", vo.getId());// session에 아이디만 저장
+                        session.setAttribute("userId", vo.getUserId());// session에 아이디만 저장
+//                        session.setAttribute("user", id);
                         session.setMaxInactiveInterval(30*60); // session 유지시간 30분으로 설정
 
                         // 아이디 비번 일치 일치
@@ -70,7 +73,7 @@ public class LoginController extends HttpServlet {
                             int memberType = rs.getInt("member_type");
 
                             if(memberType == 0) { // 게스트로 로그인
-                                resp.sendRedirect(req.getContextPath() + "/jsp/service/main.jsp");
+                                resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
                             } else if (memberType == 1) { // 호스트로 로그인
                                 resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
                             }
