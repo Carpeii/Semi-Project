@@ -47,7 +47,7 @@ public class RoomOptionController extends HttpServlet {
 
             RoomOption roomOption = new RoomOption();
             roomOption.setRoomId(roomId);
-            roomOption.setRoomOptions(optionsString.toString());
+            roomOption.setRoomOptions(optionsJson);
 
             RoomOptionDao roomOptionDao = new RoomOptionDao();
             roomOptionDao.insert(con, roomOption); // Pass connection to the DAO method
@@ -70,3 +70,6 @@ public class RoomOptionController extends HttpServlet {
         }
     }
 }
+
+
+

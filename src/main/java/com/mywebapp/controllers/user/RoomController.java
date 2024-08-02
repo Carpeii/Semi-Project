@@ -53,7 +53,7 @@ public class RoomController extends HttpServlet {
             room.setMinimumContract(Integer.parseInt(req.getParameter("minimumContract")));
             room.setApprove(Integer.parseInt(req.getParameter("approve")));
             
-            long roomId = roomDao.insert(room);
+            long roomId = roomDao.insert(room) ;
             if(roomId != -1){
                 req.setAttribute("roomId", roomId);
                 req.getRequestDispatcher("/jsp/service/roomImageUpload.jsp").forward(req, resp);
@@ -66,3 +66,6 @@ public class RoomController extends HttpServlet {
     }
 
 }
+
+
+

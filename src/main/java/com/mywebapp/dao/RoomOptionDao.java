@@ -11,6 +11,7 @@ public class RoomOptionDao {
 
     public void insert(Connection con, RoomOption roomOption) throws SQLException {
         PreparedStatement pstmt = null;
+        
 
         try {
             String sql = "INSERT INTO room_option (room_id, room_options) VALUES (?, ?)";
