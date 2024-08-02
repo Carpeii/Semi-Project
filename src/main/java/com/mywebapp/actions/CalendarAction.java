@@ -141,21 +141,21 @@ public class CalendarAction implements Action {
 				        	 System.out.println("(132in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))");
 				        	 // 체크인 날짜보다 높으면서 체크아웃날짜와 년 월이 다를때
 				        	 System.out.println("134---------if-----------------");
-				        	 while((notSelectedDay.getYear() > checkOut.getYear()) || 
-				        			 
+				        	 while((notSelectedDay.getYear() > checkOut.getYear()) 
+				        			   || 
 				        		       (notSelectedDay.getYear() == checkOut.getYear() && 
-				        		       notSelectedDay.getMonthValue() > checkOut.getMonthValue())) {
+				        		       notSelectedDay.getMonthValue() > checkOut.getMonthValue())
+				        		       && 
+				        		       (i >= scheduleList.size()) ) {
 				        		 
 				        		 System.out.println("while true   i++");
 				        		 i++;
-				        		 if(i<scheduleList.size()) {
-				        			 b = scheduleList.get(i);
-				        			 checkIn = b.getCheckInDate().toLocalDate();
-				        			 checkOut = b.getCheckOutDate().toLocalDate();
-				        			 in = checkIn.plusDays(-1);
-				        			 out = checkOut.plusDays(1);
-				        			 System.out.println(i);
-				        		 }
+				        		 b = scheduleList.get(i);
+				        		 checkIn = b.getCheckInDate().toLocalDate();
+						        	checkOut = b.getCheckOutDate().toLocalDate();
+						        	in = checkIn.plusDays(-1);
+						        	out = checkOut.plusDays(1);
+				        		 System.out.println(i);
 				        		 
 				        	 }
 				        	 //true -> 이미 예약된 날짜
