@@ -35,7 +35,6 @@ public class CalendarAction implements Action {
 		System.out.println(monthControll);
 		System.out.println("달력Action 호출");
 		Long roomId = 1l;
-		LocalDate defaultDay = LocalDate.now();
 		//                                          ?
 		//쿼리문 select * from booking where room_id =1 and curdate() <= check_out_date order by check_in_date asc;
 		//booking table에서 가져온 값 
@@ -140,13 +139,17 @@ public class CalendarAction implements Action {
 				        	 System.out.println("(132in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))");
 				        	 // 체크인 날짜보다 높으면서 체크아웃날짜와 년 월이 다를때
 				        	 System.out.println("134---------if-----------------");
-				        	 while((notSelectedDay.getYear() > checkOut.getYear()) 
+				        	 //Local : 2024-12-27  2025-01-15
+				        	 while(
+				        			 (i < (scheduleList.size()-1) &&
+				        					 notSelectedDay.getYear() > checkOut.getYear()) 
 				        			   || 
 				        		       (notSelectedDay.getYear() == checkOut.getYear() && 
 				        		       notSelectedDay.getMonthValue() > checkOut.getMonthValue())
 				        		       && 
-				        		       (i < scheduleList.size()) ) {
-				        		 
+				        		       i < (scheduleList.size()-1)) {
+				        		 	System.out.println("i값 : "+i);
+				        		 	System.out.println(scheduleList.size());
 				        		 System.out.println("while true   i++");
 				        		 i++;
 				        		 b = scheduleList.get(i);
@@ -211,7 +214,8 @@ public class CalendarAction implements Action {
 			        
 			        
 			        // 마지막 행의 끝을 추가
-			        	if ((endDay + firstDayOfWeek - 1) % 7 != 0) {
+			        	int tableEnd = notSelectedDay.getDayOfWeek().getValue();
+			        	for (int x = tableEnd; x <=6; x++) {
 			        		sb.append("<td class='disabled'> </td>\n");
 			        	}
 			        sb.append("</tr>\n");

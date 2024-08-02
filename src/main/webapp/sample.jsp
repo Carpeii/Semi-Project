@@ -24,9 +24,6 @@
             </div>
          </div>
       </div>
-      <%
-      if
-      %>
       <div class="col-4">
          <div class="card shadow-sm">
             <div class="card-body">
