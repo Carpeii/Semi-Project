@@ -91,9 +91,10 @@ public class CalendarAction implements Action {
 			        	//if(b[0].In < (i)선택 ㄱㄴ < b.[0]out) 로 찍고  i의 값이 out과 같아지면 Booking b의 인덱스 값을 하나 올리기?
 			        	//이중 for문으로 가능할듯함
 			        /*
-			        문제발견  if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay)))
-			        달이 바껴도 달력을 조회한 날짜를 기준으로 조건을 검사해야하는데 검사의 기준이 되는 변수의 값이 달을 이동하면 달의 값이 올라감
-			        체크아웃날짜가 비교하는 날짭보다 년월이 적으면
+			        문제  if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay)))
+			       	조건을 검사하고 사이값이 아니면 i의 값을 올려줘야 하는데 해당 로직이 없음 
+			       	->db에서 가져온 list의 0번째 인덱스만 참조중
+			       	달을 넘기면 무조건 false를 반환
 			        
 			        */
 			        
@@ -104,7 +105,9 @@ public class CalendarAction implements Action {
 			        LocalDate checkIn = b.getCheckInDate().toLocalDate();
 			        LocalDate checkOut = b.getCheckOutDate().toLocalDate();
 			        // 날짜 추가
-			        System.out.println("-------------do while 시작---------------");
+			        System.out.println("-------------do while 시작-------------------------------------------------------");
+			        System.out.println("-------------do while 시작-------------------------------------------------------");
+			        System.out.println("-------------do while 시작-------------------------------------------------------");
 			        System.out.println("-------------in/out리스트 반복 시작---------------");
 			        do{	
 			        	
@@ -136,6 +139,9 @@ public class CalendarAction implements Action {
 				        		 
 				        		 System.out.println("while true   i++");
 				        		 i++;
+				        		 b = scheduleList.get(i);
+				        		 checkIn = b.getCheckInDate().toLocalDate();
+						        	checkOut = b.getCheckOutDate().toLocalDate();
 				        		 System.out.println(i);
 				        		 
 				        	 }
@@ -215,3 +221,45 @@ public class CalendarAction implements Action {
 
 }
 
+//do{	
+//	
+//	if(!scheduleList.isEmpty()) {
+//	b = scheduleList.get(i);
+//	checkIn = b.getCheckInDate().toLocalDate();
+//	checkOut = b.getCheckOutDate().toLocalDate();
+//	}
+//  	while ( j <= endDay) {
+//    	 while((notSelectedDay.getYear() > checkOut.getYear()) || 
+//    		       (notSelectedDay.getYear() == checkOut.getYear() && 
+//    		       notSelectedDay.getMonthValue() > checkOut.getMonthValue())) {
+//    		 i++;
+//    	 }
+//    	if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))) {
+//    		if(todayNum == j) {
+//    		}else {
+//        	}
+//    		
+//    	} else {
+//    		if(todayNum == j) {
+//    		} else {
+//    		}
+//    	}
+//        
+//        if ((j + firstDayOfWeek - 1) % 7 == 0) {
+//        }
+//        if(notSelectedDay.isEqual(checkOut)) {
+//        	i++;
+//        	if(i < scheduleList.size()) {
+//        		 b = scheduleList.get(i);
+//		         checkIn = b.getCheckInDate().toLocalDate();
+//		         checkOut = b.getCheckOutDate().toLocalDate();
+//        	}
+//        }
+//        System.out.println("j++");
+//        j++;
+//    }
+//  	if(!scheduleList.isEmpty()) {
+//  		i++;
+//  	}
+//  	
+//}while(i < scheduleList.size());
