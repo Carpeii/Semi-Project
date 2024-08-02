@@ -75,9 +75,7 @@ public class CalendarAction implements Action {
 					
 //				 sb.append("<table border='1' cellspacing='1' width='300px' height='400px' style='text-align: center'>\n");
 				 sb.append("<table class='table calendar-table'>\n");
-				 sb.append("<div>");
-				 sb.append(year+"-"+month);
-				 sb.append("</div>");
+				 sb.append("<tr><th colspan='7'>"+year+"-"+month+"</th></tr>\n");
 			        
 			        // 요일 헤더
 				 
@@ -163,9 +161,9 @@ public class CalendarAction implements Action {
 				        	if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))) {
 				        		System.out.println("150-------------true---------------");
 				        		if(todayNum == j) {
-				        			sb.append("<td class='disabled'>").append("["+j+"]").append("</td>\n");
+				        			sb.append("<td class='disabled bg-light'>").append("["+j+"]").append("</td>\n");
 				        		}else {
-					        		sb.append("<td class='disabled'>").append(j).append("</td>\n");
+					        		sb.append("<td class='disabled bg-light'>").append(j).append("</td>\n");
 					        	}
 				        		
 				        	} else {
@@ -213,7 +211,7 @@ public class CalendarAction implements Action {
 			        
 			        // 마지막 행의 끝을 추가
 			        	if ((endDay + firstDayOfWeek - 1) % 7 != 0) {
-			        		sb.append("<td> </td>\n");
+			        		sb.append("<td class='disabled'> </td>\n");
 			        	}
 			        sb.append("</tr>\n");
 			        
