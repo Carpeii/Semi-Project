@@ -23,6 +23,7 @@
 <div class="container mt-5">
     <h1>JSP 팝업창 예제</h1>
     <button type="button" onclick="openPopup()" value="today">팝업창 열기</button>
+    <intpyt calss="btn" style="cursor: default;" type="button" onclick="openPopup()" value="totay">팝업</intpyt>
 </div>
 </body>
 </html>

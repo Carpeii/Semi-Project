@@ -14,13 +14,18 @@
 <body>
 <body>
 <div class="container mt-2 sm custom-container">
+<form>
 	<table class="table calendar-table">
 	<th colspan="7">2024-06</th>
 	<tr>
 <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th><th>일</th>
 </tr>
 <tr>
-<td class="disabled"> </td>
+<td>
+<button type="button" class="w-100 h-100 btn btn-outline-primary" style"border: none;" value="notselectedDay">
+1
+</button>
+</td>
 <td class="disabled"> </td>
 <td class="disabled"> </td>
 <td class="disabled">1</td>
@@ -65,6 +70,7 @@
 <td class="disabled"> </td>
 </tr>
 </tbody></table>
+</form>
 
 <form action="/Semi-Project/calendar/move" method="post">
 <button value="before" name="moveMonth">이전달</button>

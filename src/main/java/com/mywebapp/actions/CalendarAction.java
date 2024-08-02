@@ -31,7 +31,9 @@ public class CalendarAction implements Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
 		int monthControll = 0;
-		monthControll =(Integer)req.getSession().getAttribute("monthControll"); 
+		if(req.getSession().getAttribute("monthControll") != null) {
+			monthControll =(Integer)req.getSession().getAttribute("monthControll"); 
+		}
 		System.out.println(monthControll);
 		System.out.println("달력Action 호출");
 		Long roomId = 1l;
@@ -75,8 +77,7 @@ public class CalendarAction implements Action {
 					
 //				 sb.append("<table border='1' cellspacing='1' width='300px' height='400px' style='text-align: center'>\n");
 				 sb.append("<table class='table calendar-table'>\n");
-				 sb.append("<tr><th colspan='7'>"+year+"-"+month+"</th></tr>\n");
-			        
+				 sb.append("<tr><th colspan='7'>"+" <button value=\"before\" name=\"moveMonth\">&lt</button>   "+year+"-"+month+"   <button value=\"next\" name=\"moveMonth\">&gt</button>"+"</th></tr>\n");
 			        // 요일 헤더
 				 
 			        sb.append("<tr>\n");
@@ -162,6 +163,7 @@ public class CalendarAction implements Action {
 				        	 }
 				        	 //true -> 이미 예약된 날짜
 				        	 //false -> 예약 가능한 날짜
+				        	 
 				        	if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))) {
 				        		System.out.println("150-------------true---------------");
 				        		if(todayNum == j) {
@@ -173,9 +175,11 @@ public class CalendarAction implements Action {
 				        	} else {
 				        		System.out.println("158-------------false---------------");
 				        		if(todayNum == j) {
-				        			sb.append("<td>").append("["+j+"]").append("</td>\n");
+				        			sb.append("<td><button type='submit' name='select' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
+				        			sb.append("["+j+"]").append("</button></td>\n");
 				        		} else {
-				        			sb.append("<td>").append(j).append("</td>\n");
+				        			sb.append("<td><button type='submit' name='select' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
+				        			sb.append(j).append("</button></td>\n");
 				        		}
 				        	}
 				            

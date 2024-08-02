@@ -13,7 +13,7 @@ import com.mywebapp.actions.CalendarAction;
 public class Calendar extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		System.out.println("달력Controller 호출");
+		System.out.println("달력Controller 호출");
 		String requestUrl  = req.getPathInfo();
 //		System.out.println("requestUrl : "+requestUrl);
 		//main페이지 -> 제어변수 초기화 후 session에 저장
@@ -28,20 +28,23 @@ public class Calendar extends HttpServlet {
 		//이전달 , 다음달 이동
 		} else if(requestUrl.equals("/move")) {
 			String moveMonth = req.getParameter("moveMonth");
-			if(moveMonth.equals("next")) {
+			if(moveMonth != null && moveMonth.equals("next")) {
 				monthControll = (Integer)req.getSession().getAttribute("monthControll");
 				monthControll ++;
 				req.getSession().setAttribute("monthControll", monthControll);
 				Action action = new CalendarAction();
 				action.execute(req, resp);
 				
-			} else if(moveMonth.equals("before")) {
+			} else if(moveMonth != null && moveMonth.equals("before")) {
 				monthControll = (Integer)req.getSession().getAttribute("monthControll");
 				monthControll --;
 				req.getSession().setAttribute("monthControll", monthControll);
 				Action action = new CalendarAction();
 				action.execute(req, resp);
 				
+			} else if(req.getParameter("select") != null){
+				String select = req.getParameter("select");
+				System.out.println(select);
 			}
 			
 		}

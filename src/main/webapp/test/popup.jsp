@@ -16,8 +16,6 @@
 <div class="container mt-4 sm custom-container">
 <form action="${pageContext.request.contextPath }/calendar/move" method="post">
 	<c:out value="${sb}" escapeXml="false"/>
-<button value="before" name="moveMonth">이전달</button>
-<button value="next" name="moveMonth">다음달</button>
 </form>
 <table>
 <tr>
