@@ -16,16 +16,16 @@ public class RoomServiceImpl implements RoomService {
 
 	/* 한 페이지에 보여줄 방 목록 */
 	@Override
-	public List<RoomListItemDto> getRoomList(int pageNum, int pageSize) {
+	public List<RoomListItemDto> getRoomList(int pageNum, int pageSize, int approve) {
         // Use PaginationUtil to calculate the offset
 		int offset = PaginationUtil.calculateOffset(pageNum, pageSize);
-		return roomDao.findAllRoomListItems(offset, pageSize);
+		return roomDao.findAllRoomListItems(offset, pageSize, approve);
 	}
 
 	/* 전체 방의 수 */
 	@Override
-	public int getTotalRoomCount() {
-		return roomDao.getTotalRoomCount();
+	public int getTotalRoomCount(int approve) {
+		return roomDao.getTotalRoomCount(approve);
 	}
 	
 	@Override
