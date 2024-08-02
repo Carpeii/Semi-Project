@@ -53,10 +53,11 @@ public class LoginController extends HttpServlet {
                         UserDto vo = new UserDto();
                         vo.setId(rs.getString("id"));
                         vo.setPassword(rs.getString("password"));
+                        vo.setMemberType(Integer.parseInt(rs.getString("member_type")));
 
                         // 세션에 사용자 정보 저장
                         HttpSession session = req.getSession();
-                        session.setAttribute("user", vo.getId()); // session에 아이디만 저장
+                        session.setAttribute("user", vo); // session에 아이디만 저장
                         session.setMaxInactiveInterval(30*60); // session 유지시간 30분으로 설정
 
                         // 아이디 비번 일치 일치

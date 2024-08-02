@@ -1,4 +1,5 @@
 <%@ page import="com.mywebapp.model.Member" %>
+<%@ page import="com.mywebapp.dto.UserDto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +17,7 @@
             response.sendRedirect(request.getContextPath()+"/jsp/auth/loginMain");
             return;
         }
-        Member user = (Member) session.getAttribute("user");
+        UserDto user = (UserDto) session.getAttribute("user");
         if(user.getMemberType() == 0) {
             response.sendRedirect(request.getContextPath()+"/jsp/auth/loginMain");
             return;
