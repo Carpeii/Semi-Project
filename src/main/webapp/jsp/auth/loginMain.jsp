@@ -14,7 +14,7 @@
 <h1>Login</h1>
 <form action="${pageContext.request.contextPath}/login" method="post">
     아이디: <input type="text" name="id"><br>
-    비밀번호: <input type="password" name="pw"><br>
+    비밀번호: <input type="password" name="password"><br>
     <table>
         <tr>
             <td>${errMsg}</td>
