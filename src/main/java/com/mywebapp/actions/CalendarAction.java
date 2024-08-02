@@ -15,6 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.mywebapp.dao.BookingDaoImpl;
 import com.mywebapp.model.Booking;
 
+/*
+ * 테스트로 쓴 더미 값
+insert into booking values(0, 1 , 1 , '2024-7-15' , '2024-7-21' ,0);
+insert into booking values(0, 1 , 1 , '2024-7-29' , '2024-8-13' ,0);
+insert into booking values(0, 1 , 1 , '2024-8-14' , '2024-8-20' ,0);
+insert into booking values(0, 1 , 1 , '2024-8-29' , '2024-9-5' ,0);
+insert into booking values(0, 1 , 1 , '2024-11-1' , '2024-11-15' ,0);
+insert into booking values(0, 1 , 1 , '2024-12-27' , '2025-1-15' ,0);
+ * */
 public class CalendarAction implements Action {
 	private String calendarUrl = "/test/popup.jsp";
 
@@ -26,7 +35,8 @@ public class CalendarAction implements Action {
 		System.out.println("달력Action 호출");
 		Long roomId = 1l;
 		LocalDate defaultDay = LocalDate.now();
-		
+		//                                          ?
+		//쿼리문 select * from booking where room_id =1 and curdate() <= check_out_date order by check_in_date asc;
 		//booking table에서 가져온 값 
 		BookingDaoImpl dao = new BookingDaoImpl();
 		List<Booking> scheduleList = dao.rentalSchedule(roomId);
@@ -63,7 +73,8 @@ public class CalendarAction implements Action {
 				int year = today.getYear();
 				int month = today.getMonthValue();
 					
-				 sb.append("<table border='1' cellspacing='1' width='300px' height='400px' style='text-align: center'>\n");
+//				 sb.append("<table border='1' cellspacing='1' width='300px' height='400px' style='text-align: center'>\n");
+				 sb.append("<table class='table calendar-table'>\n");
 				 sb.append("<div>");
 				 sb.append(year+"-"+month);
 				 sb.append("</div>");
@@ -78,9 +89,8 @@ public class CalendarAction implements Action {
 			        sb.append("<tr>\n");
 
 			        // 빈 칸 추가 (첫째 주의 시작일까지)
-			       
 			        for (int i = 1; i < firstDayOfWeek; i++) {
-			            sb.append("<td> </td>\n");
+			            sb.append("<td class='disabled'> </td>\n");
 			        }
 
 			        
@@ -105,7 +115,7 @@ public class CalendarAction implements Action {
 			        LocalDate checkIn = b.getCheckInDate().toLocalDate();
 			        LocalDate checkOut = b.getCheckOutDate().toLocalDate();
 			        // 날짜 추가
-			        System.out.println("-------------do while 시작-------------------------------------------------------");
+			        System.out.println("109-------------do while 시작-------------------------------------------------------");
 			        System.out.println("-------------do while 시작-------------------------------------------------------");
 			        System.out.println("-------------do while 시작-------------------------------------------------------");
 			        System.out.println("-------------in/out리스트 반복 시작---------------");
@@ -117,7 +127,7 @@ public class CalendarAction implements Action {
 			        	checkOut = b.getCheckOutDate().toLocalDate();
 			        	}
 			        	
-			        	System.out.println("-------------날짜 찍기while 시작---------------");
+			        	System.out.println("121-------------날짜 찍기while 시작---------------");
 				      	while ( j <= endDay) {
 				      		LocalDate notSelectedDay = LocalDate.of(today.getYear(),today.getMonthValue(),j);
 				        	System.out.println("현재 날짜 : " + notSelectedDay);
@@ -127,11 +137,10 @@ public class CalendarAction implements Action {
 				        	//마킹을 in out날짜도 포함시킴
 				        	LocalDate in = checkIn.plusDays(-1);
 				        	LocalDate out = checkOut.plusDays(1);
-				        	 System.out.println("-------------if분기---------------");
-				        	 System.out.println("(in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))");
+				        	 System.out.println("131-------------if분기---------------");
+				        	 System.out.println("(132in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))");
 				        	 // 체크인 날짜보다 높으면서 체크아웃날짜와 년 월이 다를때
-				        	 System.out.println("---------if-----------------");
-				        	 
+				        	 System.out.println("134---------if-----------------");
 				        	 while((notSelectedDay.getYear() > checkOut.getYear()) || 
 				        			 
 				        		       (notSelectedDay.getYear() == checkOut.getYear() && 
@@ -139,22 +148,28 @@ public class CalendarAction implements Action {
 				        		 
 				        		 System.out.println("while true   i++");
 				        		 i++;
-				        		 b = scheduleList.get(i);
-				        		 checkIn = b.getCheckInDate().toLocalDate();
-						        	checkOut = b.getCheckOutDate().toLocalDate();
-				        		 System.out.println(i);
+				        		 if(i<scheduleList.size()) {
+				        			 b = scheduleList.get(i);
+				        			 checkIn = b.getCheckInDate().toLocalDate();
+				        			 checkOut = b.getCheckOutDate().toLocalDate();
+				        			 in = checkIn.plusDays(-1);
+				        			 out = checkOut.plusDays(1);
+				        			 System.out.println(i);
+				        		 }
 				        		 
 				        	 }
+				        	 //true -> 이미 예약된 날짜
+				        	 //false -> 예약 가능한 날짜
 				        	if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))) {
-				        		System.out.println("-------------true---------------");
+				        		System.out.println("150-------------true---------------");
 				        		if(todayNum == j) {
-				        			sb.append("<td>").append("[m"+j+"]").append("</td>\n");
+				        			sb.append("<td class='disabled'>").append("["+j+"]").append("</td>\n");
 				        		}else {
-					        		sb.append("<td>").append("m"+j).append("</td>\n");
+					        		sb.append("<td class='disabled'>").append(j).append("</td>\n");
 					        	}
 				        		
 				        	} else {
-				        		System.out.println("-------------false---------------");
+				        		System.out.println("158-------------false---------------");
 				        		if(todayNum == j) {
 				        			sb.append("<td>").append("["+j+"]").append("</td>\n");
 				        		} else {
@@ -167,15 +182,15 @@ public class CalendarAction implements Action {
 				                sb.append("</tr>\n<tr>\n");
 				            }
 				            if(notSelectedDay.isEqual(checkOut)) {
-				            	System.out.println("if문  notSelectedDay.isEqual(checkOut) ");
+				            	System.out.println("171if문  notSelectedDay.isEqual(checkOut) ");
 				            	 System.out.println("-------------if문true---------------");
 				            	 System.out.println("i++");
 				            	i++;
 				            	System.out.println("i : " + i);
 				            	
 				            	if(i < scheduleList.size()) {
-				            		System.out.println("if문     i < scheduleList.size()      ");
-				            		 System.out.println("-------------if문true ---------------");
+				            		System.out.println("178if문     i < scheduleList.size()      ");
+				            		 System.out.println("179-------------if문true ---------------");
 				            		 b = scheduleList.get(i);
 							         checkIn = b.getCheckInDate().toLocalDate();
 							         checkOut = b.getCheckOutDate().toLocalDate();
@@ -186,14 +201,14 @@ public class CalendarAction implements Action {
 				        }
 				      	
 				      	if(!scheduleList.isEmpty()) {
-				      		System.out.println("-------------if문---------------");
-				      		System.out.println("    !scheduleList.isEmpty()    ");
+				      		System.out.println("190-------------if문---------------");
+				      		System.out.println("191    !scheduleList.isEmpty()    ");
 				      		System.out.println("i++");
 				      		i++;
 				      	}
 				      	
 			        }while(i < scheduleList.size());
-			        System.out.println("-------------do while 끝 ---------------");
+			        System.out.println("197-------------do while 끝 ---------------");
 			        
 			        
 			        // 마지막 행의 끝을 추가
