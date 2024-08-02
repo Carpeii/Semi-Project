@@ -32,12 +32,10 @@ public class RoomOptionController extends HttpServlet {
         Room room = (Room) session.getAttribute("room");
         String optionsJson = req.getParameter("optionsJson");
 //        Room room = (Room) req.getAttribute("room");
-        List<RoomImage> roomImages = (List<RoomImage>) req.getAttribute("roomImages");
+        List<RoomImage> roomImages = (List<RoomImage>) session.getAttribute("roomImages");
         if(room==null){
             resp.sendRedirect(req.getContextPath()+"/jsp/service/roomAdd.jsp");
         }
-        System.out.println("Room ID: " + room.getId());
-        System.out.println("Options JSON: " + optionsJson);
 
         // JSON 파싱
         JSONObject jsonObject = new JSONObject(optionsJson);
@@ -56,9 +54,9 @@ public class RoomOptionController extends HttpServlet {
 
         roomOption.setRoomOptions(optionsString.toString());
 
-        req.setAttribute("roomOption", roomOption);
-        req.setAttribute("roomImages", roomImages);
-        req.setAttribute("room", room);
+        session.setAttribute("roomOption", roomOption);
+        session.setAttribute("roomImages", roomImages);
+        session.setAttribute("room", room);
 
         resp.sendRedirect(req.getContextPath() + "/service/roomPriceAdd");
     }

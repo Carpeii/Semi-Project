@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -40,9 +41,10 @@ public class RoomPriceController extends HttpServlet {
         int cleaningFee = Integer.parseInt(req.getParameter("cleaningFee"));
         int refundType = Integer.parseInt(req.getParameter("refundType"));
 
-        Room room = (Room) req.getAttribute("room");
-        List<RoomImage> roomImages = (List<RoomImage>) req.getAttribute("roomImages");
-        RoomOption roomOption = (RoomOption) req.getAttribute("roomOption");
+        HttpSession session = req.getSession();
+        Room room = (Room) session.getAttribute("room");
+        List<RoomImage> roomImages = (List<RoomImage>) session.getAttribute("roomImages");
+        RoomOption roomOption = (RoomOption) session.getAttribute("roomOption");
 
         RoomPrice roomPrice = new RoomPrice();
 //        roomPrice.setRoomId(roomId);
@@ -87,6 +89,5 @@ public class RoomPriceController extends HttpServlet {
         roomPriceDao.insert(roomPrice);
 
         resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
-
     }
 }

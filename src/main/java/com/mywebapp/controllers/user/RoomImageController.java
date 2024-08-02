@@ -65,11 +65,13 @@ public class RoomImageController extends HttpServlet {
                 roomImage.setImageOrder(imageOrder);
 
                 roomImages.add(roomImage);
+                System.out.println(roomImage.getImageName());
                 imageOrder++;
             }
         }
-
-        req.setAttribute("roomImages", roomImages);
+        System.out.println(roomImages.size());;
+        session.setAttribute("roomImages", room);
+        session.setAttribute("roomImages", roomImages);
         resp.sendRedirect(req.getContextPath() + "/service/roomOptionAdd");
 //        req.getRequestDispatcher(req.getContextPath() + "/jsp/service/roomOptionAdd").forward(req, resp);
     }
