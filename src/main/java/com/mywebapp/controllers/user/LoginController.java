@@ -27,7 +27,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         String pw = req.getParameter("pw");
-        String errMsg = null;
+//        String errMsg = null;
 
         String login = req.getParameter("login");
 
@@ -54,12 +54,18 @@ public class LoginController extends HttpServlet {
                         vo.setId(rs.getString("id"));
                         vo.setUserId(rs.getString("user_id"));
                         vo.setPassword(rs.getString("password"));
+                        vo.setName(rs.getString("name"));
+                        vo.setMemberType(rs.getInt("member_type"));
+
 
                         // 세션에 사용자 정보 저장
                         HttpSession session = req.getSession();
-                        session.setAttribute("user", vo.getId());// session에 아이디만 저장
-                        session.setAttribute("userId", vo.getUserId());// session에 아이디만 저장
+
+                        session.setAttribute("id", vo.getId());
 //                        session.setAttribute("user", id);
+                        session.setAttribute("userId", vo.getUserId());
+                        session.setAttribute("name", vo.getName());
+                        session.setAttribute("member_type", vo.getMemberType());
                         session.setMaxInactiveInterval(30*60); // session 유지시간 30분으로 설정
 
                         // 아이디 비번 일치 일치

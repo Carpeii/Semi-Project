@@ -2,8 +2,6 @@
          pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-
-
 <html>
 <head>
     <meta charset="EUC-KR">
@@ -13,20 +11,22 @@
 
 <h2>단기임대, 1평에서 찾아보세요</h2>
 <%
-    String user = (String) session.getAttribute("user");
-    String userId = (session != null) ? (String) session.getAttribute("user") : null;
+    //String userId = (String) session.getAttribute("userId");
+    String userId = (session != null) ? (String) session.getAttribute("userId") : null;
 %>
 <%
     if (userId != null) {
         // 로그인 정보 존재
 %>
         <button onclick="location.href='../auth/logout.jsp'">로그아웃</button>
-        <p>${userId}님 환영합니다</p>
+        <button onclick="location.href='../user/profile.jsp'">마이 페이지</button>
+<%--        <p>${userId}님 환영합니다</p>--%>
 <%
     } else if (userId == null) {
         // 로그인 정보 없음
 %>
         <button onclick="location.href='../auth/loginMain.jsp'">로그인</button>
+        <button onclick="location.href='../auth/join.jsp'">회원가입</button>
 <%
     }
 %>
