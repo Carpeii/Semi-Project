@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mywebapp.dao.BookingDao;
 import com.mywebapp.dao.BookingDaoImpl;
@@ -29,11 +30,12 @@ public class RoomBookingController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		 // 세션에서 현재 로그인한 사용자의 정보 가져오기
-		UserDto user = (UserDto) req.getSession().getAttribute("user");
+		HttpSession session = req.getSession();
+		String userId = (String) session.getAttribute("user");
 		
-		if (user != null) {
+		if (userId != null) {
 	        // 로그인된 사용자의 아이디 가져오기
-			long guestId = Long.parseLong(user.getId());
+			long guestId = Long.parseLong(userId);
 			
 	        // 선택한 방의 ID 가져오기
 			long roomId = Long.parseLong(req.getParameter("roomId"));
@@ -57,7 +59,7 @@ public class RoomBookingController extends HttpServlet {
 //			RequestDispatcher dispatcher = req.getRequestDispatcher(req.getContextPath() + "/jsp/service/bookingOk.jsp");
 //			dispatcher.forward(req, resp);
 			
-	        req.getRequestDispatcher("/jsp/service/bookingStart.jsp").forward(req, resp);
+	        req.getRequestDispatcher("/jsp/user/myPageGuestBooking.jsp").forward(req, resp);
 
 			
 		} else {

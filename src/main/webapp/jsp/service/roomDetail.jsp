@@ -64,8 +64,22 @@
         </form>
       
 -->
-        <form action="${pageContext.request.contextPath}/service/bookingInfo" method="post">
-        	<input type="hidden" name="roomId" value="${room.id }">
+		<form action="${pageContext.request.contextPath}/service/bookingInfo" method="post">
+		    <!-- Hidden inputs for additional data -->
+		    <input type="hidden" name="roomId" value="${room.id}">
+		    <input type="hidden" name="roomName" value="${room.roomName }">
+		    <input type="hidden" name="jibunAddress" value="${room.jibunAddress}">
+		    <input type="hidden" name="streetAddress" value="${room.streetAddress}">
+		    <input type="hidden" name="addressDetail" value="${room.addressDetail}">
+		    <input type="hidden" name="floor" value="${room.floor}">
+		    <input type="hidden" name="hostName" value="${room.hostName}">
+		    <input type="hidden" name="rentPrice" value="${room.rentPrice}">
+		    <input type="hidden" name="longTermDiscount" value="${room.longTermDiscount}">
+		    <input type="hidden" name="earlyCheckInDiscount" value="${room.earlyCheckInDiscount}">
+		    <input type="hidden" name="maintenanceBill" value="${room.maintenanceBill}">
+		    <input type="hidden" name="cleaningFee" value="${room.cleaningFee}">
+		    
+		    <!-- Date fields -->
         	<label for="checkInDate">Check-in Date:</label>
         	<input type="date" id="checkInDate" name="checkInDate" required><br><br>
         	

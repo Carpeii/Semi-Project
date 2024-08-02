@@ -1,25 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>jsp/service/guestMain.jsp</title>
 </head>
 <body>
 
-<button onclick="location.href='../service/hostMain.jsp'">호스트 모드</button>
-<!-- 로그인 안되어 있을때 -->
-<button onclick="location.href='../auth/login.jsp'">로그인/회원가입</button>
-<!-- 로그인 되어 있을때 -->
-<button onclick="location.href='../auth/login.jsp'">로그인/회원가입</button>
-
-<br><br>
 <h2>단기임대, 1평에서 찾아보세요</h2>
 <button onclick="location.href='../service/searchByMap.jsp'">지도로 검색</button>
 <button onclick="location.href='../service/search.jsp'">검색</button>
 
-<!-- 방 리스트  -->
+<!-- RoomListController에서 세션 받아와서 구현 -->
+<c:if test="${not empty userId }">
+	<p>${userId }님 환영합니다</p>
+</c:if>
+
+
 <table border="1" width="1500">
 	<tr>
 		<th>이미지 경로</th>
@@ -74,5 +73,6 @@
 <!-- -->
 </div>
  
+
 </body>
 </html>

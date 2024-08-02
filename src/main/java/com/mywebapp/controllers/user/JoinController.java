@@ -1,7 +1,5 @@
 package com.mywebapp.controllers.user;
 
-import com.mywebapp.dto.MemberDto;
-import com.mywebapp.service.JoinValidator;
 import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
@@ -9,11 +7,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static java.lang.Boolean.parseBoolean;
 
 @WebServlet("/joinOk")
 public class JoinController extends HttpServlet {
@@ -27,7 +28,9 @@ public class JoinController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        boolean isDuplicate = Boolean.parseBoolean(req.getParameter("isDuplicate"));
+        boolean isDuplicate = parseBoolean(req.getParameter("isDuplicate"));
+        //isDuplicate = true;
+
         // 비밀번호 확인
         String pwConfirm = req.getParameter("pwConfirm");
         String password = req.getParameter("password");
@@ -51,96 +54,80 @@ public class JoinController extends HttpServlet {
         String errMsg = null;
 
         // 아이디 중복 체크 버튼이 눌렸을 경우에
-        if (action.equals("checkId")) {
+        if ("checkId".equals(action)) {
             try {
                 conn = JdbcUtil.getCon();
 
-                // db에 존재하는 아이디인지 확인
+                //db에 존재하는 아이디인지 확인
                 String sql = "select * from member where user_id=?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, userId);
                 rs = pstmt.executeQuery();
 
                 if (rs.next()) {
-                    req.setAttribute("idErrMsg", "사용할 수 없는 아이디 입니다.");
+                    req.setAttribute("idErrMsg", "사용할 수 없는 아이디 입니다. 새로운 아이디로 다시 시도하세요.");
                     req.setAttribute("isDuplicate", true);
-                }else {
+                    req.setAttribute("userId", "");
+                } else {
+                    req.setAttribute("idErrMsg", "사용할 수 있는 아이디 입니다!");
                     req.setAttribute("isDuplicate", false);
+                    req.setAttribute("userId", userId);
                 }
+
                 req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+                return;
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                idErrMsg = "데이터베이스 오류가 발생했습니다. 관리자에게 문의하세요.";
+                req.setAttribute("idErrMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
+                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+
             } finally {
                 JdbcUtil.close(conn, pstmt, rs);
             }
         }
 
-        //guest버튼이 눌렸을때
-        if(action.equals("guest")) { // 아이디 중복 x
-            if(isDuplicate){
-                req.setAttribute("errMsg", "중복검사 하고오세요.");
-            }else{
-
+        if ("guest".equals(action) || "host".equals(action)) {
+            if (isDuplicate) {
+                req.setAttribute("errMsg", "아이디 중복 검사 필수 입니다.");
+                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+                return;
             }
 
-            // 비밀번호 == 비밀번호 확인
-            if (!pwConfirm.equals( "password")) {
-                pwErrMsg = "비밀번호가 일치하지 않습니다.";
-            } else {
-                pwErrMsg = "일치하는 비밀번호 입니다!";
+            // 비밀번호 확인
+            if (!pwConfirm.equals(password)) {
+                req.setAttribute("pwErrMsg", "비밀번호가 일치하지 않습니다.");
+                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+                return;
+            }
 
-                // db 에 회원정보 저장
-                if (userId != null && password != null && name != null && phone != null) {
-                    try {
-                        String sql = "INSERT INTO member (user_id, password, name, phone, member_type) VALUES (?, PASSWORD(?), ?, ?, ?)";
-                        pstmt = conn.prepareStatement(sql);
-                        pstmt.setString(1, userId);
-                        pstmt.setString(2, password);
-                        pstmt.setString(3, name);
-                        pstmt.setString(4, phone);
-                        pstmt.setInt(5, 0);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    } finally {
-                        JdbcUtil.close(conn, pstmt, rs);
-                    }
+            // 회원가입으로 데이터베이스에 insert
+            try {
+                conn = JdbcUtil.getCon();
+                String sql = "INSERT INTO member (user_id, password, name, phone, member_type) VALUES (?, PASSWORD(?), ?, ?, ?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, userId);
+                pstmt.setString(2, password);
+                pstmt.setString(3, name);
+                pstmt.setString(4, phone);
+                pstmt.setInt(5, "guest".equals(action) ? 0 : 1);
+                pstmt.executeUpdate();
+
+                HttpSession session = req.getSession();
+                session.setAttribute("userId", userId); // session에 userId 저장
+
+                // 회원가입 성공 -> 메인 페이지로 이동
+                if ("guest".equals(action)) { // 게스트 회원가입
+                    req.getRequestDispatcher("/jsp/service/main.jsp").forward(req, resp);
+                } else { // 호스트 회원가입
+                    req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
                 }
-            }
-        }
-
-        //host버튼이 눌렸을때
-        if(action.equals("host")) { // 아이디 중복 x
-            if(isDuplicate){
-                req.setAttribute("errMsg", "중복검사 하고오세요.");
-            }else{
-
-            }
-
-            // 비밀번호 == 비밀번호 확인
-            if (!pwConfirm.equals( "password")) {
-                pwErrMsg = "비밀번호가 일치하지 않습니다.";
-            } else {
-                pwErrMsg = "일치하는 비밀번호 입니다!";
-
-                // db 에 회원정보 저장
-                if (userId != null && password != null && name != null && phone != null) {
-
-                    try {
-                        String sql = "INSERT INTO member (user_id, password, name, phone, member_type) VALUES (?, PASSWORD(?), ?, ?, ?)";
-                        pstmt = conn.prepareStatement(sql);
-                        pstmt.setString(1, userId);
-                        pstmt.setString(2, password);
-                        pstmt.setString(3, name);
-                        pstmt.setString(4, phone);
-                        pstmt.setInt(5, 1);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    } finally {
-                        JdbcUtil.close(conn, pstmt, rs);
-                    }
-                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
+                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+            } finally {
+                JdbcUtil.close(conn, pstmt, rs);
             }
         }
     }

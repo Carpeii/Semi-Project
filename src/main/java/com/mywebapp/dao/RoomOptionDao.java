@@ -12,6 +12,7 @@ public class RoomOptionDao {
     public int insert(RoomOption roomOption) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
+        
 
         try {
             con = JdbcUtil.getCon();
