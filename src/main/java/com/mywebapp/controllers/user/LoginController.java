@@ -56,6 +56,7 @@ public class LoginController extends HttpServlet {
                         vo.setPassword(rs.getString("password"));
                         vo.setName(rs.getString("name"));
                         vo.setMemberType(rs.getInt("member_type"));
+                        vo.setPhone(rs.getString("phone"));
 
 
                         // 세션에 사용자 정보 저장
@@ -65,6 +66,7 @@ public class LoginController extends HttpServlet {
 //                        session.setAttribute("user", id);
                         session.setAttribute("userId", vo.getUserId());
                         session.setAttribute("name", vo.getName());
+                        session.setAttribute("phone", vo.getPhone());
                         session.setAttribute("member_type", vo.getMemberType());
                         session.setMaxInactiveInterval(30*60); // session 유지시간 30분으로 설정
 
