@@ -26,6 +26,7 @@ insert into booking values(0, 1 , 1 , '2024-12-27' , '2025-1-15' ,0);
  * */
 public class CalendarAction implements Action {
 	private String calendarUrl = "/test/popup.jsp";
+	LocalDate notSelectedDay;
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -127,7 +128,7 @@ public class CalendarAction implements Action {
 			        	
 			        	System.out.println("121-------------날짜 찍기while 시작---------------");
 				      	while ( j <= endDay) {
-				      		LocalDate notSelectedDay = LocalDate.of(today.getYear(),today.getMonthValue(),j);
+				      		notSelectedDay = LocalDate.of(today.getYear(),today.getMonthValue(),j);
 				        	System.out.println("현재 날짜 : " + notSelectedDay);
 				        	//true일시 마킹
 				        	System.out.println("리스트의 인덱스 번째 i : " + i);
@@ -144,7 +145,7 @@ public class CalendarAction implements Action {
 				        		       (notSelectedDay.getYear() == checkOut.getYear() && 
 				        		       notSelectedDay.getMonthValue() > checkOut.getMonthValue())
 				        		       && 
-				        		       (i >= scheduleList.size()) ) {
+				        		       (i < scheduleList.size()) ) {
 				        		 
 				        		 System.out.println("while true   i++");
 				        		 i++;
