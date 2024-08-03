@@ -13,6 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import com.mywebapp.dao.BookingDao;
 import com.mywebapp.dao.BookingDaoImpl;
+import com.mywebapp.dao.RoomDao;
+import com.mywebapp.dao.RoomDaoImpl;
+import com.mywebapp.dto.RoomDetailDto;
 import com.mywebapp.dto.UserDto;
 import com.mywebapp.model.Booking;
 
@@ -20,11 +23,13 @@ import com.mywebapp.model.Booking;
 public class RoomBookingController extends HttpServlet {
 	
 	private BookingDao bookingDao;
+	private RoomDao roomDao;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		bookingDao = new BookingDaoImpl();
+		roomDao = new RoomDaoImpl();
 	}
 	
 	@Override
@@ -49,18 +54,17 @@ public class RoomBookingController extends HttpServlet {
 			booking.setCheckInDate(checkInDate);
 			booking.setCheckOutDate(checkOutDate);
 
+			// booking_status 0으로 해서 booking테이블에 하나 삽입
 			bookingDao.insertBooking(booking);
 			
-		      // 예약된 방 정보 가져오기 (예시)
-            //Room bookedRoom = bookingDAO.getBookedRoom(roomId); // 예약된 방 정보를 DB에서 가져오는 예시 메서드
-			
-            // 예약이 성공적으로 저장되었다면 bookingSuccess.jsp로 포워드
-//	         request.setAttribute("bookedRoom", bookedRoom);
-//			RequestDispatcher dispatcher = req.getRequestDispatcher(req.getContextPath() + "/jsp/service/bookingOk.jsp");
-//			dispatcher.forward(req, resp);
-			
-	        req.getRequestDispatcher("/jsp/user/myPageGuestBooking.jsp").forward(req, resp);
+			// 방 세부 정보 조회
+			RoomDetailDto bookedRoom = roomDao.getRoomById(roomId); 
 
+			// 세션에 예약한 방 정보를 저장
+			session.setAttribute("bookedRoom", bookedRoom);
+			
+			// 사용자 방 정보 조회를 위해 리다이렉트
+			resp.sendRedirect(req.getContextPath() + "/user/guestBooking");
 			
 		} else {
             // 사용자 정보가 없을 경우에 대한 처리 (예: 로그인 페이지로 리다이렉트)
