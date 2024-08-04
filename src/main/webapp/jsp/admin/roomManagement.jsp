@@ -17,27 +17,53 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="room" items="${rooms}">
+        <c:forEach var="room" items="${roomList}">
             <tr>
+                <td>${room.id}</td>
                 <td>${room.roomName}</td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/editRoom" method="post" class="d-inline">
+<%--                    <form action="${pageContext.request.contextPath}/editRoom" method="post" class="d-inline">--%>
+<%--                        <input type="hidden" name="roomId" value="${room.id}">--%>
+<%--                        <button type="submit" class="btn btn-primary">Edit</button>--%>
+<%--                    </form>--%>
+                    <form action="${pageContext.request.contextPath}/admin/roomManagement" method="post" class="d-inline">
+                        <input type="hidden" name="action" value="approve">
                         <input type="hidden" name="roomId" value="${room.id}">
-                        <button type="submit" class="btn btn-primary">Edit</button>
+                        <button type="submit" class="btn btn-secondary">approve</button>
                     </form>
-                    <form action="${pageContext.request.contextPath}/service/hostContractManagement" method="post" class="d-inline">
+                    <form action="${pageContext.request.contextPath}/admin/roomManagement" method="post" class="d-inline">
+                        <input type="hidden" name="action" value="decline">
                         <input type="hidden" name="roomId" value="${room.id}">
-                        <button type="submit" class="btn btn-secondary">Manage Contract</button>
-                    </form>
-                    <form action="${pageContext.request.contextPath}/service/hostBookingHistory" method="post" class="d-inline">
-                        <input type="hidden" name="roomId" value="${room.id}">
-                        <button type="submit" class="btn btn-secondary">view History</button>
+                        <button type="submit" class="btn btn-secondary">decline</button>
                     </form>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        <c:if test="${pageNum > 1}">
+            <a href="?pageNum=${pageNum - 1}" style="text-decoration: underline; color: #007bff;">Previous</a>
+        </c:if>
+
+        <c:forEach begin="${startPage}" end="${endPage}" var="i">
+            <c:choose>
+                <c:when test="${i == pageNum}">
+                    <span style="color: red; font-weight: bold;">${i}</span> <!-- Highlight current page -->
+                </c:when>
+                <c:otherwise>
+                    <a href="?pageNum=${i}" style="text-decoration: none; color: #007bff;">${i}</a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+
+        <c:if test="${pageNum < pageCount}">
+            <a href="?pageNum=${pageNum + 1}" style="text-decoration: underline; color: #007bff;">Next</a>
+        </c:if>
+    </div>
+
 </div>
 <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 </body>

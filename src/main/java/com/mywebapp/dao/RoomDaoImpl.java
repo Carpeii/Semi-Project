@@ -7,10 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mywebapp.dto.BookingInfoDto;
 import com.mywebapp.dto.GuestRoomBookingDto;
 import com.mywebapp.dto.RoomDetailDto;
-import com.mywebapp.dto.RoomDto;
 import com.mywebapp.dto.RoomListItemDto;
 import com.mywebapp.model.Room;
 import com.mywebapp.model.RoomImage;
@@ -489,8 +487,31 @@ public class RoomDaoImpl implements RoomDao {
 		} finally {
 			JdbcUtil.close(con, pstmt, rs);
 		}
-		
-
-		
 	}
+
+	@Override
+	public void updateRoomApproveStatus(long roomId, int approve) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = JdbcUtil.getCon();
+			String sql = "UPDATE room SET approve = ? WHERE id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, approve);
+			pstmt.setLong(2, roomId);
+			int updatedRows = pstmt.executeUpdate();
+
+			if (updatedRows > 0) {
+				System.out.println("Room with id " + roomId + " has been updated to approve status " + approve);
+			} else {
+				System.out.println("No room found with id " + roomId);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(con, pstmt, null);
+		}
+	}
+
 }
