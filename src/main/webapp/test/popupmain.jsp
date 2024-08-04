@@ -14,7 +14,7 @@
         	
         function openPopup() {
             //매개변수 -> (Url, 창이름 , 옵션)
-            window.open(url, 'popupWindow', 'width=600,height=400,scrollbars=yes');
+            window.open(url, 'popupWindow', 'width=1000,height=1000,scrollbars=yes');
         }
     </script>
 </head>
@@ -22,8 +22,9 @@
 
 <div class="container mt-5">
     <h1>JSP 팝업창 예제</h1>
-    <button type="button" onclick="openPopup()" value="today">팝업창 열기</button>
-    <intpyt calss="btn" style="cursor: default;" type="button" onclick="openPopup()" value="totay">팝업</intpyt>
+    <button type="button" onclick="openPopup()">팝업창 열기</button>
+    <input class="btn" style="cursor: default;" type="button" onclick="openPopup()" value="팝업"	 />
 </div>
 </body>
+
 </html>

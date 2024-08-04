@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,16 +48,26 @@ public class CalendarController extends HttpServlet {
 				monthControll = (Integer)req.getSession().getAttribute("monthControll");
 				monthControll --;
 				req.getSession().setAttribute("monthControll", monthControll);
-				
+			
 				action = new CalendarAction();
 				action.execute(req, resp);
-				
+				//날짜 버튼을 눌렀을 때 호출
 			} else if(req.getParameter("select") != null){
-				
+				req.getSession().setAttribute("select", req.getParameter("select"));
 				action = new ReservationAvailablePeriodCallAction();
 				action.execute(req, resp);
 			}
-			
+			//날짜 버튼을 누른 후 나오는 기간버튼을 누르면 호출
+		} else if(requestUrl.equals("/select")) {
+			int selectPeriod = Integer.parseInt(req.getParameter("period"));
+			//사용자가 선택한 기간 
+			String select = (String)req.getSession().getAttribute("select");
+			LocalDate selectDate = LocalDate.parse(select);
+			LocalDate selectEndDate = selectDate.plusDays(selectPeriod);
+			System.out.println("사용자가 선택한 기간 : "+selectPeriod);
+			System.out.println("시작 날짜 : " + selectDate);
+			System.out.println("끝나는 날짜 : " + selectEndDate);
+		
 		}
 		
 	}

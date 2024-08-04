@@ -16,15 +16,7 @@ import com.mywebapp.actions.Action;
 import com.mywebapp.dao.BookingDaoImpl;
 import com.mywebapp.model.Booking;
 
-/*
- * 테스트로 쓴 더미 값
-insert into booking values(0, 1 , 1 , '2024-7-15' , '2024-7-21' ,0);
-insert into booking values(0, 1 , 1 , '2024-7-29' , '2024-8-13' ,0);
-insert into booking values(0, 1 , 1 , '2024-8-14' , '2024-8-20' ,0);
-insert into booking values(0, 1 , 1 , '2024-8-29' , '2024-9-5' ,0);
-insert into booking values(0, 1 , 1 , '2024-11-1' , '2024-11-15' ,0);
-insert into booking values(0, 1 , 1 , '2024-12-27' , '2025-1-15' ,0);
- * */
+
 public class CalendarAction implements Action {
 	private String calendarUrl = "/test/popup.jsp";
 	LocalDate notSelectedDay;
@@ -47,8 +39,11 @@ public class CalendarAction implements Action {
 			LocalDate checkIn = b.getCheckInDate().toLocalDate();
 			LocalDate checkOut = b.getCheckOutDate().toLocalDate();
 			System.out.println("Local : "+checkIn+"  "+checkOut);
-		}
-		
+		}		
+				if(req.getParameter("select") != null) {
+					String selectDate = req.getParameter("select");
+					LocalDate selectDay =  LocalDate.parse(selectDate);
+				}
 				LocalDate today = null;
 				int todayNum = 0;
 				//최초 호출시 이번달 달력 + 이번달의 오늘날짜 마킹[]
@@ -93,22 +88,6 @@ public class CalendarAction implements Action {
 			            sb.append("<td class='disabled'> </td>\n");
 			        }
 
-			        
-			        	//notSelectedDay = 한달의 날짜를 하나씩 순서대로 반환 연 월도 같이 받아옴 다음달이나 다음년도로 이어지는 계약도 ㄱㄴ
-			        	//db에서 체크인 날짜를 정렬해서 받아옴
-			        	//받아오는 값은 (In)localDate~(Out)localDate 범위를 가진 날짜의 배열 list임
-			        	//단순하게 In < 선택 ㄱㄴ < out 하고싶어도  계약 건수가  복수임
-			        	//if(b[0].In < (i)선택 ㄱㄴ < b.[0]out) 로 찍고  i의 값이 out과 같아지면 Booking b의 인덱스 값을 하나 올리기?
-			        	//이중 for문으로 가능할듯함
-			        /*
-			        문제  if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay)))
-			       	조건을 검사하고 사이값이 아니면 i의 값을 올려줘야 하는데 해당 로직이 없음 
-			       	->db에서 가져온 list의 0번째 인덱스만 참조중
-			       	달을 넘기면 무조건 false를 반환
-			        
-			        */
-			        
-			        
 			        int i = 0;
 			        int j = 1;
 			        Booking b = scheduleList.get(0);
@@ -227,9 +206,7 @@ public class CalendarAction implements Action {
 			        
 			        // 테이블의 끝
 			        sb.append("</table>\n");
-			        
-			        	req.setAttribute("sb", sb);
-			        	
+			        	req.getSession().setAttribute("sb", sb);
 						req.getRequestDispatcher(calendarUrl).forward(req, resp);
 						
 					} catch (ServletException e) {
