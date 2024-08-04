@@ -1,6 +1,10 @@
 package com.mywebapp.controllers.user;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mywebapp.actions.Action;
 import com.mywebapp.actions.CalendarAction;
+import com.mywebapp.model.Booking;
 @WebServlet("/calendar/*")
 public class Calendar extends HttpServlet {
 	@Override
@@ -43,8 +48,22 @@ public class Calendar extends HttpServlet {
 				action.execute(req, resp);
 				
 			} else if(req.getParameter("select") != null){
-				String select = req.getParameter("select");
-				System.out.println(select);
+				String dateString = req.getParameter("select");
+				// String으로 받은 날짜(연도-월-일) 형식 -> sqlDate타입으로 형변환
+				try {
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				
+				java.util.Date utilDate = format.parse(dateString);
+				Date sqlDate = new Date(utilDate.getTime());
+				
+				Booking b = new Booking();
+				b.setCheckInDate(sqlDate);
+				utilDate = format.parse(dateString);
+				System.out.println("sqlDateType : "+b.getCheckInDate());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		}
