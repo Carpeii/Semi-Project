@@ -1,4 +1,4 @@
-package com.mywebapp.actions;
+package com.mywebapp.actions.calendar;
 
 import java.awt.PageAttributes;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mywebapp.actions.Action;
 import com.mywebapp.dao.BookingDaoImpl;
 import com.mywebapp.model.Booking;
 

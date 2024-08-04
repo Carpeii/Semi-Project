@@ -123,4 +123,27 @@ public class BookingDaoImpl implements BookingDao {
 			}
 			return scheduleList;
 		}
+	@Override
+	public Booking reservationAvailablePeriodCall(Date selectDate) {
+		//Id도 추가해야함
+		Booking booking =  new Booking();
+		String sql = "select check_in_date from booking where ? < check_in_date limit 1";
+		try {
+			Connection con = JdbcUtil.getCon();
+			
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setDate(1,selectDate);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				booking = new Booking();
+				booking.setCheckInDate(rs.getDate("check_in_date"));
+			}
+		}catch(SQLException s) {
+			s.printStackTrace();
+		}
+		
+		
+		return booking;
+	}
 }
