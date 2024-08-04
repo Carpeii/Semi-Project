@@ -1,5 +1,6 @@
 package com.mywebapp.controllers.user;
 
+import com.mywebapp.dto.HostDto;
 import com.mywebapp.dto.UserDto;
 import com.mywebapp.util.JdbcUtil;
 
@@ -60,10 +61,43 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("user", vo);
                 session.setMaxInactiveInterval(30 * 60); // session 유지시간 30분으로 설정
 
+//                if(vo.getMemberType() == 1) {
+//                    HostDto host = new HostDto();
+//                    host.setMemberId(rs.getLong("member_id"));
+//                    host.setBankName(rs.getString("bankName"));
+//                    host.setAccount(rs.getString("account"));
+//                    host.setAccount_holder(rs.getString("account_holder"));
+//                    session.setAttribute("host", host);
+//                }
+
                 if(vo.getMemberType() == 0) {
                     resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
                 } else if (vo.getMemberType() ==1) {
+                    // 호스트 정보 조회
+                    String hostSql = "SELECT * FROM host WHERE member_id = ?";
+                    pstmt = conn.prepareStatement(hostSql);
+                    pstmt.setLong(1, vo.getId()); // UserDto의 id를 사용
+                    ResultSet hostRs = pstmt.executeQuery();
+
+                    if (hostRs.next()) {
+                        // 호스트 정보 설정
+                        HostDto hostDto = new HostDto();
+                        hostDto.setMemberId(hostRs.getLong("member_id"));
+                        hostDto.setBankName(hostRs.getString("bank_name"));
+                        hostDto.setAccount(hostRs.getString("account"));
+                        hostDto.setAccountHolder(hostRs.getString("account_holder"));
+
+                        // 세션에 호스트 정보 저장
+                        session.setAttribute("host", hostDto);
+                    }
                     resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+//                    HostDto host = new HostDto();
+//                    host.setMemberId(rs.getLong("member_id"));
+//                    host.setBankName(rs.getString("bankName"));
+//                    host.setAccount(rs.getString("account"));
+//                    host.setAccount_holder(rs.getString("account_holder"));
+//                    session.setAttribute("host", host);
+//                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
                 }
             } else {
                 req.setAttribute("errMsg", "아이디 비밀번호를 확인하세요.");
