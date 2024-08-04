@@ -59,11 +59,12 @@ public class CalendarController extends HttpServlet {
 			}
 			//날짜 버튼을 누른 후 나오는 기간버튼을 누르면 호출
 		} else if(requestUrl.equals("/select")) {
+			//당일포함-> -1
 			int selectPeriod = Integer.parseInt(req.getParameter("period"));
-			//사용자가 선택한 기간 
 			String select = (String)req.getSession().getAttribute("select");
 			LocalDate selectDate = LocalDate.parse(select);
-			LocalDate selectEndDate = selectDate.plusDays(selectPeriod);
+			//사용자가 선택한 기간 
+			LocalDate selectEndDate = selectDate.plusDays(selectPeriod-1);
 			System.out.println("사용자가 선택한 기간 : "+selectPeriod);
 			System.out.println("시작 날짜 : " + selectDate);
 			System.out.println("끝나는 날짜 : " + selectEndDate);
