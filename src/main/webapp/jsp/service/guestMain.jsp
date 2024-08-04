@@ -1,3 +1,4 @@
+<%@ page import="com.mywebapp.dto.UserDto" %>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
          pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,18 +12,20 @@
 
 <h2>단기임대, 1평에서 찾아보세요</h2>
 <%
-    //String userId = (String) session.getAttribute("userId");
-    String userId = (session != null) ? (String) session.getAttribute("userId") : null;
+    UserDto user = (session != null) ? (UserDto) session.getAttribute("user") : null;
 %>
 <%
-    if (userId != null) {
+    if (user != null) {
+        System.out.println(user);
         // 로그인 정보 존재
 %>
+        <p>${sessionScope.user.userId}님 환영합니다</p>
         <button onclick="location.href='../auth/logout.jsp'">로그아웃</button>
-        <button onclick="location.href='../user/profile.jsp'">마이 페이지</button>
+        <button onclick="location.href='../auth/myPage.jsp'">마이 페이지</button>
 <%--        <p>${userId}님 환영합니다</p>--%>
 <%
-    } else if (userId == null) {
+    } else if (user == null) {
+        System.out.println(user);
         // 로그인 정보 없음
 %>
         <button onclick="location.href='../auth/loginMain.jsp'">로그인</button>
@@ -34,10 +37,9 @@
 <button onclick="location.href='../service/search.jsp'">검색</button>
 
 <!-- RoomListController에서 세션 받아와서 구현 -->
-<c:if test="${not empty userId }">
-    <p>${userId }님 환영합니다</p>
-</c:if>
-
+<%--<c:if test="${not empty userId }">--%>
+<%--    <p>${userId }님 환영합니다</p>--%>
+<%--</c:if>--%>
 
 <table border="1" width="1500">
     <tr>

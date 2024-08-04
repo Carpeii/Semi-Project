@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.mywebapp.dto.UserDto" %><%--
   Created by IntelliJ IDEA.
   User: kimjiwoong
   Date: 2024. 7. 16.
@@ -14,25 +14,19 @@
 <h1>회원정보 수정</h1>
 <form action="${pageContext.request.contextPath}/edit" method="post">
     <table>
-        <tr>
-            <td colspan="2"><h2>게스트 계정 정보</h2></td>
-        </tr>
         <td><h3>개인정보 변경</h3></td>
         <tr>
             <td>이름:</td>
-            <td><input type="text" name="name" id="name" value="${sessionScope.name}"></td>
+            <td><input type="text" name="name" id="name" value="${sessionScope.user.name}"></td>
         </tr>
         <tr>
             <td>휴대폰 번호:</td>
-            <td><input type="text" name="phone" id="phone" value="${sessionScope.phone}"></td>
+            <td><input type="text" name="phone" id="phone" value="${sessionScope.user.phone}"></td>
         </tr>
         <br>
         <tr>
             <td>기존 비밀번호:</td>
             <td><input type="password" name="password" id="password"></td>
-        </tr>
-        <tr>
-            <div id="pwErrMsg">${pwErrMsg}</div><br>
         </tr>
         <tr>
             <td>비밀번호:</td>

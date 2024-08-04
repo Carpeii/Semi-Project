@@ -17,10 +17,10 @@
             <td><input type="submit" name="booking" value="계약관리">나의 계약관리</td>
         </tr>
         <tr>
-            <td><input type="submit" name="account" value="계약관리">나의 정보관리</td>
+            <td><input type="submit" name="account" value="계정관리">나의 정보관리</td>
         </tr>
         <tr>
-            <td><input type="submit" name="chat" value="계약관리">채팅</td>
+            <td><input type="submit" name="chat" value="채팅">채팅</td>
         </tr>
     </table>
 </form>
