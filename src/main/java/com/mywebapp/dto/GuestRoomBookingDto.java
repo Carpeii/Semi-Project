@@ -2,6 +2,10 @@ package com.mywebapp.dto;
 
 import java.sql.Date;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class GuestRoomBookingDto {
     // Room Table Fields
     private long roomId;
@@ -10,23 +14,14 @@ public class GuestRoomBookingDto {
     private String streetAddress;
     private String addressDetail;
     private int floor;
-    private int usableArea;
-    private int roomCount;
-    private int livingRoomCount;
-    private int toiletCount;
-    private int kitchenCount;
-    private boolean duplex;
-    private boolean elevator;
-    private boolean park;
-    private String parkDetail;
-    private int roomType;
-    private int minimumContract;
-    private int approve;
-
+    
     // Booking Table Fields
     private long guestId;
     private Date checkInDate;
     private Date checkOutDate;
     private int bookingStatus;
+    
+    //room_price
+    private int rentPrice;
 
 }

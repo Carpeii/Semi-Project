@@ -57,11 +57,11 @@ public class RoomBookingController extends HttpServlet {
 			// booking_status 0으로 해서 booking테이블에 하나 삽입
 			bookingDao.insertBooking(booking);
 			
-			// 방 세부 정보 조회
-			RoomDetailDto bookedRoom = roomDao.getRoomById(roomId); 
+			//------------------------------------위에까지가 booking
 
+			
 			// 세션에 예약한 방 정보를 저장
-			session.setAttribute("bookedRoom", bookedRoom);
+			session.setAttribute("bookedRoomId", roomId); // roomId를 직접 저장
 			
 			// 사용자 방 정보 조회를 위해 리다이렉트
 			resp.sendRedirect(req.getContextPath() + "/user/guestBooking");
