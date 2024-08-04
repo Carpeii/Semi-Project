@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mywebapp.dto.BookingInfoDto;
+import com.mywebapp.dto.GuestRoomBookingDto;
 import com.mywebapp.dto.RoomDetailDto;
 import com.mywebapp.dto.RoomDto;
 import com.mywebapp.dto.RoomListItemDto;
@@ -73,31 +74,39 @@ public class RoomDaoImpl implements RoomDao {
 		return roomId;
 	}
 
-	/* 게스트 페이지에서 보여줄 방 리스트 + 페이징 처리*/
+	/* approve에 따라 보여줄 방 리스트 + 페이징 처리*/
 	@Override
-	public List<RoomListItemDto> findAllRoomListItems(int offset, int pageSize) {
+	public List<RoomListItemDto> findAllRoomListItems(int offset, int pageSize, int approve) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		List<RoomListItemDto> roomList = new ArrayList<RoomListItemDto>();
 
 		// LIMIT은 페이지 크기(한 페이지에 보여줄 데이터의 수)
 		// OFFSET은 데이터베이스에서 시작할 위치 (OFFSET은 0부터 시작)
-		String sql = "SELECT r.id, ri.image_path, ri.image_name, ri.save_file_name, r.room_name, r.street_address, rp.rent_price, ro.room_options " +
-				"FROM room r " +
-				"INNER JOIN room_image ri ON r.id = ri.room_id " +
-				"INNER JOIN room_option ro ON r.id = ro.room_id " +
-				"INNER JOIN room_price rp ON r.id = rp.room_id " +
-				"LIMIT ? OFFSET ?";
-
+		String sql = "SELECT r.id, " +
+	             "       ri.image_path, " +
+	             "       ri.image_name, " +
+	             "       ri.save_file_name, " +
+	             "       r.room_name, " +
+	             "       r.street_address, " +
+	             "       rp.rent_price, " +
+	             "       ro.room_options " +
+	             "FROM room r " +
+	             "INNER JOIN room_image ri ON r.id = ri.room_id " +
+	             "INNER JOIN room_option ro ON r.id = ro.room_id " +
+	             "INNER JOIN room_price rp ON r.id = rp.room_id " +
+	             "WHERE r.approve = ? " +
+	             "LIMIT ? OFFSET ?";
 
 		try {
 			con = JdbcUtil.getCon();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, pageSize);
-			pstmt.setInt(2, offset);
+			pstmt.setInt(1, approve);
+			pstmt.setInt(2, pageSize);
+			pstmt.setInt(3, offset);
 			rs = pstmt.executeQuery();
 
-			List<RoomListItemDto> roomList = new ArrayList<RoomListItemDto>();
 			while (rs.next()) {
 				Long id = rs.getLong("id");
 				String imagePath = rs.getString("image_path");
@@ -122,16 +131,17 @@ public class RoomDaoImpl implements RoomDao {
 
 	}
 
-	/* room 테이블에서 전체 행 수를 계산해 반환 */
+	/* room 테이블에서 전체 행 수를 계산해 반환 + approve 추가*/
 	@Override
-	public int getTotalRoomCount() {
+	public int getTotalRoomCount(int approve) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(*) FROM room";
+		String sql = "SELECT COUNT(*) FROM room where approve = ?";
 		try {
 			con = JdbcUtil.getCon();
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, approve);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt(1); // 결과의 첫 번째 열(전체 행 수)을 정수로 반환
@@ -265,53 +275,6 @@ public class RoomDaoImpl implements RoomDao {
 			JdbcUtil.close(con, pstmt, rs);
 		}
 	}
-	@Override
-	public BookingInfoDto getBookingInfoById(long roomId) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		BookingInfoDto bookingInfo = null;
-		String sql = "SELECT r.room_name, r.jibun_address, r.street_address, r.address_detail, r.floor, " +
-				"m.name AS member_name, m.phone, b.check_in_date, b.check_out_date, " +
-				"rp.rent_price, rp.long_term_discount, rp.early_check_in_discount, rp.maintenance_bill, rp.cleaning_fee " +
-				"FROM room r " +
-				"INNER JOIN member m ON r.host_id = m.id " +
-				"INNER JOIN booking b ON r.id = b.room_id " +
-				"INNER JOIN room_price rp ON r.id = rp.room_id " +
-				"WHERE r.id = ?";
-
-		try {
-			con = JdbcUtil.getCon();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setLong(1, roomId);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				bookingInfo = new BookingInfoDto();
-				bookingInfo.setRoomName(rs.getString("room_name"));
-				bookingInfo.setJibunAddress(rs.getString("jibun_address"));
-				bookingInfo.setStreetAddress(rs.getString("street_address"));
-				bookingInfo.setAddressDetail(rs.getString("address_detail"));
-				bookingInfo.setFloor(rs.getInt("floor"));
-				bookingInfo.setMemberName(rs.getString("member_name"));
-				bookingInfo.setPhone(rs.getString( "phone"));
-				bookingInfo.setCheckInDate(rs.getDate("check_in_date"));
-				bookingInfo.setCheckOutDate(rs.getDate("check_out_date"));
-				bookingInfo.setRentPrice(rs.getInt("rent_price"));
-				bookingInfo.setLongTermDiscount(rs.getInt("long_term_discount"));
-				bookingInfo.setEarlyCheckInDiscount(rs.getInt("early_check_in_discount"));
-				bookingInfo.setMaintenanceBill(rs.getInt("maintenance_bill"));
-				bookingInfo.setCleaningFee(rs.getInt("cleaning_fee"));
-			}
-			return bookingInfo;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			JdbcUtil.close(con, pstmt, rs);
-		}
-	}
 
 	@Override
 	public List<Room> getRoomsByHostId(long hostId) {
@@ -349,7 +312,7 @@ public class RoomDaoImpl implements RoomDao {
 		}
 		return rooms;
 	}
-	//승인여부도 확인해야됨 applove -> 1정상
+	//승인여부도 확인해야됨 approve -> 1정상
 	@Override
 	public ArrayList<Room> searchRoomList(String searchWord,int viewRecord) {
 		Connection con = null;
@@ -471,5 +434,63 @@ public class RoomDaoImpl implements RoomDao {
 		}
 
 		return roomImageList;
+	}
+
+	@Override
+	public List<GuestRoomBookingDto> getRoomsByGuestIdWithStatus(long guestId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<GuestRoomBookingDto> rooms = new ArrayList<>();
+		
+		try {
+			con = JdbcUtil.getCon();
+			String sql = "SELECT "
+					   + "    r.id as roomId, "
+			           + "    r.room_name AS roomName, "
+			           + "    r.jibun_address AS jibunAddress, "
+			           + "    r.street_address AS streetAddress, "
+			           + "    r.address_detail AS addressDetail, "
+			           + "    r.floor AS floor, "
+			           + "    b.check_in_date AS checkInDate, "
+			           + "    b.check_out_date AS checkOutDate, "
+			           + "    rp.rent_price AS rentPrice, "
+			           + "    b.booking_status AS bookingStatus "
+			           + "FROM "
+			           + "    booking b "
+			           + "    JOIN room r ON b.room_id = r.id "
+			           + "    JOIN room_price rp ON r.id = rp.room_id "
+			           + "WHERE "
+			           + "    b.guest_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setLong(1, guestId);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				GuestRoomBookingDto room = new GuestRoomBookingDto();
+				room.setRoomId(rs.getLong("roomId"));
+				room.setRoomName(rs.getString("roomName"));
+			    room.setJibunAddress(rs.getString("jibunAddress"));
+			    room.setStreetAddress(rs.getString("streetAddress"));
+			    room.setAddressDetail(rs.getString("addressDetail"));
+			    room.setFloor(rs.getInt("floor"));
+			    room.setCheckInDate(rs.getDate("checkInDate"));
+			    room.setCheckOutDate(rs.getDate("checkOutDate"));
+			    room.setRentPrice(rs.getInt("rentPrice"));
+			    room.setBookingStatus(rs.getInt("bookingStatus"));	
+			    
+			    rooms.add(room);
+			}
+			return rooms;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			JdbcUtil.close(con, pstmt, rs);
+		}
+		
+
+		
 	}
 }

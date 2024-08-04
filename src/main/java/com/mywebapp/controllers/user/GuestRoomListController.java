@@ -17,7 +17,7 @@ import com.mywebapp.service.RoomService;
 import com.mywebapp.service.RoomServiceImpl;
 
 @WebServlet("/service/guestMain")
-public class RoomListController extends HttpServlet {
+public class GuestRoomListController extends HttpServlet {
 	
 	//RoomServiceImpl 불러오기
 	private RoomService roomService = new RoomServiceImpl();
@@ -26,9 +26,10 @@ public class RoomListController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		
+		int approve = 1; // 승인완료
+		
 		// 페이지 번호 처리
 		String pNum = req.getParameter("pageNum");
-		
 		int pageNum = 1;
 		if(pNum != null) {
 			pageNum = Integer.parseInt(pNum);
@@ -36,8 +37,8 @@ public class RoomListController extends HttpServlet {
 		int pageSize = 10; // 한 페이지에 보여줄 항목 수
 		
 		// RoomServiceImpl의 메서드들 호출
-		List<RoomListItemDto> roomList = roomService.getRoomList(pageNum, pageSize);
-		int totalCount = roomService.getTotalRoomCount();
+		List<RoomListItemDto> roomList = roomService.getRoomList(pageNum, pageSize, approve);
+		int totalCount = roomService.getTotalRoomCount(approve);
 		Map<String, Object> paginationInfo = roomService.calculatePagination(pageNum, pageSize, totalCount);
 		
 		// request 객체를 통해 guestMain.jsp로 데이터들 전달

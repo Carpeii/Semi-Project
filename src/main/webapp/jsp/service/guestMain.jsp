@@ -18,7 +18,6 @@
 	<p>${userId }님 환영합니다</p>
 </c:if>
 
-
 <table border="1" width="1500">
 	<tr>
 		<th>이미지 경로</th>
@@ -31,7 +30,7 @@
 	</tr>
 	<c:forEach var="room" items="${roomList }">
 		<tr>
-		<!--  
+			<!--  
             <td><img src="${room.imagePath}" alt="${room.imageName}" width="100"/></td>
        -->
 			<td>${room.imagePath }</td>
@@ -40,61 +39,33 @@
 			<td>${room.streetAddress }</td>
 			<td>${room.rentPrice }</td>
 			<td>${room.roomOption }</td>
-			<td><a href="<%=request.getContextPath()%>/service/roomDetail?roomId=${room.id}">방 상세보기</a>
+			<td><a href="${pageContext.request.contextPath}/service/roomDetail?roomId=${room.id}">방 상세보기</a></td>
 		</tr>
 	</c:forEach>
 </table>
 
 
-
-<div>
-    <!-- 이전 페이지 링크 -->
+<!-- Pagination Controls -->
+<div class="pagination">
     <c:if test="${pageNum > 1}">
-        <a href="${pageContext.request.contextPath}/service/guestMain?pageNum=${pageNum - 1}">이전</a>
+        <a href="?pageNum=${pageNum - 1}" style="text-decoration: underline; color: #007bff;">Previous</a>
     </c:if>
 
-    <!-- 페이지 번호 링크 -->
-    <c:set var="pageRange" value="10" />
-    <c:set var="startPage" value="${pageNum - (pageRange / 2)}" />
-    <c:set var="endPage" value="${pageNum + (pageRange / 2)}" />
-
-    <c:if test="${startPage < 1}">
-        <c:set var="endPage" value="${endPage + (1 - startPage)}" />
-        <c:set var="startPage" value="1" />
-    </c:if>
-
-    <c:if test="${endPage > pageCount}">
-        <c:set var="startPage" value="${startPage - (endPage - pageCount)}" />
-        <c:set var="endPage" value="${pageCount}" />
-    </c:if>
-
-    <c:forEach var="num" begin="${startPage}" end="${endPage}">
+    <c:forEach begin="${startPage}" end="${endPage}" var="i">
         <c:choose>
-            <c:when test="${num == pageNum}">
-                <!-- 현재 페이지 색 바꾸기 -->
-                <a href="${pageContext.request.contextPath}/service/guestMain?pageNum=${num}">
-                    <span style="color:red">${num}</span>
-                </a>
+            <c:when test="${i == pageNum}">
+                <span style="color: red; font-weight: bold;">${i}</span> <!-- Highlight current page -->
             </c:when>
             <c:otherwise>
-                <a href="${pageContext.request.contextPath}/service/guestMain?pageNum=${num}">
-                    <span style="color:gray">${num}</span>
-                </a>
+                <a href="?pageNum=${i}" style="text-decoration: none; color: #007bff;">${i}</a>
             </c:otherwise>
         </c:choose>
     </c:forEach>
 
-    <!-- 다음 페이지 링크 -->
     <c:if test="${pageNum < pageCount}">
-        <a href="${pageContext.request.contextPath}/service/guestMain?pageNum=${pageNum + 1}">다음</a>
+        <a href="?pageNum=${pageNum + 1}" style="text-decoration: underline; color: #007bff;">Next</a>
     </c:if>
 </div>
-
-
-
-
-
- 
 
 </body>
 </html>
