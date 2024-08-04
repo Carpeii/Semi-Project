@@ -8,10 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>myPageGuestBooking.jsp</title>
 </head>
 <body>
 <!-- 계약한 내용 보여주기 -->
-
 </body>
 </html>

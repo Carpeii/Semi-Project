@@ -2,7 +2,6 @@ package com.mywebapp.controllers.user;
 
 import com.mywebapp.dto.UserDto;
 import com.mywebapp.util.JdbcUtil;
-import com.mywebapp.util.PasswordUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

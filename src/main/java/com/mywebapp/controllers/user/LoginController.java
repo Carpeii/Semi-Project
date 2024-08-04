@@ -61,15 +61,6 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("user", vo);
                 session.setMaxInactiveInterval(30 * 60); // session 유지시간 30분으로 설정
 
-//                if(vo.getMemberType() == 1) {
-//                    HostDto host = new HostDto();
-//                    host.setMemberId(rs.getLong("member_id"));
-//                    host.setBankName(rs.getString("bankName"));
-//                    host.setAccount(rs.getString("account"));
-//                    host.setAccount_holder(rs.getString("account_holder"));
-//                    session.setAttribute("host", host);
-//                }
-
                 if(vo.getMemberType() == 0) {
                     resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
                 } else if (vo.getMemberType() ==1) {
@@ -89,7 +80,9 @@ public class LoginController extends HttpServlet {
 
                         // 세션에 호스트 정보 저장
                         session.setAttribute("host", hostDto);
+                        session.setMaxInactiveInterval(30 * 60);
                     }
+
                     resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
 //                    HostDto host = new HostDto();
 //                    host.setMemberId(rs.getLong("member_id"));
