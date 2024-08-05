@@ -22,7 +22,7 @@ import static java.lang.Boolean.parseBoolean;
 public class AdminJoinController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        req.getRequestDispatcher("/jsp/amin/adminJoin.jsp").forward(req, resp);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class AdminJoinController extends HttpServlet {
             session.setAttribute("userId", userId); // session에 userId 저장
 
             // 회원가입 성공 -> 메인 페이지로 이동
-            resp.sendRedirect(req.getContextPath() + "/admin/adminMain.jsp");
+            resp.sendRedirect(req.getContextPath() + "/adminMain.jsp");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,6 +97,7 @@ public class AdminJoinController extends HttpServlet {
             JdbcUtil.close(conn, pstmt, rs);
         }
     }
+
     protected void checkUserID(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 아이디 중복 체크 버튼이 눌렸을 경우에
         Connection conn = null;

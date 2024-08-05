@@ -4,6 +4,7 @@ import com.mywebapp.dto.HostDto;
 import com.mywebapp.dto.UserDto;
 import com.mywebapp.util.JdbcUtil;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
 
         // 공백란 존재
-        if (userId == null || userId == "" || password == null || password == "") {
+        if (userId.isEmpty() || password.isEmpty()) {
             req.setAttribute("errMsg", "아이디와 비밀번호 모두 기입");
             req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
         }
@@ -62,7 +63,7 @@ public class LoginController extends HttpServlet {
                 session.setMaxInactiveInterval(30 * 60); // session 유지시간 30분으로 설정
 
                 if(dto.getMemberType() == 0) {
-                    resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
+                    resp.sendRedirect(req.getContextPath() + "/guestMain");
                 } else if (dto.getMemberType() ==1) {
                     // 호스트 정보 조회
                     String hostSql = "SELECT * FROM host WHERE member_id = ?";
@@ -83,9 +84,9 @@ public class LoginController extends HttpServlet {
                         session.setMaxInactiveInterval(30 * 60);
                     }
 
-                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+                    resp.sendRedirect(req.getContextPath() + "/hostMain");
                 } else if(dto.getMemberType() == 3) { // admin
-                    resp.sendRedirect(req.getContextPath() + "/jsp/admin/adminMain.jsp");
+                    resp.sendRedirect(req.getContextPath() + "/adminMain");
                 }
             } else {
                 req.setAttribute("errMsg", "아이디 비밀번호를 확인하세요.");

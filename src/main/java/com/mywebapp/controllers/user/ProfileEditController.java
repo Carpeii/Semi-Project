@@ -17,9 +17,13 @@ import java.sql.SQLException;
 
 @WebServlet("/edit")
 public class ProfileEditController extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/jsp/user/profile.jsp").forward(req, resp);
+    }
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(); // 수정 페이지에 기본정보 자동으로 입력되어있도록 -> null이 아님
         UserDto user = (UserDto) session.getAttribute("user");
 
@@ -71,9 +75,9 @@ public class ProfileEditController extends HttpServlet {
                         // 세션에 수정도니 정보 저장
                         session.setAttribute("user", updateUser);
                         if (user.getMemberType() == 0) {
-                            resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
+                            resp.sendRedirect(req.getContextPath() + "/guestMain");
                         } else if (user.getMemberType() == 1) {
-                            resp.sendRedirect(req.getContextPath() + "/jsp/user/hostProfile.jsp");
+                            resp.sendRedirect(req.getContextPath() + "/editHost");
                         }
 
                     } else if (newPassword.equals(pwConfirm)) {
@@ -92,9 +96,9 @@ public class ProfileEditController extends HttpServlet {
 
                         // 비밀번호 업데이트도 완료
                         if (user.getMemberType() == 0) {
-                            resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
+                            resp.sendRedirect(req.getContextPath() + "/guestMain");
                         } else if (user.getMemberType() == 1) {
-                            resp.sendRedirect(req.getContextPath() + "/jsp/user/hostProfile.jsp");
+                            resp.sendRedirect(req.getContextPath() + "/editHost");
                         }
 
                     } else if (newPassword.isEmpty() || pwConfirm.isEmpty()) { // 업데이트는 성공, 비밀번호 변경란 하나가 비어있는 경우

@@ -77,7 +77,7 @@ public class HostJoinController extends HttpServlet {
 
                 if (rowsAffected > 0) {
                     // 로그인 성공 -> 로그인 페이지로 리다이렉트
-                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+                    resp.sendRedirect(req.getContextPath() + "/hostMain");
                 } else {
                     // 로그인 실패 -> 다시 회원가입 폼으로
                     req.setAttribute("errMsg", "회원가입에 실패했습니다. 다시 시도해주세요.");

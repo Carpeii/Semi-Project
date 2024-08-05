@@ -16,7 +16,7 @@
 <form action="${pageContext.request.contextPath}/adminJoin" method="post">
     <input type="hidden" name="isDuplicate" value="${isDuplicate}">
     <fieldset>
-        <legend>회원가입 폼을 작성해주세요.</legend>
+        <legend>관리자 계정 추가 폼을 작성해주세요</legend>
         <table>
             <tr>
                 <td><label for="userId">아이디</label></td>
