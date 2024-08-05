@@ -9,8 +9,10 @@ import java.util.List;
 public class RoomDto {
     private long id;
     private String hostId;
+    private String roomName;
     private String jibunAddress;
     private String streetAddress;
+    private String addressDetail;
     private int floor;
     private int usableArea;
     private int roomCount;
@@ -32,14 +34,16 @@ public class RoomDto {
 
     public RoomDto() {}
 
-    public RoomDto(long id, String hostId, String jibunAddress, String streetAddress,
-                   int floor, int usableArea, int roomCount, int livingRoomCount,
+    public RoomDto(long id, String hostId, String roomName ,String jibunAddress, String streetAddress,
+                   String addressDetail, int floor, int usableArea, int roomCount, int livingRoomCount,
                    int toiletCount, int kitchenCount, boolean duplex, boolean elevator,
                    boolean park, String parkDetail, int roomType, int minimumContract, int approve) {
         this.id = id;
         this.hostId = hostId;
+        this.roomName = roomName;
         this.jibunAddress = jibunAddress;
         this.streetAddress = streetAddress;
+        this.addressDetail = addressDetail;
         this.floor = floor;
         this.usableArea = usableArea;
         this.roomCount = roomCount;
