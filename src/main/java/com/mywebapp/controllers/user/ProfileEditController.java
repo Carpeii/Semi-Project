@@ -67,7 +67,7 @@ public class ProfileEditController extends HttpServlet {
                     }
 
                     // 업데이트 성공, 비밀번호 수정하지 않는 경우
-                    if (newPassword.isEmpty() && pwConfirm.isEmpty()) {
+                    if (newPassword.isEmpty() && pwConfirm.isEmpty()) { // 둘 다 비어있지 않은 경우
                         UserDto updateUser = new UserDto();
                         updateUser.setId(user.getId());
                         updateUser.setName(name);
@@ -104,8 +104,10 @@ public class ProfileEditController extends HttpServlet {
                     } else if (newPassword.isEmpty() || pwConfirm.isEmpty()) { // 업데이트는 성공, 비밀번호 변경란 하나가 비어있는 경우
                         req.setAttribute("errMsg", "비밀번호 변경을 원하시면 모두 채워주세요");
                         req.getRequestDispatcher("/jsp/user/profile.jsp").forward(req, resp);
+                    } else if (!newPassword.equals(pwConfirm)) {
+                        req.setAttribute("errMsg", "새로운 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                        req.getRequestDispatcher("/jsp/user/profile.jsp").forward(req, resp);
                     }
-
                 } catch (SQLException e) {
                     e.printStackTrace();
                     req.setAttribute("errMsg", e.getMessage());
