@@ -34,3 +34,12 @@
   .noborder {
     border: none;
   }
+  .btnsize {
+  			width: 300px;
+            height: 300px;
+  }
+   .custom-table {
+      border-spacing: 10px; /* 원하는 간격 값 */
+      border-collapse: separate; /* 기본적으로 collapse가 설정되어 있으니 separate로 변경 */
+      border: none;
+    }

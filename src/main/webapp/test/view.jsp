@@ -16,14 +16,16 @@
 <div class="container mt-2 sm custom-container">
 <form>
 	<table class="table calendar-table">
+	<tr>
 	<th colspan="7">2024-06</th>
+	</tr>
 	<tr>
 <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th><th>일</th>
 </tr>
 <tr>
 <td>
-<button type="button" class="w-100 h-100 btn btn-outline-primary" style"border: none;" value="notselectedDay">
-1
+<button type="button" class="w-100 h-100 btn btn-outline-primary" style="border:none;" value="notselectedDay">
+
 </button>
 </td>
 <td class="disabled"> </td>

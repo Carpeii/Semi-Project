@@ -48,7 +48,7 @@ public class ReservationAvailablePeriodCallAction implements Action {
 			dateDiff = ChronoUnit.DAYS.between(select, firstCheckInDate);
 			System.out.println("차이 값"+dateDiff);
 			
-			//db에서 가져온 값이 없다면 최대가간 84일 3달
+			//db에서 가져온 값이 없다면 최대가간 91일 3달
 		} else {
 			dateDiff = 91L;
 			System.out.println("모두 가능 : " + dateDiff);
