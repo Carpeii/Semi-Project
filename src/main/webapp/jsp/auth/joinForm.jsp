@@ -20,7 +20,7 @@
 </head>
 <body>
 <h1>1평 회원가입</h1>
-<form action="${pageContext.request.contextPath}/joinOk" method="post">
+<form action="${pageContext.request.contextPath}/join" method="post">
     <input type="hidden" name="isDuplicate" value="${isDuplicate}">
     <fieldset>
         <legend>회원가입 폼을 작성해주세요.</legend>
