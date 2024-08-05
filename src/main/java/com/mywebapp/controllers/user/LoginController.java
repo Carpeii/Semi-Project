@@ -1,6 +1,6 @@
 package com.mywebapp.controllers.user;
 
-import com.mywebapp.dao.MemberDao;
+import com.mywebapp.dto.HostDto;
 import com.mywebapp.dto.UserDto;
 import com.mywebapp.util.JdbcUtil;
 
@@ -19,87 +19,90 @@ import java.sql.SQLException;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/jsp/service/loginMain.jsp").forward(request, response);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        String pw = req.getParameter("pw");
-        String errMsg = null;
+        String userId = req.getParameter("userId");
+        String password = req.getParameter("password");
 
-        String login = req.getParameter("login");
+        // 공백란 존재
+        if (userId == null || userId == "" || password == null || password == "") {
+            req.setAttribute("errMsg", "아이디와 비밀번호 모두 기입");
+            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+        }
 
-        PreparedStatement pstmt = null;
         Connection conn = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
             conn = JdbcUtil.getCon();
-            // if (id != null && pw != null) {
-            if (id != null && !id.isEmpty() && pw != null && !pw.isEmpty()) {
-                // 아이디, 비밀번호가 공백이 아닌 경우
-                // db 연결해서 아이디 비밀번호 일치 확인
-                try {
-                    String sql = "select * from member where user_id = ? and password = ?";
-                    pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, id);
-                    pstmt.setString(2, pw);
-                    rs = pstmt.executeQuery();
 
-                    if (rs.next()) {
-                        //user 로그인 정보를 담기 위한 객체 생성
-                        UserDto vo = new UserDto();
-                        vo.setId(rs.getString("id"));
-                        vo.setPassword(rs.getString("password"));
+            String sql = "select * from member where user_id = ? and password = password(?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, password);
+            rs = pstmt.executeQuery();
 
-                        // 세션에 사용자 정보 저장
-                        HttpSession session = req.getSession();
-                        session.setAttribute("user", vo.getId()); // session에 아이디만 저장
-                        session.setMaxInactiveInterval(30*60); // session 유지시간 30분으로 설정
+            if(rs.next()) {
+                // id, pw와 일치하는 사용자 발견
+                UserDto vo = new UserDto();
+                vo.setId(rs.getLong("id"));
+                vo.setUserId(rs.getString("user_id"));
+                vo.setName(rs.getString("name"));
+                vo.setMemberType(rs.getInt("member_type"));
+                vo.setPhone(rs.getString("phone"));
 
-                        // 아이디 비번 일치 일치
-                        if (login != null) {
-//                            // db 조회하기 -> guest, host 분리
-//                            String searchSql = "select member_type from member where user_id = ?";
-//                            pstmt = conn.prepareStatement(searchSql);
-//                            pstmt.setString(1, id);
-//                            rs = pstmt.executeQuery();
+                // session에 저장
+                HttpSession session = req.getSession();
+                session.setAttribute("user", vo);
+                session.setMaxInactiveInterval(30 * 60); // session 유지시간 30분으로 설정
 
-                            int memberType = rs.getInt("member_type");
+                if(vo.getMemberType() == 0) {
+                    resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
+                } else if (vo.getMemberType() ==1) {
+                    // 호스트 정보 조회
+                    String hostSql = "SELECT * FROM host WHERE member_id = ?";
+                    pstmt = conn.prepareStatement(hostSql);
+                    pstmt.setLong(1, vo.getId()); // UserDto의 id를 사용
+                    ResultSet hostRs = pstmt.executeQuery();
 
-                            if(memberType == 0) { // 게스트로 로그인
-                                resp.sendRedirect(req.getContextPath() + "/service/guestMain");
-                            } else if (memberType == 1) { // 호스트로 로그인
-                                resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
-                            }
-                        }
-                    } else {
-                        // 아이디 비밀번호 불일치
-                        req.setAttribute("errMsg", "아이디, 비밀번호를 확인하세요");
-                        req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+                    if (hostRs.next()) {
+                        // 호스트 정보 설정
+                        HostDto hostDto = new HostDto();
+                        hostDto.setMemberId(hostRs.getLong("member_id"));
+                        hostDto.setBankName(hostRs.getString("bank_name"));
+                        hostDto.setAccount(hostRs.getString("account"));
+                        hostDto.setAccountHolder(hostRs.getString("account_holder"));
+
+                        // 세션에 호스트 정보 저장
+                        session.setAttribute("host", hostDto);
+                        session.setMaxInactiveInterval(30 * 60);
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
+
+                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+//                    HostDto host = new HostDto();
+//                    host.setMemberId(rs.getLong("member_id"));
+//                    host.setBankName(rs.getString("bankName"));
+//                    host.setAccount(rs.getString("account"));
+//                    host.setAccount_holder(rs.getString("account_holder"));
+//                    session.setAttribute("host", host);
+//                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
                 }
             } else {
-                // 아이디 비밀번호에 null 값이 있는 경우
-                req.setAttribute("errMsg", "아이디와 비밀번호를 모두 채워주세요.");
+                req.setAttribute("errMsg", "아이디 비밀번호를 확인하세요.");
                 req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
-        } catch (ServletException e) {
-            e.printStackTrace();
-            req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
+        } catch (SQLException e) {
+            e.getMessage();
+            req.setAttribute("errMsg", e.getMessage());
+            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
         } finally {
             JdbcUtil.close(conn, pstmt, rs);
         }
+
     }
 }
