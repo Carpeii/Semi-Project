@@ -31,7 +31,7 @@
     // 로그인 정보 없음
 %>
 <button onclick="location.href='../admin/adminJoin.jsp'">관리자 계정 등록</button>
-<button onclick="location.href='../admin/adminLogin.jsp'">관리자 로그인</button>
+<button onclick="location.href='../auth/loginMain.jsp.jsp'">관리자 로그인</button>
 <%
     }
 %>
