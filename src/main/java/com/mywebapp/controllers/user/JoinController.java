@@ -22,12 +22,11 @@ import static java.lang.Boolean.parseBoolean;
 public class JoinController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 회원가입 폼을 보여주기 위한 요청 처리
         req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
-    	
     }
+    	
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -94,11 +93,11 @@ public class JoinController extends HttpServlet {
                 if ("guest".equals(action)) { // 게스트 회원가입
                     int memberType = 0;
                     dto.setMemberType(memberType);
-                    resp.sendRedirect(req.getContextPath() + "/service/guestMain");
+                    resp.sendRedirect(req.getContextPath() + "/guestMain");
                 } else if("host".equals(action)){ // 호스트 회원가입
                     int memberType = 1;
                     dto.setMemberType(memberType);
-                    resp.sendRedirect(req.getContextPath() + "/jsp/sevice/hostMain.jsp");
+                    resp.sendRedirect(req.getContextPath() + "/hostJoin");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
