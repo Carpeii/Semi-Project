@@ -45,56 +45,54 @@ asdasdsadas
 			</td>
 		 </c:forEach>
 		 
-		 <tr>
-		 <c:if test="${pagenum > 1 }">
-		 <td>
- <a href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum-1}">이전페이지</a>
-		 </td>
-		 </c:if>
-		 <c:if test="${totalpage > pagenum }">
-		 <td>
- <a href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+1}">다음페이지</a>
-		 </td>
-		 </c:if>
+		
  </table>
- 
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item">
-	 <c:choose>
-	 <c:when test="${pagenum > 5 }">
-      <a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum-5}" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
- 	</c:when>
- 	<c:otherwise>
-      <a class="page-link" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
- 	</c:otherwise>
- </c:choose>
-    </li>
-    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum}">${pagenum}</a></li>
-    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+1}">${pagenum+1}</a></li>
-    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+2}">${pagenum+2}</a></li>
-    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+3}">${pagenum+3}</a></li>
-    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+4}">${pagenum+4}</a></li>
-    <li class="page-item">
-     <c:choose>
-	 <c:when test="${5+pagenum < totalpage}">
-      <a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+5}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
- 	</c:when>
- 	<c:otherwise>
-     <a class="page-link" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
- 	</c:otherwise>
- </c:choose>
-    </li>
-  </ul>
-</nav>
+          <!-- --------------------------------------------------------페이징----------------------------------------------------- -->
+          <!-- --------------------------------------------------------페이징----------------------------------------------------- -->
+          <!-- --------------------------------------------------------페이징----------------------------------------------------- -->
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<li class="page-item"><c:choose>
+					<c:when test="${startBlock > 5 }">
+						<a class="page-link"
+							href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${endBlock - blockPerPage}"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a>
+					</c:when>
+					<c:otherwise>
+						<a class="page-link text-secondary" aria-label="Previous"> <span
+							aria-hidden="true">&laquo;</span>
+						</a>
+					</c:otherwise>
+				</c:choose></li>
+			<c:forEach var="page" begin="${startBlock}" end="${endBlock}">
+				<c:if test="${page == pageNum}">
+					<li class="page-item"><a class="page-link">[${page}]</a></li>
+				</c:if>
+				<!--  endBlock -> 9 , totalPage 7 ,  -->
+			<c:if test="${page <=  totalPage }">
+				<c:if test="${page != pageNum}">
+					<li class="page-item"><a class="page-link"
+						href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${page}">${page}</a></li>
+				</c:if>
+			</c:if>
+			</c:forEach>
+
+			<li class="page-item"><c:choose>
+					<c:when test="${endBlock < totalPage}">
+						<a class="page-link"
+							href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${startBlock + blockPerPage}"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a>
+					</c:when>
+					<c:otherwise>
+						<a class="page-link text-secondary" aria-label="Next"> <span
+							aria-hidden="true">&raquo;</span>
+						</a>
+					</c:otherwise>
+				</c:choose></li>
+		</ul>
+	</nav>
 
 </body>
 </html>
