@@ -18,9 +18,9 @@
         // 로그인 정보 존재
 %>
 <p>${sessionScope.user.userId}님 환영합니다</p>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/logout.jsp'">로그아웃</button>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/user/profile.jsp'">마이 페이지</button>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/service/guestMain.jsp'">게스트 페이지로</button>
+<button onclick="location.href='${pageContext.request.contextPath}/logout'">로그아웃</button>
+<button onclick="location.href='${pageContext.request.contextPath}/myPage'">마이 페이지</button>
+<button onclick="location.href='${pageContext.request.contextPath}/guestMain'">게스트 페이지로</button>
 <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">방관리</button>
 <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">계약</button>
 <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">채팅</button>
@@ -34,8 +34,8 @@
     System.out.println(user);
     // 로그인 정보 없음
 %>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/loginMain.jsp'">로그인</button>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/join.jsp'">회원가입</button>
+<button onclick="location.href='${pageContext.request.contextPath}/login'">로그인</button>
+<button onclick="location.href='${pageContext.request.contextPath}/join'">회원가입</button>
 <%
     }
 %>
