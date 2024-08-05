@@ -1,5 +1,7 @@
 package com.mywebapp.controllers.user;
 
+import com.mywebapp.dao.MemberDao;
+import com.mywebapp.dto.MemberDto;
 import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
@@ -16,7 +18,7 @@ import java.sql.SQLException;
 
 import static java.lang.Boolean.parseBoolean;
 
-@WebServlet("/joinOk")
+@WebServlet("/join")
 public class JoinController extends HttpServlet {
 
     @Override
@@ -28,6 +30,7 @@ public class JoinController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        // 아이디 중복 확인
         boolean isDuplicate = parseBoolean(req.getParameter("isDuplicate"));
         //isDuplicate = true;
 
@@ -43,51 +46,18 @@ public class JoinController extends HttpServlet {
         String name = req.getParameter("name");
         String phone = req.getParameter("phone");
 
-        // db 연결
-        PreparedStatement pstmt = null;
         Connection conn = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
-
-        // 에러 메세지 띄우기 위한 변수
-        String idErrMsg = null;
-        String pwErrMsg = null;
-        String errMsg = null;
 
         // 아이디 중복 체크 버튼이 눌렸을 경우에
         if ("checkId".equals(action)) {
-            try {
-                conn = JdbcUtil.getCon();
-
-                //db에 존재하는 아이디인지 확인
-                String sql = "select * from member where user_id=?";
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, userId);
-                rs = pstmt.executeQuery();
-
-                if (rs.next()) {
-                    req.setAttribute("idErrMsg", "사용할 수 없는 아이디 입니다. 새로운 아이디로 다시 시도하세요.");
-                    req.setAttribute("isDuplicate", true);
-                    req.setAttribute("userId", "");
-                } else {
-                    req.setAttribute("idErrMsg", "사용할 수 있는 아이디 입니다!");
-                    req.setAttribute("isDuplicate", false);
-                    req.setAttribute("userId", userId);
-                }
-
-                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
-                return;
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                req.setAttribute("idErrMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
-                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
-
-            } finally {
-                JdbcUtil.close(conn, pstmt, rs);
-            }
+            checkUserID(req, resp);
+            return;
         }
 
         if ("guest".equals(action) || "host".equals(action)) {
+
             if (isDuplicate) {
                 req.setAttribute("errMsg", "아이디 중복 검사 필수 입니다.");
                 req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
@@ -101,26 +71,31 @@ public class JoinController extends HttpServlet {
                 return;
             }
 
+            // dto에 담기
+            MemberDto dto = new MemberDto();
+            dto.setUserId(userId);
+            dto.setPassword(password);
+            dto.setName(name);
+            dto.setPhone(phone);
+
             // 회원가입으로 데이터베이스에 insert
             try {
                 conn = JdbcUtil.getCon();
-                String sql = "INSERT INTO member (user_id, password, name, phone, member_type) VALUES (?, PASSWORD(?), ?, ?, ?)";
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, userId);
-                pstmt.setString(2, password);
-                pstmt.setString(3, name);
-                pstmt.setString(4, phone);
-                pstmt.setInt(5, "guest".equals(action) ? 0 : 1);
-                pstmt.executeUpdate();
+                MemberDao dao = new MemberDao(conn);
+                dao.joinMember(dto);
 
                 HttpSession session = req.getSession();
                 session.setAttribute("userId", userId); // session에 userId 저장
 
                 // 회원가입 성공 -> 메인 페이지로 이동
                 if ("guest".equals(action)) { // 게스트 회원가입
+                    int memberType = 0;
+                    dto.setMemberType(memberType);
                     resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
-                } else { // 호스트 회원가입
-                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+                } else if("host".equals(action)){ // 호스트 회원가입
+                    int memberType = 1;
+                    dto.setMemberType(memberType);
+                    resp.sendRedirect(req.getContextPath() + "/jsp/sevice/hostMain.jsp");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -129,6 +104,42 @@ public class JoinController extends HttpServlet {
             } finally {
                 JdbcUtil.close(conn, pstmt, rs);
             }
+        }
+    }
+
+    protected void checkUserID(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // 아이디 중복 체크 버튼이 눌렸을 경우에
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = JdbcUtil.getCon();
+
+            //db에 존재하는 아이디인지 확인
+            String sql = "select * from member where user_id=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, req.getParameter("userId"));
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                req.setAttribute("idErrMsg", "사용할 수 없는 아이디 입니다. 새로운 아이디로 다시 시도하세요.");
+                req.setAttribute("isDuplicate", true);
+                req.setAttribute("userId", "");
+            } else {
+                req.setAttribute("idErrMsg", "사용할 수 있는 아이디 입니다!");
+                req.setAttribute("isDuplicate", false);
+                req.setAttribute("userId", req.getParameter("userId"));
+            }
+
+            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            req.setAttribute("idErrMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
+            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+
+        } finally {
+            JdbcUtil.close(conn, pstmt, rs);
         }
     }
 }
