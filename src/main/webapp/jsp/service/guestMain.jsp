@@ -1,84 +1,104 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ page import="com.mywebapp.dto.UserDto" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>jsp/service/guestMain.jsp</title>
+    <meta charset="UTF-8">
+    <title>guestMain.jsp</title>
 </head>
 <body>
 
-<h2>´Ü±âÀÓ´ë, 1Æò¿¡¼­ Ã£¾Æº¸¼¼¿ä</h2>
-<button onclick="location.href='../service/searchByMap.jsp'">Áöµµ·Î °Ë»ö</button>
-<button onclick="location.href='../service/search.jsp'">°Ë»ö</button>
+<h2>ë‹¨ê¸°ì„ëŒ€, 1í‰ì—ì„œ ì°¾ì•„ë³´ì„¸ìš”</h2>
+<%
+    UserDto user = (session != null) ? (UserDto) session.getAttribute("user") : null;
+%>
+<%
+    if (user != null) {
+        System.out.println(user);
+        // ë¡œê·¸ì¸ ì •ë³´ ì¡´ì¬
+%>
+        <p>${user.name}ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</p>
+<%--        <p>${user.userId}ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</p>--%>
+        <button onclick="location.href='${pageContext.request.contextPath}/logout'">ë¡œê·¸ì•„ì›ƒ</button>
+        <button onclick="location.href='${pageContext.request.contextPath}/myPage'">ë§ˆì´ í˜ì´ì§€</button>
+        <button onclick="location.href='${pageContext.request.contextPath}/hostMain'">í˜¸ìŠ¤íŠ¸ í˜ì´ì§€ë¡œ</button>
+<%--        <p>${userId}ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</p>--%>
 
-<!-- RoomListController¿¡¼­ ¼¼¼Ç ¹Ş¾Æ¿Í¼­ ±¸Çö -->
-    <!-- ·Î±×ÀÎ »óÅÂ È®ÀÎ ¹× »ç¿ëÀÚ ÀÌ¸§ Ç¥½Ã -->
-	<c:if test="${not empty user }">
-		<p>${user.name }´Ô È¯¿µÇÕ´Ï´Ù</p>
-	</c:if>
-	
-	 <!-- ·Î±×ÀÎ »óÅÂ°¡ ¾Æ´Ò ¶§ ·Î±×ÀÎ ¹öÆ° Ç¥½Ã -->
-    <c:if test="${empty user}">
-        <p>·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.</p>
-        <a href="${pageContext.request.contextPath}/login">·Î±×ÀÎ</a>
-    </c:if>
-	
-<c:if test="${empty roomList }">
-	<p>No rooms available.</p>
-</c:if>
 
-<!-- ¹æ ¸ñ·Ï Ç¥½Ã -->
-<c:if test="${not empty roomList}">
-    <table border="1" width="1500">
+<%
+    } else if (user == null) {
+        System.out.println(user);
+        // ë¡œê·¸ì¸ ì •ë³´ ì—†ìŒ
+%>
+        <button onclick="location.href='${pageContext.request.contextPath}/login'">ë¡œê·¸ì¸</button>
+        <button onclick="location.href='${pageContext.request.contextPath}/join'">íšŒì›ê°€ì…</button>
+<%
+    }
+%>
+<button onclick="location.href='${pageContext.request.contextPath}/jsp/service/searchByMap.jsp'">ì§€ë„ë¡œ ê²€ìƒ‰</button>
+<button onclick="location.href='${pageContext.request.contextPath}/jsp/service/search.jsp'">ê²€ìƒ‰</button>
+
+<!-- RoomListControllerì—ì„œ ì„¸ì…˜ ë°›ì•„ì™€ì„œ êµ¬í˜„ -->
+<%--<c:if test="${not empty userId }">--%>
+<%--    <p>${userId }ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</p>--%>
+<%--</c:if>--%>
+
+<table border="1" width="1500">
+    <tr>
+        <th>ì´ë¯¸ì§€ ê²½ë¡œ</th>
+        <th>ì´ë¯¸ì§€ ì´ë¦„</th>
+        <th>ë°© ì´ë¦„</th>
+        <th>ë„ë¡œëª… ì£¼ì†Œ</th>
+        <th>ì„ëŒ€ ê°€ê²©</th>
+        <th>ë°© ì˜µì…˜</th>
+        <th>ë°© ì„ íƒ</th>
+    </tr>
+    <c:forEach var="room" items="${roomList }">
         <tr>
-            <th>ÀÌ¹ÌÁö °æ·Î</th>
-            <th>ÀÌ¹ÌÁö ÀÌ¸§</th>
-            <th>¹æ ÀÌ¸§</th>
-            <th>µµ·Î¸í ÁÖ¼Ò</th>
-            <th>ÀÓ´ë °¡°İ</th>
-            <th>¹æ ¿É¼Ç</th>
-            <th>¹æ ¼±ÅÃ</th>
+            <!--
+            <td><img src="${room.imagePath}" alt="${room.imageName}" width="100"/></td>
+       -->
+            <td>${room.imagePath }</td>
+            <td>${room.imageName }</td>
+            <td>${room.roomName }</td>
+            <td>${room.streetAddress }</td>
+            <td>${room.rentPrice }</td>
+            <td>${room.roomOption }</td>
+            <td><a href="<%=request.getContextPath()%>/service/roomDetail?roomId=${room.id}">ë°© ìƒì„¸ë³´ê¸°</a>
         </tr>
-        <c:forEach var="room" items="${roomList}">
-            <tr>
-                <!--  
-                <td><img src="${room.imagePath}" alt="${room.imageName}" width="100"/></td>
-                -->
-                <td>${room.imagePath}</td>
-                <td>${room.imageName}</td>
-                <td>${room.roomName}</td>
-                <td>${room.streetAddress}</td>
-                <td>${room.rentPrice}</td>
-                <td>${room.roomOption}</td>
-                <td><a href="${pageContext.request.contextPath}/service/roomDetail?roomId=${room.id}">¹æ »ó¼¼º¸±â</a></td>
-            </tr>
-        </c:forEach>
-    </table>
+    </c:forEach>
+</table>
 
-    <!-- Pagination Controls -->
-    <div class="pagination">
-        <c:if test="${pageNum > 1}">
-            <a href="?pageNum=${pageNum - 1}" style="text-decoration: underline; color: #007bff;">Previous</a>
-        </c:if>
+<div>
+    <!-- ì´ì „í˜ì´ì§€ ë§í¬ -->
+    <c:if test="${startPage>10 }">
+        <a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${ startPage - 1}">ì´ì „</a>
+    </c:if>
+    <!--  -->
+    <c:forEach var="num" begin="${startPage }" end="${endPage }" >
+        <c:choose>
+            <c:when test="${pageNum == num }"><!-- í˜„ì¬ í˜ì´ì§€ ìƒ‰ ë°”ê¾¸ê¸° -->
+                <a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${num }">
+                    <span style="color:red">${num }</span>
+                </a>
+            </c:when>
+            <c:otherwise>
+                <a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${num}">
+                    <span style="color:gray">${num }</span>
+                </a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
 
-        <c:forEach begin="${startPage}" end="${endPage}" var="i">
-            <c:choose>
-                <c:when test="${i == pageNum}">
-                    <span style="color: red; font-weight: bold;">${i}</span> <!-- Highlight current page -->
-                </c:when>
-                <c:otherwise>
-                    <a href="?pageNum=${i}" style="text-decoration: none; color: #007bff;">${i}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
+    <!-- ë‹¤ìŒí˜ì´ì§€ ë§í¬ -->
+    <c:if test="${endPage<pageCount }">
+        <a href="<%=request.getContextPath() %>/service/guestMain?pageNum=${endPage + 1}">ë‹¤ìŒ</a>
+    </c:if>
+    <!-- -->
+</div>
 
-        <c:if test="${pageNum < pageCount}">
-            <a href="?pageNum=${pageNum + 1}" style="text-decoration: underline; color: #007bff;">Next</a>
-        </c:if>
-    </div>
-</c:if>
 
 </body>
 </html>

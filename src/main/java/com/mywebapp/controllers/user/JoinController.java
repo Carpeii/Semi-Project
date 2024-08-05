@@ -24,12 +24,15 @@ public class JoinController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        // 회원가입 폼을 보여주기 위한 요청 처리
+        req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+    	
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
+    	req.setCharacterEncoding("utf-8");
         // 아이디 중복 확인
         boolean isDuplicate = parseBoolean(req.getParameter("isDuplicate"));
         //isDuplicate = true;

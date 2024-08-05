@@ -19,7 +19,7 @@
     <title>joinForm.jsp</title>
 </head>
 <body>
-<h1>1평 회원가입</h1>
+<h1>1평 회원가입</h1> 
 <form action="${pageContext.request.contextPath}/join" method="post">
     <input type="hidden" name="isDuplicate" value="${isDuplicate}">
     <fieldset>
@@ -27,7 +27,7 @@
         <table>
             <tr>
                 <td><label for="userId">아이디</label></td>
-                <td><input type="text" name="userId" id="userId" value="${userId != null ? userId : ''}"/></td>
+                <td><input type="text" name="userId" id=  serId" value="${userId != null ? userId : ''}"/></td>
                 <td><button type="submit" name="action" value="checkId">아이디 중복 검사</button></td>
             </tr>
             <tr>
