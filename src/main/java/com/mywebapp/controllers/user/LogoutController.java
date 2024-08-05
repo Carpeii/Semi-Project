@@ -22,6 +22,6 @@ public class LogoutController extends HttpServlet {
             session.invalidate(); // session 날림
         }
 
-        resp.sendRedirect(req.getContextPath() + "/guestMain");
+        resp.sendRedirect(req.getContextPath() + "/service/guestMain");
     }
 }

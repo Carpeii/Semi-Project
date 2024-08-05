@@ -93,7 +93,7 @@ public class JoinController extends HttpServlet {
                 if ("guest".equals(action)) { // 게스트 회원가입
                     int memberType = 0;
                     dto.setMemberType(memberType);
-                    resp.sendRedirect(req.getContextPath() + "/guestMain");
+                    resp.sendRedirect(req.getContextPath() + "/service/guestMain");
                 } else if("host".equals(action)){ // 호스트 회원가입
                     int memberType = 1;
                     dto.setMemberType(memberType);
