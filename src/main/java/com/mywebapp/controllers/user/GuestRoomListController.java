@@ -42,8 +42,6 @@ public class GuestRoomListController extends HttpServlet {
 		Map<String, Object> paginationInfo = roomService.calculatePagination(pageNum, pageSize, totalCount);
 		
 		
-	    System.out.println("roomList size: " + roomList.size());
-
 		// request 객체를 통해 guestMain.jsp로 데이터들 전달
 		req.setAttribute("roomList", roomList);
 		req.setAttribute("pageCount", paginationInfo.get("pageCount"));
