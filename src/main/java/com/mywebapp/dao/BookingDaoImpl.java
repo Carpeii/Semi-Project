@@ -1,7 +1,6 @@
 package com.mywebapp.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mywebapp.model.Booking;
+import com.mywebapp.model.Room;
 import com.mywebapp.util.JdbcUtil;
 
 public class BookingDaoImpl implements BookingDao {
@@ -37,6 +37,88 @@ public class BookingDaoImpl implements BookingDao {
 			JdbcUtil.close(con, pstmt, null);
 		}
 	}
+	
+//	@Override
+//	public void insertBookingAndRoom(Booking booking, Room room) {
+//	    Connection con = null;
+//	    PreparedStatement pstmtRoom = null;
+//	    PreparedStatement pstmtBooking = null;
+//	    ResultSet generatedKeys = null;
+//	    
+//	    String insertRoomSql = "INSERT INTO room (room_name, jibun_address, street_address, address_detail, floor) VALUES (?, ?, ?, ?, ?)";
+//	    String insertBookingSql = "INSERT INTO booking (guest_id, room_id, check_in_date, check_out_date, booking_status) VALUES (?, LAST_INSERT_ID(), ?, ?, ?)";
+//	    
+//	    try {
+//	        con = JdbcUtil.getCon();
+//	        pstmtRoom = con.prepareStatement(insertRoomSql, PreparedStatement.RETURN_GENERATED_KEYS);
+//	        
+//	        // Insert room
+//	        pstmtRoom.setString(1, room.getRoomName());
+//	        pstmtRoom.setString(2, room.getJibunAddress());
+//	        pstmtRoom.setString(3, room.getStreetAddress());
+//	        pstmtRoom.setString(4, room.getAddressDetail());
+//	        pstmtRoom.setInt(5, room.getFloor());
+//
+//	        int affectedRows = pstmtRoom.executeUpdate();
+//
+//	        if (affectedRows == 0) {
+//	            throw new SQLException("Creating room failed, no rows affected.");
+//	        }
+//
+//	        // Retrieve the generated room ID
+//	        generatedKeys = pstmtRoom.getGeneratedKeys();
+//	        if (generatedKeys.next()) {
+//	            long roomId = generatedKeys.getLong(1);
+//
+//	            pstmtBooking = con.prepareStatement(insertBookingSql);
+//	            // Insert booking
+//	            pstmtBooking.setLong(1, booking.getGuestId());
+//	            pstmtBooking.setLong(2, roomId); // Use the generated room ID
+//	            pstmtBooking.setDate(3, booking.getCheckInDate());
+//	            pstmtBooking.setDate(4, booking.getCheckOutDate());
+//	            pstmtBooking.setInt(5, 0); // booking_status is 0
+//
+//	            pstmtBooking.executeUpdate();
+//	        } else {
+//	            throw new SQLException("Creating booking failed, no ID obtained.");
+//	        }
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        // Close resources in the reverse order of their creation
+//	        if (generatedKeys != null) {
+//	            try {
+//	                generatedKeys.close();
+//	            } catch (SQLException e) {
+//	                e.printStackTrace();
+//	            }
+//	        }
+//	        if (pstmtBooking != null) {
+//	            try {
+//	                pstmtBooking.close();
+//	            } catch (SQLException e) {
+//	                e.printStackTrace();
+//	            }
+//	        }
+//	        if (pstmtRoom != null) {
+//	            try {
+//	                pstmtRoom.close();
+//	            } catch (SQLException e) {
+//	                e.printStackTrace();
+//	            }
+//	        }
+//	        if (con != null) {
+//	            try {
+//	                con.close();
+//	            } catch (SQLException e) {
+//	                e.printStackTrace();
+//	            }
+//	        }
+//	    }
+//	}
+
+	
+	
 	@Override
 	public List<Booking> getBookingsByRoomId(long roomId, int bookingStatus) {
 		Connection con = null;
@@ -98,4 +180,7 @@ public class BookingDaoImpl implements BookingDao {
 			e.printStackTrace();
 		}
 	}
+
+
+
 }

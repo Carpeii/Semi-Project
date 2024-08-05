@@ -16,4 +16,5 @@ public interface BookingDao {
     List<Booking> getBookingsByRoomId(long roomId, int bookingStatus);
     void approveBooking(long bookingId);
     void declineBooking(long bookingId);
+//    void insertBookingAndRoom(Booking booking, Room room);
 }

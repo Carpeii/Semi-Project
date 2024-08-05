@@ -18,6 +18,7 @@ import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dto.RoomDetailDto;
 import com.mywebapp.dto.UserDto;
 import com.mywebapp.model.Booking;
+import com.mywebapp.model.Room;
 
 @WebServlet("/service/bookRoom")
 public class RoomBookingController extends HttpServlet {
@@ -39,16 +40,26 @@ public class RoomBookingController extends HttpServlet {
 		UserDto user = (UserDto) session.getAttribute("user");
 //		String userId = (String) session.getAttribute("user");
 		
+	    // 디버깅을 위한 출력
+	    if (user == null) {
+	        System.out.println("DEBUG: UserDto is null. Redirecting to login.");
+	    } else {
+	        System.out.println("DEBUG: UserDto found. User ID = " + user.getId());
+	    }
+
+		
+
 		if (user != null) {
 	        // 로그인된 사용자의 아이디 가져오기
 			long guestId = user.getId();
+
 			
 	        // 선택한 방의 ID 가져오기
 			long roomId = Long.parseLong(req.getParameter("roomId"));
 			// 체크인 날짜와 체크아웃 날짜 가져오기
 			Date checkInDate = Date.valueOf(req.getParameter("checkInDate"));
 			Date checkOutDate = Date.valueOf(req.getParameter("checkOutDate"));
-
+			
 			Booking booking = new Booking();
 			booking.setGuestId(guestId);
 			booking.setRoomId(roomId);
@@ -69,7 +80,7 @@ public class RoomBookingController extends HttpServlet {
 			
 		} else {
             // 사용자 정보가 없을 경우에 대한 처리 (예: 로그인 페이지로 리다이렉트)
-			resp.sendRedirect(req.getContextPath() + "/jsp/auth/loginMain.jsp");
+			resp.sendRedirect(req.getContextPath() + "/login");
 		}
 	}
 

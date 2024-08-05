@@ -52,12 +52,18 @@ public class BookingInfoController extends HttpServlet {
 
             try {
                 long roomId = Long.parseLong(roomIdParam);
+                
+                // 디버깅용으로 roomId 출력
+                System.out.println("DEBUG: roomId = " + roomId);
+                
+                
                 int floor = Integer.parseInt(floorParam);
                 int rentPrice = Integer.parseInt(rentPriceParam);
                 int longTermDiscount = Integer.parseInt(longTermDiscountParam);
                 int earlyCheckInDiscount = Integer.parseInt(earlyCheckInDiscountParam);
                 int maintenanceBill = Integer.parseInt(maintenanceBillParam);
                 int cleaningFee = Integer.parseInt(cleaningFeeParam);
+                
                 
                 // 날짜 문자열을 java.util.Date 객체로 변환
                 java.util.Date checkInDateUtil;
