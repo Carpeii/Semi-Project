@@ -18,42 +18,38 @@
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5 mt-5 mx-5">
       <!-- Attribute로 가져온 list rooms -->
  <c:if test="${not empty rooms}">
-<c:forEach var="room" items="${requestScope.rooms}">
-<!-- rooms가 비어있지 않으면 -->
+    <c:forEach var="room" items="${requestScope.rooms}">
         <!-- room의 멤버 roomImageList가 비어있지 않다면 -->
         <c:if test="${not empty room.roomImageList}">
-       <!-- room을 참조해서 룸의 맴버 roomImage리스트를 참조하는 변수 image선언 -->
+            <!-- room을 참조해서 룸의 맴버 roomImage리스트를 참조하는 변수 image선언 -->
             <c:set var="image" value="${room.roomImageList[0]}" />
         </c:if>
-      <!-- 앨범 한 개 시작 -->
+        <!-- 앨범 한 개 시작 -->
         <div class="col-sm">
-        <div class="card shadow-sm">
-          <!-- 이미지를 눌렀을 때 이동하는 페이지 -->
-          <a href="해당 페이지">
-          <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="${pageContext.request.contextPath}/${image.imagePath}" alt="${ image.imageName}">
-          </a>
-            <div class="card-body">
-            <p class="card-title">${room.roomName}</p>
-              <p class="overflow-y-hidden">${room.jibunAddress}</p>
-            <p class="card-title">${room.roomPrice.rentPrice}원/1주일</p>
-              <div class="d-flex justify-content-between align-items-center">
-             </div>
-                <small class="text-body-secondary">방 ${room.roomCount}</small>
-                <small class="text-body-secondary">화장실 ${room.toiletCount}</small>
-                <small class="text-body-secondary">거실 ${room.livingRoomCount}</small>
-                <small class="text-body-secondary">주방 ${room.kitchenCount}</small>
-              </div>
+            <a href="해당 페이지" class="card shadow-sm" style="text-decoration: none; color: inherit;">
+                <img class="bd-placeholder-img card-img-top" width="100%" height="225" 
+                     src="${pageContext.request.contextPath}/${image.imagePath}" alt="${image.imageName}">
+                <div class="card-body">
+                    <p class="card-title">${room.roomName}</p>
+                    <p class="overflow-y-hidden">${room.jibunAddress}</p>
+                    <p class="card-title">${room.roomPrice.rentPrice}원/1주일</p>
+                    <div class="d-flex justify-content-between align-items-center"></div>
+                    <small class="text-body-secondary">방 ${room.roomCount}</small>
+                    <small class="text-body-secondary">화장실 ${room.toiletCount}</small>
+                    <small class="text-body-secondary">거실 ${room.livingRoomCount}</small>
+                    <small class="text-body-secondary">주방 ${room.kitchenCount}</small>
+                </div>
                 <div class="card-footer">
-                <c:set var="discount" value="${room.roomPrice.longTermDiscount + room.roomPrice.earlyCheckInDiscount}"/>
-                <c:if test="${discount > 0 }">
-        <small class="text-primary">장기계약 시 최대 ${discount }%할인</small>
-                </c:if>
-      </div>
-          </div>
+                    <c:set var="discount" value="${room.roomPrice.longTermDiscount + room.roomPrice.earlyCheckInDiscount}"/>
+                    <c:if test="${discount > 0}">
+                        <small class="text-primary">장기계약 시 최대 ${discount}% 할인</small>
+                    </c:if>
+                </div>
+            </a>
         </div>
         <!-- 앨범 한 개 끝 -->
-</c:forEach>
- </c:if>
+    </c:forEach>
+</c:if>
   </div>
 longTermDiscount;
 earlyCheckIn;
