@@ -98,4 +98,52 @@ public class BookingDaoImpl implements BookingDao {
 			e.printStackTrace();
 		}
 	}
+	//방계약 달력의 계약된 날짜 가져오는 메소드ㅜ
+	@Override
+	 public List<Booking> rentalSchedule(Long roomId) {
+			List<Booking> scheduleList = new ArrayList<Booking>();
+			//curdate() -> 오늘의 연 월 일 반환 -> 체크아웃 날짜가 오늘과 같거나 이후인 모든 행 오름차순으로 정렬 가장 옛날부터 -> 최신
+			String sql = "select * from booking where room_id = ? and curdate() <= check_out_date"
+					+ " order by check_in_date asc";
+			try {
+				Connection con = JdbcUtil.getCon();
+				
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setLong(1,roomId);
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					Booking booking = new Booking();
+							booking.setCheckInDate(rs.getDate("check_in_date"));
+							booking.setCheckOutDate(rs.getDate("check_out_date"));
+					scheduleList.add(booking);
+				}
+			}catch(SQLException s) {
+				s.printStackTrace();
+			}
+			return scheduleList;
+		}
+	@Override
+	public Booking reservationAvailablePeriodCall(Date selectDate) {
+		//Id도 추가해야함
+		Booking booking =  new Booking();
+		String sql = "select check_in_date from booking where ? < check_in_date limit 1";
+		try {
+			Connection con = JdbcUtil.getCon();
+			
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setDate(1,selectDate);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				booking = new Booking();
+				booking.setCheckInDate(rs.getDate("check_in_date"));
+			}
+		}catch(SQLException s) {
+			s.printStackTrace();
+		}
+		
+		
+		return booking;
+	}
 }
