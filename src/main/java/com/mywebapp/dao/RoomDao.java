@@ -23,4 +23,6 @@ public interface RoomDao {
 	ArrayList<Room> searchRoomList(String searchWord,int viewRecord);
 	int searchTotalRecord(String searchWord);
 	List<GuestRoomBookingDto> getRoomsByGuestIdWithStatus(long guestId);
+
+	void updateRoomApproveStatus(long roomId, int approve);
 }

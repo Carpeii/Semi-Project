@@ -9,9 +9,8 @@
  	 <meta charset="utf-8">
  	 <meta name="viewport" content="width=device-width, initial-scale=1">
      <title>호스트 메인</title>
-     <link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.css">
-  <script src="webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
-  
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.css">
+  <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
   </head>
   <body>
   

@@ -1,0 +1,45 @@
+@charset "UTF-8";
+  /* 커스텀 컨테이너 크기 */
+        .custom-container {
+            width: 400px; /* 컨테이너 너비 */
+            height: 400px; /* 컨테이너 높이 */
+            display: inline-block; /* <div>의 범위 설정 */
+            padding: 5px; /* <div> 내부에 5px의 여백 추가 */
+            box-sizing: border-box; 
+        }
+
+        /* 달력 테이블의 사이즈 조정 */
+        .calendar-table {
+            width: 50%; /* 테이블 너비 */
+            height: 75%; /* 테이블 높이 */
+        }
+        
+        .calendar-table td, .calendar-table th {
+            width: 14.28%; /* 셀 너비 (7개의 열) */
+            height: calc(100% / 7); /* 셀 높이 (6개의 행) */
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #ddd; /* 테두리 추가 */
+        }
+
+        .calendar-table .today {
+            background-color: #dff0d8;
+        }
+
+        .calendar-table .disabled {
+        color: red;
+            cursor: default;
+        text-decoration: line-through;
+        }
+  .noborder {
+    border: none;
+  }
+  .btnsize {
+  			width: 300px;
+            height: 300px;
+  }
+   .custom-table {
+      border-spacing: 10px; /* 원하는 간격 값 */
+      border-collapse: separate; /* 기본적으로 collapse가 설정되어 있으니 separate로 변경 */
+      border: none;
+    }

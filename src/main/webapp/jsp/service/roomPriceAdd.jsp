@@ -8,8 +8,6 @@
 <body>
 <h2>Room Price Form</h2>
 <form id="priceForm" action="<%=request.getContextPath() %>/service/roomPriceAdd" method="post">
-    <input type="hidden" name="roomId" value="<%= request.getAttribute("roomId") != null ? request.getAttribute("roomId") : "1" %>">
-
     <label for="rentPrice">Rent Price:</label>
     <input type="number" id="rentPrice" name="rentPrice" value="1000" required><br><br>
 

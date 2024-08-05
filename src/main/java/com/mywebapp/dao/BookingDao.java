@@ -1,14 +1,8 @@
 package com.mywebapp.dao;
 
 import com.mywebapp.model.Booking;
-import com.mywebapp.model.Room;
-import com.mywebapp.util.JdbcUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public interface BookingDao {
@@ -16,5 +10,9 @@ public interface BookingDao {
     List<Booking> getBookingsByRoomId(long roomId, int bookingStatus);
     void approveBooking(long bookingId);
     void declineBooking(long bookingId);
-//    void insertBookingAndRoom(Booking booking, Room room);
+    List<Booking> rentalSchedule(Long roomId);
+    Booking reservationAvailablePeriodCall(Date selectDate);
+    
+
 }
+
