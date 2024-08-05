@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.css">
+  <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 </head>
 <body>
 <!-- 
@@ -55,8 +57,44 @@ asdasdsadas
 		 </td>
 		 </c:if>
  </table>
-
  
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+	 <c:choose>
+	 <c:when test="${pagenum > 5 }">
+      <a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum-5}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+ 	</c:when>
+ 	<c:otherwise>
+      <a class="page-link" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+ 	</c:otherwise>
+ </c:choose>
+    </li>
+    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum}">${pagenum}</a></li>
+    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+1}">${pagenum+1}</a></li>
+    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+2}">${pagenum+2}</a></li>
+    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+3}">${pagenum+3}</a></li>
+    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+4}">${pagenum+4}</a></li>
+    <li class="page-item">
+     <c:choose>
+	 <c:when test="${5+pagenum < totalpage}">
+      <a class="page-link" href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+5}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+ 	</c:when>
+ 	<c:otherwise>
+     <a class="page-link" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+ 	</c:otherwise>
+ </c:choose>
+    </li>
+  </ul>
+</nav>
 
 </body>
 </html>
