@@ -22,11 +22,11 @@ public class SearchAction implements Action {
 		String searchWord = req.getParameter("searchWord");
 		int pageNum = 1;
 		int blockPerPage = 5;
+		System.out.println(searchWord);
 		
 		if(req.getParameter("pageNum")!=null) {
 			pageNum = Integer.parseInt(req.getParameter("pageNum"));
 		}
-		System.out.println(searchWord);
 		
 	try {
 		RoomDao dao = new RoomDaoImpl();
@@ -47,9 +47,18 @@ public class SearchAction implements Action {
 			String address = r.getJibunAddress();
 			String addressDetail = r.getAddressDetail();
 			String roomName = r.getRoomName();
+			if(r.getRoomImageList() != null) {
+				
 			for(RoomImage i : r.getRoomImageList()) {
 				String imageName = i.getImageName();
-				System.out.println(imageName);
+				if(i.getImageName().equals("")) {
+					System.out.println("imageName"+imageName);
+				} else {
+					System.out.println("값이 비어있음");
+				}
+			}
+			} else {
+				System.out.println("image리스트가 비어있음");
 			}
 			System.out.println("totalPage : "+totalPage);
 			System.out.println("pageNum : "+pageNum);
