@@ -11,7 +11,7 @@
     <label for="rentPrice">임대료:</label>
     <input type="number" id="rentPrice" name="rentPrice" value="1000" required><br><br>
 
-    <label for="longTerm">장기 계약 기간 (개월):</label>
+    <label for="longTerm">장기 계약 기간 (주):</label>
     <input type="number" id="longTerm" name="longTerm" value="6" required><br><br>
 
     <label for="longTermDiscount">장기 계약 할인율 (%):</label>
