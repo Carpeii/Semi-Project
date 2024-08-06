@@ -46,9 +46,6 @@
 	        <p><strong>Internet:</strong> ${room.internet ? 'Yes' : 'No'}</p>
 	        <p><strong>Cleaning Fee:</strong> ${room.cleaningFee}</p>
 	        <p><strong>Refund Type:</strong> ${room.refundType}</p>
-	        <p><strong>Review Message:</strong> ${room.reviewMessage}</p>
-	        <p><strong>Rating:</strong> ${room.rating}</p>
-	        <p><strong>Review Created At:</strong> ${room.reviewCreatedAt}</p>
         </div>
 
 <!--    

@@ -16,7 +16,7 @@ import com.mywebapp.dto.UserDto;
 import com.mywebapp.service.RoomService;
 import com.mywebapp.service.RoomServiceImpl;
 
-@WebServlet("/service/guestMain")
+@WebServlet("/guestMain")
 public class GuestMainController extends HttpServlet {
 	
 	//RoomServiceImpl 불러오기

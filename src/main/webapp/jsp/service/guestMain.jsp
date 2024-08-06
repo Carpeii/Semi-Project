@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>호스트 메인</title>
+    <title>게스트 메인</title>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <style>
@@ -137,7 +137,7 @@
             	 <!-- 카드 전체를 링크로 감쌉니다 -->
             	 <a href="${pageContext.request.contextPath}/service/roomDetail?roomId=${room.id}" class="card-link">
 	                <div class="card shadow-sm border-light rounded-3">
-                    <img src="${room.imagePath}" class="card-img-top" alt="${room.roomName}">
+                        <img src="${pageContext.request.contextPath}${room.imagePath}" class="card-img-top" alt="${room.roomName}">
                     <div class="card-body">
                         <h5 class="card-title">${room.roomName}</h5>
                         <p class="card-text">${room.streetAddress}</p>
@@ -160,19 +160,19 @@
         <ul class="pagination justify-content-center mt-4">
             <c:if test="${startPage > 1}">
                 <li class="page-item">
-                    <a href="${pageContext.request.contextPath}/service/guestMain?pageNum=${startPage - 1}" class="page-link" aria-label="Previous">
+                    <a href="${pageContext.request.contextPath}/guestMain?pageNum=${startPage - 1}" class="page-link" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
             </c:if>
             <c:forEach var="num" begin="${startPage}" end="${endPage}">
                 <li class="page-item <c:if test="${pageNum == num}">active</c:if>">
-                    <a href="${pageContext.request.contextPath}/service/guestMain?pageNum=${num}" class="page-link">${num}</a>
+                    <a href="${pageContext.request.contextPath}/guestMain?pageNum=${num}" class="page-link">${num}</a>
                 </li>
             </c:forEach>
             <c:if test="${endPage < pageCount}">
                 <li class="page-item">
-                    <a href="${pageContext.request.contextPath}/service/guestMain?pageNum=${endPage + 1}" class="page-link" aria-label="Next">
+                    <a href="${pageContext.request.contextPath}/guestMain?pageNum=${endPage + 1}" class="page-link" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

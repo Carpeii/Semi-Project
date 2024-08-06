@@ -162,10 +162,10 @@ public class RoomDaoImpl implements RoomDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		System.out.println("test"+roomId);
 		RoomDetailDto room = null;
 		String sql = "SELECT " +
-			     "    r.id as room_id, " + 
+	             "    r.id AS room_id, " +
 	             "    m.id AS member_id, " +
 	             "    m.name AS host_name, " +
 	             "    r.room_name, " +
@@ -201,10 +201,7 @@ public class RoomDaoImpl implements RoomDao {
 	             "    rp.gas, " +
 	             "    rp.internet, " +
 	             "    rp.cleaning_fee, " +
-	             "    rp.refund_type, " +
-	             "    rv.message, " +
-	             "    rv.rating, " +
-	             "    rv.created_at " +
+	             "    rp.refund_type " +
 	             "FROM " +
 	             "    room r " +
 	             "INNER JOIN " +
@@ -215,12 +212,8 @@ public class RoomDaoImpl implements RoomDao {
 	             "    room_option rop ON r.id = rop.room_id " +
 	             "INNER JOIN " +
 	             "    room_price rp ON r.id = rp.room_id " +
-	             "INNER JOIN " +
-	             "    booking b ON r.id = b.room_id " +
-	             "INNER JOIN " +
-	             "    review rv ON b.id = rv.booking_id " +
-	             "WHERE r.id = ?";
-
+	             "WHERE " +
+	             "    r.id = ?";
 
 		try {
 			con = JdbcUtil.getCon();
@@ -266,9 +259,6 @@ public class RoomDaoImpl implements RoomDao {
 				room.setInternet(rs.getBoolean("internet"));
 				room.setCleaningFee(rs.getInt("cleaning_fee"));
 				room.setRefundType(rs.getInt("refund_type"));
-				room.setReviewMessage(rs.getString("message"));
-				room.setRating(rs.getInt("rating"));
-				room.setReviewCreatedAt(rs.getDate("created_at"));
 			}
 			return room;
 		} catch (SQLException e) {

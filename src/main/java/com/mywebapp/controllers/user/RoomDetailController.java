@@ -31,7 +31,7 @@ public class RoomDetailController extends HttpServlet {
         System.out.println(roomId);
         // DAO를 사용하여 방의 상세 정보를 가져옵니다.
         RoomDetailDto room = roomDao.getRoomById(roomId);
-        
+        System.out.println(room.getRoomName());
         req.setAttribute("room", room);
         
         RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/service/roomDetail.jsp");
