@@ -84,6 +84,15 @@ public class JoinController extends HttpServlet {
             dto.setName(name);
             dto.setPhone(phone);
 
+            // 회원가입 성공 -> 메인 페이지로 이동
+            if ("guest".equals(action)) { // 게스트 회원가입
+                int memberType = 0;
+                dto.setMemberType(memberType);
+            } else if ("host".equals(action)) { // 호스트 회원가입
+                int memberType = 1;
+                dto.setMemberType(memberType);
+            }
+
             // 회원가입으로 데이터베이스에 insert
             MemberDao dao = new MemberDao();
             dao.joinMember(dto);
@@ -91,15 +100,9 @@ public class JoinController extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("userId", userId); // session에 userId 저장
 
-            // 회원가입 성공 -> 메인 페이지로 이동
-            if ("guest".equals(action)) { // 게스트 회원가입
-                int memberType = 0;
-                dto.setMemberType(memberType);
+            if(dto.getMemberType() == 0) {
                 resp.sendRedirect(req.getContextPath() + "/main.jsp");
-
-            } else if ("host".equals(action)) { // 호스트 회원가입
-                int memberType = 1;
-                dto.setMemberType(memberType);
+            } else if (dto.getMemberType() == 1) {
                 req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp); // url변경 x
             }
         }
