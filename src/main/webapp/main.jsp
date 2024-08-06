@@ -26,7 +26,7 @@
   
 <!-- 호스트 게스트 조건문으로 처리? -->
 
-<jsp:include page="/jsp/common/header.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}jsp/common/header.jsp"></jsp:include>
 <!-- START ALBUM -->
   <div class="album py-5 bg-body-tertiary">
   
@@ -126,7 +126,7 @@
 <!--       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> -->
 <!-- </main> -->
  <!-- footer -->
- <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
+ <jsp:include page="${pageContext.request.contextPath}/jsp/common/footer.jsp"></jsp:include>
 <%--  <%@include file="/jsp/common/footer.jsp" %> --%>
   </body>
 </html>
