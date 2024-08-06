@@ -38,15 +38,15 @@ public class HostJoinController extends HttpServlet {
         ResultSet rs = null;
 
         // 유효성 검사
-        if(bankName.equals("") || bankName == null) {
+        if(bankName.isEmpty()) {
             req.setAttribute("errMsg", "은행 이름을 확인해주세요");
             req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
         }
-        if(account.equals("") || account == null) {
+        if(account.isEmpty()) {
             req.setAttribute("errMsg", "계좌를 확인해주세요");
             req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
         }
-        if(accountHolder.equals("") || accountHolder == null) {
+        if(accountHolder.isEmpty()) {
             req.setAttribute("errMsg", "예금주를 확인해주세요");
             req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
         }
