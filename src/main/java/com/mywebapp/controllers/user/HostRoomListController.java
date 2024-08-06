@@ -29,6 +29,7 @@ public class HostRoomListController extends HttpServlet {
 ////            return;
 ////        }
 //        System.out.println(hostId);
+        req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         UserDto user = (UserDto) session.getAttribute("user");
         RoomDao roomDao = new RoomDaoImpl();
