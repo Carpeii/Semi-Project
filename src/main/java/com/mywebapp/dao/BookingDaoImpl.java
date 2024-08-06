@@ -98,7 +98,9 @@ public class BookingDaoImpl implements BookingDao {
 			e.printStackTrace();
 		}
 	}
-	//방계약 달력의 계약된 날짜 가져오는 메소드ㅜ
+	//방계약 달력의 계약된 날짜 가져오는 메소드
+	//roomId를 인자로받음 
+	//반환값 List<Booking> checkInDate , dheckOutDate 만 들어있음
 	@Override
 	 public List<Booking> rentalSchedule(Long roomId) {
 			List<Booking> scheduleList = new ArrayList<Booking>();
@@ -124,15 +126,16 @@ public class BookingDaoImpl implements BookingDao {
 			return scheduleList;
 		}
 	@Override
-	public Booking reservationAvailablePeriodCall(Date selectDate) {
+	public Booking reservationAvailablePeriodCall(Date selectDate, long roomId) {
 		//Id도 추가해야함
 		Booking booking =  new Booking();
-		String sql = "select check_in_date from booking where ? < check_in_date limit 1";
+		String sql = "select check_in_date from booking where ? < check_in_date and room_id=? limit 1";
 		try {
 			Connection con = JdbcUtil.getCon();
 			
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setDate(1,selectDate);
+			pstmt.setLong(2,roomId);
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
