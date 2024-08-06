@@ -88,6 +88,6 @@ public class RoomManagementController extends HttpServlet {
                 return;
         }
         // 작업 완료 후 리다이렉트
-        resp.sendRedirect("/admin/roomManagement");
+        resp.sendRedirect(req.getContextPath() + "/admin/roomManagement");
     }
 }
