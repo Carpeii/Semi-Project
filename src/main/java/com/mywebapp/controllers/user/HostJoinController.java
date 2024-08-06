@@ -24,10 +24,10 @@ public class HostJoinController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String bankName = req.getParameter("bankName");
         String account = req.getParameter("account");
         String accountHolder = req.getParameter("accountHolder");
-        String errMsg = null;
 
         // 앞에서 기재한 아이디 가져오기
         HttpSession session = req.getSession();

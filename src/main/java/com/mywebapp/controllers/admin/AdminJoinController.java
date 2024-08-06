@@ -1,4 +1,4 @@
-package com.mywebapp.controllers.user;
+package com.mywebapp.controllers.admin;
 
 import com.mywebapp.dao.MemberDao;
 import com.mywebapp.dto.MemberDto;

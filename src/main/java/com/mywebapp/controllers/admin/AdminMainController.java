@@ -1,4 +1,4 @@
-package com.mywebapp.controllers.user;
+package com.mywebapp.controllers.admin;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
