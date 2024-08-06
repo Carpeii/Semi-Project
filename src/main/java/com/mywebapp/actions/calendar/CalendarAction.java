@@ -161,6 +161,10 @@ public class CalendarAction implements Action {
 				        		if(todayNum == j) {
 				        			sb.append("<td><button type='submit' name='select' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
 				        			sb.append("["+j+"]").append("</button></td>\n");
+				        			//오늘 이전 날짜 비활성화
+				        		} else if((monthControll == 0 && notSelectedDay.getDayOfMonth() < today.getDayOfMonth() )  || monthControll < 0 ){
+				        			sb.append("<td><button type='submit' name='select' class='w-100 h-100 btn btn-outline-secondary' style'border: none;' value='"+notSelectedDay+"' disabled>");
+				        			sb.append(j).append("</button></td>\n");
 				        		} else {
 				        			sb.append("<td><button type='submit' name='select' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
 				        			sb.append(j).append("</button></td>\n");
