@@ -11,7 +11,7 @@
     <title>hostJoinForm.jsp</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/hostJoin" method="post">
+<form action="${pageContext.request.contextPath}/auth/hostJoin" method="post">
     <input type="hidden" name="userId" value="${userId}">
   <fieldset>
     <legend>호스트 추가 정보를 입력해주세요.</legend>
