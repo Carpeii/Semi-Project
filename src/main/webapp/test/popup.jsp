@@ -45,7 +45,7 @@ if(a > 0){
 			</div>
 				
 			<div class="col">
-				<form action="${pageContext.request.contextPath }/calendar/select" method="post" id="periodfrm"  target="_parent" onsubmit="return closepopup(event);">
+				<form action="${pageContext.request.contextPath }/calendar/select" method="post" id="periodfrm"  target="_parent" onsubmit="return closepopup(event);" class="mb-5">
 					<table class="table custom-table" style="border:none; ">
 						<tr>
 							<c:if test="${dateDiff >= 7}">
@@ -121,7 +121,7 @@ if(a > 0){
 			</div>
 		</div>
 	</div>
-		<div><button onclick=" opener.location.reload();self.close();" style="width:100px; height:50px;">닫기</button></div>
+		<div><button class="btn btn-outline-success" onclick=" opener.location.reload();self.close();" style="width:100px; height:50px;">확인</button></div>
 <script>
 
 </script>
