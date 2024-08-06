@@ -1,4 +1,4 @@
-package com.mywebapp.controllers.user;
+package com.mywebapp.controllers.admin;
 
 import com.mywebapp.dao.MemberDao;
 import com.mywebapp.dto.MemberDto;
@@ -18,18 +18,15 @@ import java.sql.SQLException;
 
 import static java.lang.Boolean.parseBoolean;
 
-@WebServlet("/join")
-public class JoinController extends HttpServlet {
-
+@WebServlet("/adminJoin")
+public class AdminJoinController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/amin/adminJoin.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 아이디 중복 확인
         boolean isDuplicate = parseBoolean(req.getParameter("isDuplicate"));
         //isDuplicate = true;
@@ -37,6 +34,9 @@ public class JoinController extends HttpServlet {
         // 비밀번호 확인
         String pwConfirm = req.getParameter("pwConfirm");
         String password = req.getParameter("password");
+
+        // 관리자는 무조건 3
+        int memberType = 3;
 
         // 아이디 중복확인을 위한 변수
         String action = req.getParameter("action");
@@ -56,54 +56,45 @@ public class JoinController extends HttpServlet {
             return;
         }
 
-        if ("guest".equals(action) || "host".equals(action)) {
+        if (isDuplicate) {
+            req.setAttribute("errMsg", "아이디 중복 검사 필수 입니다.");
+            req.getRequestDispatcher("/jsp/admin/adminJoin.jsp").forward(req, resp);
+            return;
+        }
 
-            if (isDuplicate) {
-                req.setAttribute("errMsg", "아이디 중복 검사 필수 입니다.");
-                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
-                return;
-            }
+        // 비밀번호 확인
+        if (!pwConfirm.equals(password)) {
+            req.setAttribute("pwErrMsg", "비밀번호가 일치하지 않습니다.");
+            req.getRequestDispatcher("/jsp/admin/adminJoin.jsp").forward(req, resp);
+            return;
+        }
 
-            // 비밀번호 확인
-            if (!pwConfirm.equals(password)) {
-                req.setAttribute("pwErrMsg", "비밀번호가 일치하지 않습니다.");
-                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
-                return;
-            }
+        // dto에 담기
+        MemberDto dto = new MemberDto();
+        dto.setUserId(userId);
+        dto.setPassword(password);
+        dto.setName(name);
+        dto.setPhone(phone);
+        dto.setMemberType(memberType);
 
-            // dto에 담기
-            MemberDto dto = new MemberDto();
-            dto.setUserId(userId);
-            dto.setPassword(password);
-            dto.setName(name);
-            dto.setPhone(phone);
+        // 회원가입으로 데이터베이스에 insert
+        try {
+            conn = JdbcUtil.getCon();
+            MemberDao dao = new MemberDao(conn);
+            dao.joinMember(dto);
 
-            // 회원가입으로 데이터베이스에 insert
-            try {
-                conn = JdbcUtil.getCon();
-                MemberDao dao = new MemberDao(conn);
-                dao.joinMember(dto);
+            HttpSession session = req.getSession();
+            session.setAttribute("userId", userId); // session에 userId 저장
 
-                HttpSession session = req.getSession();
-                session.setAttribute("userId", userId); // session에 userId 저장
+            // 회원가입 성공 -> 메인 페이지로 이동
+            resp.sendRedirect(req.getContextPath() + "/adminMain.jsp");
 
-                // 회원가입 성공 -> 메인 페이지로 이동
-                if ("guest".equals(action)) { // 게스트 회원가입
-                    int memberType = 0;
-                    dto.setMemberType(memberType);
-                    resp.sendRedirect(req.getContextPath() + "/guestMain");
-                } else if("host".equals(action)){ // 호스트 회원가입
-                    int memberType = 1;
-                    dto.setMemberType(memberType);
-                    resp.sendRedirect(req.getContextPath() + "/hostJoin");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
-                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
-            } finally {
-                JdbcUtil.close(conn, pstmt, rs);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            req.setAttribute("errMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
+            req.getRequestDispatcher("/jsp/admin/adminMain.jsp").forward(req, resp);
+        } finally {
+            JdbcUtil.close(conn, pstmt, rs);
         }
     }
 
@@ -132,11 +123,11 @@ public class JoinController extends HttpServlet {
                 req.setAttribute("userId", req.getParameter("userId"));
             }
 
-            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+            req.getRequestDispatcher("/jsp/admin/adminJoin.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
             req.setAttribute("idErrMsg", "데이터베이스의 오류입니다. 관리자에게 문의하세요.");
-            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+            req.getRequestDispatcher("/jsp/admin/adminJoin.jsp").forward(req, resp);
 
         } finally {
             JdbcUtil.close(conn, pstmt, rs);

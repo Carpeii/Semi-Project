@@ -18,7 +18,12 @@ import java.sql.SQLException;
 @WebServlet("/editHost")
 public class HostProfileEditController extends HttpServlet {
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/jsp/user/hostProfile.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         HostDto host = (HostDto) session.getAttribute("host");
 
@@ -63,7 +68,7 @@ public class HostProfileEditController extends HttpServlet {
                 // 세션에 수정된 정보 저장
                 session.setAttribute("host", updateHost);
             }
-            resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+            resp.sendRedirect(req.getContextPath() + "/hostMain");
         } catch (SQLException e) {
             e.printStackTrace();
             req.setAttribute("errMsg", e.getMessage());

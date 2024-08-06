@@ -4,6 +4,7 @@ import com.mywebapp.dto.HostDto;
 import com.mywebapp.dto.UserDto;
 import com.mywebapp.util.JdbcUtil;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
 
         // 공백란 존재
-        if (userId == null || userId == "" || password == null || password == "") {
+        if (userId.isEmpty() || password.isEmpty()) {
             req.setAttribute("errMsg", "아이디와 비밀번호 모두 기입");
             req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
         }
@@ -49,25 +50,25 @@ public class LoginController extends HttpServlet {
 
             if(rs.next()) {
                 // id, pw와 일치하는 사용자 발견
-                UserDto vo = new UserDto();
-                vo.setId(rs.getLong("id"));
-                vo.setUserId(rs.getString("user_id"));
-                vo.setName(rs.getString("name"));
-                vo.setMemberType(rs.getInt("member_type"));
-                vo.setPhone(rs.getString("phone"));
+                UserDto dto = new UserDto();
+                dto.setId(rs.getLong("id"));
+                dto.setUserId(rs.getString("user_id"));
+                dto.setName(rs.getString("name"));
+                dto.setMemberType(rs.getInt("member_type"));
+                dto.setPhone(rs.getString("phone"));
 
                 // session에 저장
                 HttpSession session = req.getSession();
-                session.setAttribute("user", vo);
+                session.setAttribute("user", dto);
                 session.setMaxInactiveInterval(30 * 60); // session 유지시간 30분으로 설정
 
-                if(vo.getMemberType() == 0) {
-                    resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
-                } else if (vo.getMemberType() ==1) {
+                if(dto.getMemberType() == 0) {
+                    resp.sendRedirect(req.getContextPath() + "/guestMain");
+                } else if (dto.getMemberType() ==1) {
                     // 호스트 정보 조회
                     String hostSql = "SELECT * FROM host WHERE member_id = ?";
                     pstmt = conn.prepareStatement(hostSql);
-                    pstmt.setLong(1, vo.getId()); // UserDto의 id를 사용
+                    pstmt.setLong(1, dto.getId()); // UserDto의 id를 사용
                     ResultSet hostRs = pstmt.executeQuery();
 
                     if (hostRs.next()) {
@@ -83,14 +84,9 @@ public class LoginController extends HttpServlet {
                         session.setMaxInactiveInterval(30 * 60);
                     }
 
-                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
-//                    HostDto host = new HostDto();
-//                    host.setMemberId(rs.getLong("member_id"));
-//                    host.setBankName(rs.getString("bankName"));
-//                    host.setAccount(rs.getString("account"));
-//                    host.setAccount_holder(rs.getString("account_holder"));
-//                    session.setAttribute("host", host);
-//                    resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+                    resp.sendRedirect(req.getContextPath() + "/hostMain");
+                } else if(dto.getMemberType() == 3) { // admin
+                    resp.sendRedirect(req.getContextPath() + "/adminMain");
                 }
             } else {
                 req.setAttribute("errMsg", "아이디 비밀번호를 확인하세요.");

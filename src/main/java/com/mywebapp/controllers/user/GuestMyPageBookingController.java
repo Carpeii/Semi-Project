@@ -14,6 +14,7 @@ import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dto.GuestRoomBookingDto;
 import com.mywebapp.dto.RoomDetailDto;
+import com.mywebapp.dto.UserDto;
 
 @WebServlet("/user/guestBooking")
 public class GuestMyPageBookingController extends HttpServlet {
@@ -29,12 +30,12 @@ public class GuestMyPageBookingController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		String userId = (String) session.getAttribute("user");
+		UserDto user = (UserDto) session.getAttribute("user");
 		Long bookedRoomId = (Long) session.getAttribute("bookedRoomId");
 //		RoomDetailDto bookedRoom = (RoomDetailDto)session.getAttribute("bookedRoom");
 		
-		if (userId != null) {
-			long guestId = Long.parseLong(userId);
+		if (user != null) {
+			long guestId = user.getId();
 			
 
 			//사용자 방 정보 조회

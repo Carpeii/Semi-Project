@@ -41,6 +41,7 @@ public class GuestRoomListController extends HttpServlet {
 		int totalCount = roomService.getTotalRoomCount(approve);
 		Map<String, Object> paginationInfo = roomService.calculatePagination(pageNum, pageSize, totalCount);
 		
+		
 		// request 객체를 통해 guestMain.jsp로 데이터들 전달
 		req.setAttribute("roomList", roomList);
 		req.setAttribute("pageCount", paginationInfo.get("pageCount"));
@@ -48,13 +49,24 @@ public class GuestRoomListController extends HttpServlet {
 		req.setAttribute("endPage", paginationInfo.get("endPage"));
 		req.setAttribute("pageNum", paginationInfo.get("pageNum"));
 		
+
+		
 		// LoginController에서 세션 받아오기
 		HttpSession session = req.getSession();
-		String userId = (String) session.getAttribute("user");
-		if (userId != null) {
-			req.setAttribute("userId" , userId);
-		}
+		UserDto user = (UserDto) session.getAttribute("user");
 		
+        // 세션에 user가 없으면 로그인 상태가 아닌 것으로 간주
+		if (user == null) {
+			req.setAttribute("user", null);
+		} else {
+			req.setAttribute("user", user);
+		}
+//		if (user != null) {
+//			req.setAttribute("userId" , userId);
+//		}
+		
+		
+
 		req.getRequestDispatcher("/jsp/service/guestMain.jsp").forward(req, resp);
 		
 		

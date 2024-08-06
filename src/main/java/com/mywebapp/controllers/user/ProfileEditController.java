@@ -17,9 +17,13 @@ import java.sql.SQLException;
 
 @WebServlet("/edit")
 public class ProfileEditController extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/jsp/user/profile.jsp").forward(req, resp);
+    }
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(); // 수정 페이지에 기본정보 자동으로 입력되어있도록 -> null이 아님
         UserDto user = (UserDto) session.getAttribute("user");
 
@@ -63,7 +67,7 @@ public class ProfileEditController extends HttpServlet {
                     }
 
                     // 업데이트 성공, 비밀번호 수정하지 않는 경우
-                    if (newPassword.isEmpty() && pwConfirm.isEmpty()) {
+                    if (newPassword.isEmpty() && pwConfirm.isEmpty()) { // 둘 다 비어있지 않은 경우
                         UserDto updateUser = new UserDto();
                         updateUser.setId(user.getId());
                         updateUser.setName(name);
@@ -71,9 +75,9 @@ public class ProfileEditController extends HttpServlet {
                         // 세션에 수정도니 정보 저장
                         session.setAttribute("user", updateUser);
                         if (user.getMemberType() == 0) {
-                            resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
+                            resp.sendRedirect(req.getContextPath() + "/guestMain");
                         } else if (user.getMemberType() == 1) {
-                            resp.sendRedirect(req.getContextPath() + "/jsp/user/hostProfile.jsp");
+                            resp.sendRedirect(req.getContextPath() + "/editHost");
                         }
 
                     } else if (newPassword.equals(pwConfirm)) {
@@ -92,16 +96,18 @@ public class ProfileEditController extends HttpServlet {
 
                         // 비밀번호 업데이트도 완료
                         if (user.getMemberType() == 0) {
-                            resp.sendRedirect(req.getContextPath() + "/jsp/service/guestMain.jsp");
+                            resp.sendRedirect(req.getContextPath() + "/guestMain");
                         } else if (user.getMemberType() == 1) {
-                            resp.sendRedirect(req.getContextPath() + "/jsp/user/hostProfile.jsp");
+                            resp.sendRedirect(req.getContextPath() + "/editHost");
                         }
 
                     } else if (newPassword.isEmpty() || pwConfirm.isEmpty()) { // 업데이트는 성공, 비밀번호 변경란 하나가 비어있는 경우
                         req.setAttribute("errMsg", "비밀번호 변경을 원하시면 모두 채워주세요");
                         req.getRequestDispatcher("/jsp/user/profile.jsp").forward(req, resp);
+                    } else if (!newPassword.equals(pwConfirm)) {
+                        req.setAttribute("errMsg", "새로운 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                        req.getRequestDispatcher("/jsp/user/profile.jsp").forward(req, resp);
                     }
-
                 } catch (SQLException e) {
                     e.printStackTrace();
                     req.setAttribute("errMsg", e.getMessage());

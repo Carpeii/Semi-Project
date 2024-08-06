@@ -27,6 +27,8 @@ public class RoomDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	    // guestMain.jsp에서 방 id 파라미터 가져오기
         int roomId = Integer.parseInt(req.getParameter("roomId"));
+        
+        System.out.println(roomId);
         // DAO를 사용하여 방의 상세 정보를 가져옵니다.
         RoomDetailDto room = roomDao.getRoomById(roomId);
         
