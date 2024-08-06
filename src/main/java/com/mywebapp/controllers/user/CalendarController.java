@@ -72,7 +72,7 @@ public class CalendarController extends HttpServlet {
 //			req.setAttribute("selectEndDate", selectEndDate);
 			req.getSession().setAttribute("selectDate", selectDate);
 			req.getSession().setAttribute("selectEndDate", selectEndDate);
-			req.setAttribute("a", 1);
+			req.setAttribute("datecheck", 1);
 			req.getRequestDispatcher("/test/popup.jsp").forward(req, resp);
 		
 		}
