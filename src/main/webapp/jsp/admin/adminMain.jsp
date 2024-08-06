@@ -22,6 +22,8 @@
         // 로그인 정보 존재
 %>
 <p>관리자 ${sessionScope.user.userId}님 환영합니다</p>
+
+<button onclick="location.href='${pageContext.request.contextPath}/admin/roomManagement'">방관리</button>
 <button onclick="location.href='../auth/logout.jsp'">로그아웃</button>
 <%--<button onclick="location.href='../auth/myPage.jsp'">마이 페이지</button>--%>
 <%--        <p>${userId}님 환영합니다</p>--%>
