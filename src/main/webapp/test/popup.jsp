@@ -16,6 +16,22 @@ request.setCharacterEncoding("utf-8");
 	src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 
 <title>Insert title here</title>
+
+<% 
+int a = 0;
+if(request.getParameter("a") != null) {
+a = Integer.parseInt(request.getParameter("a"));
+}
+%>
+<%
+if(a > 0){
+%>	
+<script type="text/javascript">
+	self.close();
+</script>
+<% 	} %> 
+	
+
 </head>
 <body>
 	<div class="container mt-4 sm custom-container">
@@ -29,8 +45,8 @@ request.setCharacterEncoding("utf-8");
 			</div>
 				
 			<div class="col">
-				<form action="${pageContext.request.contextPath }/calendar/select" method="post">
-					<table class="table custom-table" style="border:none;">
+				<form action="${pageContext.request.contextPath }/calendar/select" method="post" id="periodfrm"  target="_parent" onsubmit="return closepopup(event);">
+					<table class="table custom-table" style="border:none; ">
 						<tr>
 							<c:if test="${dateDiff >= 7}">
 						<td class="noborder">
@@ -103,7 +119,11 @@ request.setCharacterEncoding("utf-8");
 				</form>
 
 			</div>
-<!-- 		<div><button onclick="history.back(-1)" style="width:100px; height:50px;">취소</button></div> -->
+		</div>
+	</div>
+		<div><button onclick=" opener.location.reload();self.close();" style="width:100px; height:50px;">닫기</button></div>
+<script>
 
+</script>
 </body>
 </html>

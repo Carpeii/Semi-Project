@@ -56,17 +56,7 @@ public class ReservationAvailablePeriodCallAction implements Action {
 		}
 		req.setAttribute("dateDiff", dateDiff);
 			req.getRequestDispatcher(calendarUrl).forward(req, resp);
-		
-//		 2024-08-23
-//		 2024-08-30
-//		 차이 값7
-		
-			
-			
-//		2024-12-11
-//		2024-12-25
-//		차이 값14
-//     최대 2주일 11~24일까지
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

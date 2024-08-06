@@ -68,6 +68,12 @@ public class CalendarController extends HttpServlet {
 			System.out.println("사용자가 선택한 기간 : "+selectPeriod);
 			System.out.println("시작 날짜 : " + selectDate);
 			System.out.println("끝나는 날짜 : " + selectEndDate);
+//			req.setAttribute("selectDate", selectDate);
+//			req.setAttribute("selectEndDate", selectEndDate);
+			req.getSession().setAttribute("selectDate", selectDate);
+			req.getSession().setAttribute("selectEndDate", selectEndDate);
+			req.setAttribute("a", 1);
+			req.getRequestDispatcher("/test/popup.jsp").forward(req, resp);
 		
 		}
 		

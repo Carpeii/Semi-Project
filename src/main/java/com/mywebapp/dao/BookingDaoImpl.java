@@ -135,6 +135,7 @@ public class BookingDaoImpl implements BookingDao {
 			
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setDate(1,selectDate);
+			pstmt.setLong(2,roomId);
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) {

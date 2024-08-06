@@ -13,10 +13,9 @@
     <title>팝업 JSP 예제</title>
     <script type="text/javascript">
         	let url = '${pageContext.request.contextPath}/calendar/call';
-        	
         function openPopup() {
             //매개변수 -> (Url, 창이름 , 옵션)
-            window.open(url, 'popupWindow', 'width=1000,height=1000,scrollbars=yes');
+            window.open(url, 'popupWindow', 'width=1027,height=474,scrollbars=yes');
         }
     </script>
 </head>
@@ -27,6 +26,9 @@
     <button type="button"  class="w-25px h-100 btn btn-outline-primary" onclick="openPopup()">팝업창 열기</button>
     <input  class="w-100 h-100 btn btn-outline-primary" style="cursor: default;" type="button" onclick="openPopup()" value="팝업"	 />
 </div>
+<p>넘어온값</p>
+checkIn  : <input type="text" value="${selectDate }" disabled/> <br><br>
+checkOut : <input type="text" value="${selectEndDate }" disabled/>
 </body>
 
 </html>
