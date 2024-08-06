@@ -4,6 +4,10 @@
     <file url="file://$PROJECT_DIR$/../Downloads/Scripts/insert_booking.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/../Downloads/Scripts/insert_host.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/../Downloads/Scripts/insert_member.sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/../Downloads/Scripts/insert_review.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/../Downloads/Scripts/insert_room.sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/../Downloads/Scripts/insert_room_image.sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/../Downloads/Scripts/insert_room_option.sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/../Downloads/Scripts/insert_room_price.sql" dialect="MariaDB" />
   </component>
 </project>
