@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
 import static java.lang.Boolean.parseBoolean;
 
-@WebServlet("/join")
+@WebServlet("/auth/join")
 public class JoinController extends HttpServlet {
 
     @Override
