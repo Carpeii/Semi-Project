@@ -13,15 +13,15 @@
 <body>
 <h1>Login</h1>
 <form action="${pageContext.request.contextPath}/login" method="post">
-    아이디: <input type="text" name="id"><br>
-    비밀번호: <input type="password" name="pw"><br>
+    아이디: <input type="text" name="userId"><br>
+    비밀번호: <input type="password" name="password"><br>
     <table>
         <tr>
             <td>${errMsg}</td>
         </tr>
     </table>
-    <input type="submit" name="guestLogin" value="게스트 로그인">
-    <input type="submit" name="hostLogin" value="호스트 로그인">
+    <input type="submit" name="login" value="로그인">
+<%--    <input type="submit" name="hostLogin" value="호스트 로그인">--%>
 </form>
 </body>
 </html>

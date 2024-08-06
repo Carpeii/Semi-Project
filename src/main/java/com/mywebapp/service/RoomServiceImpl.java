@@ -7,6 +7,7 @@ import java.util.Map;
 import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dto.RoomListItemDto;
+import com.mywebapp.util.PaginationUtil;
 
 public class RoomServiceImpl implements RoomService {
 	
@@ -15,30 +16,29 @@ public class RoomServiceImpl implements RoomService {
 
 	/* 한 페이지에 보여줄 방 목록 */
 	@Override
-	public List<RoomListItemDto> getRoomList(int pageNum, int pageSize) {
-		int offset = (pageNum - 1) * pageSize;
-		return roomDao.findAllRoomListItems(offset, pageSize);
+	public List<RoomListItemDto> getRoomList(int pageNum, int pageSize, int approve) {
+        // Use PaginationUtil to calculate the offset
+		int offset = PaginationUtil.calculateOffset(pageNum, pageSize);
+		return roomDao.findAllRoomListItems(offset, pageSize, approve);
 	}
 
 	/* 전체 방의 수 */
 	@Override
-	public int getTotalRoomCount() {
-		return roomDao.getTotalRoomCount();
+	public int getTotalRoomCount(int approve) {
+		return roomDao.getTotalRoomCount(approve);
 	}
-
+	
 	@Override
 	public Map<String, Object> calculatePagination(int pageNum, int pageSize, int totalCount) {
-		Map<String, Object> paginationInfo = new HashMap<>();
-		int pageCount = (int) Math.ceil((double) totalCount / pageSize);
-		int startPage = ((pageNum - 1) / 10) * 10 + 1;
-		int endPage  = Math.min(startPage + 9, pageCount);
-		
-		paginationInfo.put("pageCount", pageCount);
-		paginationInfo.put("startPage", startPage);
-		paginationInfo.put("endPage", endPage);
-		paginationInfo.put("pageNum", pageNum);
-		
-		return paginationInfo;
+		return PaginationUtil.calculatePagination(pageNum, pageSize, totalCount);
 	}
+
+
+	
+	
+
+
+
+
 	
 }

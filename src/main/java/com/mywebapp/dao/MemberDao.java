@@ -16,33 +16,36 @@ public class MemberDao {
         this.connection = connection;
     }
 
-    public void joinMember(MemberDto member) throws SQLException {
-        String sql = "INSERT INTO members (user_id, password, name, phone, member_type, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public void joinMember(MemberDto dto) throws SQLException {
+//        String sql = "INSERT INTO members (user_id, password, name, phone, member_type, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO member (user_id, password, name, phone, member_type) VALUES (?, password(?), ?, ?, ?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
 
         try {
-            pstmt.setString(1, member.getUserId());
-            pstmt.setString(2, member.getPassword());
-            pstmt.setString(3, member.getName());
-            pstmt.setString(4, member.getPhone());
-            pstmt.setInt(5, member.getMemberType());
-            pstmt.setTimestamp(6, member.getCreatedAt());
-            pstmt.setTimestamp(7, member.getUpdatedAt());
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, dto.getUserId());
+            pstmt.setString(2, dto.getPassword());
+            pstmt.setString(3, dto.getName());
+            pstmt.setString(4, dto.getPhone());
+            pstmt.setInt(5, dto.getMemberType());
+//            pstmt.setTimestamp(6, member.getCreatedAt());
+//            pstmt.setTimestamp(7, member.getUpdatedAt());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } finally {
-            try {
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                if (pstmt != null) {
+//                    pstmt.close();
+//                }
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+            JdbcUtil.close(conn, pstmt, null);
         }
 
     }
