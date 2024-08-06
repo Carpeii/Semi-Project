@@ -13,6 +13,6 @@ public interface BookingDao {
     List<Booking> rentalSchedule(Long roomId);
     Booking reservationAvailablePeriodCall(Date selectDate, long roomId);
     
-    
+
 }
 

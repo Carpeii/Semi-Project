@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter @Setter
 public class RoomDetailDto {
@@ -25,11 +26,17 @@ public class RoomDetailDto {
     private String parkDetail;
     private String roomType;
     private int minimumContract;
+    
+    // room_image
     private String imageName;
     private String imagePath;
     private String saveFileName;
     private int imageOrder;
+    
+    // room_option
     private String roomOption;
+    
+    // 
     private int rentPrice;
     private int longTerm;
     private int longTermDiscount;
@@ -43,7 +50,9 @@ public class RoomDetailDto {
     private boolean internet;
     private int cleaningFee;
     private int refundType;
-    private String reviewMessage;
-    private int rating;
-    private Date reviewCreatedAt;
+//    private String reviewMessage;
+//    private int rating;
+//    private Date reviewCreatedAt;
+    private Date checkInDate;
+    private Date checkOutDate;
 }
