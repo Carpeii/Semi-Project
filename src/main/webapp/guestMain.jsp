@@ -8,7 +8,7 @@
   <head>
  	 <meta charset="utf-8">
  	 <meta name="viewport" content="width=device-width, initial-scale=1">
-     <title>호스트 메인</title>
+     <title>1평 단기임대, 한달살기 부동산 단기계약 플랫폼</title>
      <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.css">
   <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
   </head>
@@ -16,7 +16,7 @@
   
 <!-- 호스트 게스트 조건문으로 처리? -->
 
-<jsp:include page="/jsp/common/header.jsp"></jsp:include>
+<jsp:include page="/jsp/common/guestHeader.jsp"></jsp:include>
 <!-- START ALBUM -->
   <div class="album py-5 bg-body-tertiary">
   
@@ -110,13 +110,6 @@
       </div>
     </div>
   </div>
-<!-- END ALBUM -->
-<!--  <div class="album py-5 bg-body-tertiary"> -->
-<!--     <div class="container"> -->
-<!--       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> -->
-<!-- </main> -->
- <!-- footer -->
  <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
-<%--  <%@include file="/jsp/common/footer.jsp" %> --%>
   </body>
 </html>

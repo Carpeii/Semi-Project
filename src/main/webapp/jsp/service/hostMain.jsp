@@ -26,7 +26,7 @@
 <button onclick="location.href='${pageContext.request.contextPath}/service/roomAdd'">방 등록하기</button>
 <%--        <p>${userId}님 환영합니다</p>--%>
 <%
-} else if (user == null) {
+} else if (user == null && user.getMemberType() == 1) {
     System.out.println(user);
     // 로그인 정보 없음
 %>

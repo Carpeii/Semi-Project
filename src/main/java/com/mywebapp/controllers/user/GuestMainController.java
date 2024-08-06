@@ -11,6 +11,6 @@ import java.io.IOException;
 public class GuestMainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/service/guestMain.jsp").forward(req, resp);
+        req.getRequestDispatcher("/guestMain.jsp").forward(req, resp);
     }
 }
