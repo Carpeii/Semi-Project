@@ -2,32 +2,81 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>header.jsp</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Optional: Custom styles for specific elements */
+        .logo img {
+            max-height: 50px; /* Adjust logo height as needed */
+        }
+        .navbar .nav-link {
+            padding: .5rem 1rem; /* Adjust padding for nav links */
+        }
+        .navbar .navbar-text {
+            margin-right: 1rem; /* Adjust margin for navbar text */
+        }
+    </style>
 </head>
 <body>
 
-<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom">
-    <div class="col-md-3 mb-2 mb-md-0">
-        <a href="${pageContext.request.contextPath}/main.jsp">
-            <img class="ps-3" alt="logo" src="${pageContext.request.contextPath}/image/logo.jpg">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/main.jsp">
+            <img src="${pageContext.request.contextPath}/image/logo.jpg" alt="로고 이미지" class="img-fluid">
         </a>
-    </div>
-    
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary">메뉴1</a></li>
-        <li><a href="../index.jsp" class="nav-link px-2">메인 페이지</a></li>
-        <li><a href="../user/profile.jsp" class="nav-link px-2">마이페이지</a></li>
-        <li><a href="../auth/login.jsp" class="nav-link px-2">로그인</a></li>
-        <li><a href="../service/hostMain.jsp" class="nav-link px-2">호스트 모드</a></li>
-    </ul>
 
-    <div class="col-md-3 text-end">
-        <button type="button" name="mode" id="gbtn" class="btn btn-outline-primary me-2">게스트 모드</button>
-        <button type="button" class="btn btn-outline-primary me-2">로그인/회원가입</button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">메뉴1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.jsp">메인 페이지</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../user/profile.jsp">마이페이지</a>
+                </li>
+
+                <c:choose>
+                    <c:when test="${user != null}">
+                        <li class="nav-item">
+                            <p class="navbar-text">${user.name}님 환영합니다</p>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/logout">로그아웃</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/myPage">마이 페이지</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/hostMain">호스트 페이지로</a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/login">로그인</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/join">회원가입</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </div>
     </div>
-</header>
+</nav>
 
 </body>
 </html>
