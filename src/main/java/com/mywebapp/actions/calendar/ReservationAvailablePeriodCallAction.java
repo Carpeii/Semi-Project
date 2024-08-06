@@ -37,10 +37,11 @@ public class ReservationAvailablePeriodCallAction implements Action {
 		java.util.Date utilDate = format.parse(dateString);
 		//         util.Date타입을 -> SQL.Date타입으로 변환
 		Date sqlDate = new Date(utilDate.getTime());
+		long roomId = 2l;
 		
 		BookingDaoImpl dao = new BookingDaoImpl();
 		//checkIn값을 가져오는 객체
-		b = dao.reservationAvailablePeriodCall(sqlDate);
+		b = dao.reservationAvailablePeriodCall(sqlDate, roomId);
 		//db에서 가져온 값이 있다면 선택한 날짜와 비교해 최대로 가능한 기간 계산
 		if(b.getCheckInDate() != null) {
 			firstCheckInDate = b.getCheckInDate().toLocalDate();
@@ -55,17 +56,7 @@ public class ReservationAvailablePeriodCallAction implements Action {
 		}
 		req.setAttribute("dateDiff", dateDiff);
 			req.getRequestDispatcher(calendarUrl).forward(req, resp);
-		
-//		 2024-08-23
-//		 2024-08-30
-//		 차이 값7
-		
-			
-			
-//		2024-12-11
-//		2024-12-25
-//		차이 값14
-//     최대 2주일 11~24일까지
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

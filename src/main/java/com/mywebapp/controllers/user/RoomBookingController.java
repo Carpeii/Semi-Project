@@ -35,6 +35,7 @@ public class RoomBookingController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		 // 세션에서 현재 로그인한 사용자의 정보 가져오기
 		HttpSession session = req.getSession();
 		UserDto user = (UserDto) session.getAttribute("user");

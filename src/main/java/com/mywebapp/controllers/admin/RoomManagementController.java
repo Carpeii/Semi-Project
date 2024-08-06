@@ -24,6 +24,7 @@ public class RoomManagementController extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         UserDto dto = (UserDto) session.getAttribute("user");
 
@@ -59,6 +60,7 @@ public class RoomManagementController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         UserDto dto = (UserDto) session.getAttribute("user");
 

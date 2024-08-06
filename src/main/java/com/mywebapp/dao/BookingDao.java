@@ -11,7 +11,7 @@ public interface BookingDao {
     void approveBooking(long bookingId);
     void declineBooking(long bookingId);
     List<Booking> rentalSchedule(Long roomId);
-    Booking reservationAvailablePeriodCall(Date selectDate);
+    Booking reservationAvailablePeriodCall(Date selectDate, long roomId);
     
 
 }
