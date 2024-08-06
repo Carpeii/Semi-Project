@@ -16,12 +16,9 @@
     <p>${user.name}님 환영합니다</p>
     <button onclick="location.href='${pageContext.request.contextPath}/logout'">로그아웃</button>
     <button onclick="location.href='${pageContext.request.contextPath}/myPage'">마이 페이지</button>
-    <button onclick="location.href='${pageContext.request.contextPath}/guestMain'">게스트 페이지로</button>
-    <button onclick="location.href='${pageContext.request.contextPath}/service/roomAdd'">방관리</button>
-    <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">계약</button>
-    <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">채팅</button>
-    <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">정산</button>
-    <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">더보기</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/service/guestMain'">게스트 페이지로</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/service/roomAdd'">방추가</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/roomAdd.jsp'">방관리</button>
 <% } else { %>
     <button onclick="location.href='${pageContext.request.contextPath}/login'">로그인</button>
     <button onclick="location.href='${pageContext.request.contextPath}/join'">회원가입</button>

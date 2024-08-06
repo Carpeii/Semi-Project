@@ -95,6 +95,15 @@
         .btn-custom:focus, .btn-custom:active {
             box-shadow: none; /* 포커스 및 활성 상태에서 그림자 제거 */
         }
+        
+        .card-link {
+		    text-decoration: none; /* 링크 밑줄 제거 */
+		    color: inherit; /* 링크 텍스트 색상 유지 (부모 요소의 색상 사용) */
+		}
+
+		.card-link:hover {
+		    text-decoration: none; /* 호버 시에도 밑줄 제거 */
+		}
     </style>
 </head>
 <body>
@@ -125,25 +134,23 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         <c:forEach var="room" items="${roomList}">
             <div class="col">
-                <div class="card shadow-sm border-light rounded-3">
-                    <!-- 이미지를 클릭했을 때 이동하는 페이지 -->
-                    <a href="${pageContext.request.contextPath}/service/roomDetail?roomId=${room.id}">
-                        <img src="${room.imagePath}" class="card-img-top" alt="${room.roomName}">
-                    </a>
+            	 <!-- 카드 전체를 링크로 감쌉니다 -->
+            	 <a href="${pageContext.request.contextPath}/service/roomDetail?roomId=${room.id}" class="card-link">
+	                <div class="card shadow-sm border-light rounded-3">
+                    <img src="${room.imagePath}" class="card-img-top" alt="${room.roomName}">
                     <div class="card-body">
                         <h5 class="card-title">${room.roomName}</h5>
                         <p class="card-text">${room.streetAddress}</p>
                         <p class="card-text">
-                        	<span class="rent-price">${room.rentPrice}</span>
-                        	<span class="rent-info">원/1주</span>
+                            <span class="rent-price">${room.rentPrice}</span>
+                            <span class="rent-info">원/1주</span>
                         </p>
-                        <p class="card-text"><small class="text-muted">${room.roomOption }</small></p>
-                        <%-- <p class="card-text"><small class="text-muted">방: 1 | 화장실: 1 | 거실: 0 | 주방: 0</small></p>--%>
                     </div>
                     <div class="card-footer text-center">
                         <small class="text-primary">장기계약 시 최대 60% 할인</small>
                     </div>
                 </div>
+	            </a>
             </div>
         </c:forEach>
     </div>
