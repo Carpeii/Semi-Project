@@ -34,11 +34,13 @@ public class GuestMainController extends HttpServlet {
 		if(pNum != null) {
 			pageNum = Integer.parseInt(pNum);
 		}
-		int pageSize = 10; // 한 페이지에 보여줄 항목 수
+		int pageSize = 9; // 한 페이지에 보여줄 항목 수
 		
 		// RoomServiceImpl의 메서드들 호출
 		List<RoomListItemDto> roomList = roomService.getRoomList(pageNum, pageSize, approve);
 		int totalCount = roomService.getTotalRoomCount(approve);
+		
+		System.out.println(totalCount);
 		Map<String, Object> paginationInfo = roomService.calculatePagination(pageNum, pageSize, totalCount);
 		
 		

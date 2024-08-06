@@ -129,13 +129,17 @@ public class RoomDaoImpl implements RoomDao {
 
 	}
 
-	/* room 테이블에서 전체 행 수를 계산해 반환 + approve 추가*/
 	@Override
 	public int getTotalRoomCount(int approve) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(*) FROM room where approve = ?";
+		String sql = "SELECT COUNT(*) " +
+	             "FROM room r " +
+	             "INNER JOIN room_image ri ON r.id = ri.room_id " +
+	             "INNER JOIN room_option ro ON r.id = ro.room_id " +
+	             "INNER JOIN room_price rp ON r.id = rp.room_id " +
+	             "WHERE r.approve = ?";
 		try {
 			con = JdbcUtil.getCon();
 			pstmt = con.prepareStatement(sql);

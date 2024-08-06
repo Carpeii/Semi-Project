@@ -12,21 +12,36 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <style>
-        /* Optional: Custom styles for specific elements */
-        .logo img {
-            max-height: 50px; /* Adjust logo height as needed */
+        /* Custom styles for navbar */
+        .navbar {
+            background-color: #343a40; /* Dark background for navbar */
         }
-        .navbar .nav-link {
-            padding: .5rem 1rem; /* Adjust padding for nav links */
+        .navbar-brand img {
+            max-height: 60px; /* Adjust logo height */
         }
-        .navbar .navbar-text {
-            margin-right: 1rem; /* Adjust margin for navbar text */
+        .nav-link {
+            color: #ffffff !important; /* White color for nav links */
+            font-weight: 500; /* Slightly bold */
+        }
+        .nav-link:hover {
+            color: #f8f9fa !important; /* Light color on hover */
+            background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+        }
+        .navbar-text {
+            color: #ffffff; /* White color for navbar text */
+            font-weight: 500; /* Slightly bold */
+        }
+        .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml;base64,...'); /* Custom icon (optional) */
+        }
+        .navbar-nav .nav-item + .nav-item {
+            margin-left: 1rem; /* Spacing between nav items */
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/main.jsp">
             <img src="${pageContext.request.contextPath}/image/logo.jpg" alt="로고 이미지" class="img-fluid">

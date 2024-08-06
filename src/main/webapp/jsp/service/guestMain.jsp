@@ -12,7 +12,7 @@
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <style>
-        body {
+               body {
             background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -21,6 +21,7 @@
             background-size: cover;
             padding: 4rem 0;
             color: #fff;
+            text-align: center;
         }
         .hero-title {
             font-size: 2.5rem;
@@ -32,10 +33,42 @@
             margin: 0 auto;
         }
         .card {
-            transition: transform 0.3s;
+            border: 1px solid #ddd;
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         .card:hover {
             transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            object-fit: cover;
+            height: 200px; /* 이미지 높이 조정 */
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .card-text {
+            color: #6c757d; /* 회색 텍스트 색상 */
+        }
+        .rent-price {
+            font-size: 1.5rem; /* 텍스트 크기 */
+            font-weight: bold; /* 볼드체 */
+            color: #000; /* 검정색 텍스트 */
+        }
+        .rent-info {
+            font-size: 1rem; /* 기본 텍스트 크기 */
+            color: #6c757d; /* 회색 텍스트 색상 */
+        }
+        .card-footer {
+            background-color: #f1f1f1;
+            border-top: 1px solid #e9ecef;
+            padding: 1rem;
         }
         .pagination .page-item.active .page-link {
             background-color: #0d6efd;
@@ -77,8 +110,10 @@
                     <div class="card-body">
                         <h5 class="card-title">${room.roomName}</h5>
                         <p class="card-text">${room.streetAddress}</p>
-                        <p class="card-text">${room.roomName}</p>
-                        <p class="card-text">${room.rentPrice}</p>
+                        <p class="card-text">
+                        	<span class="rent-price">${room.rentPrice}</span>
+                        	<span class="rent-info">원/1주</span>
+                        </p>
                         <p class="card-text"><small class="text-muted">방: 1 | 화장실: 1 | 거실: 0 | 주방: 0</small></p>
                     </div>
                     <div class="card-footer text-center">
