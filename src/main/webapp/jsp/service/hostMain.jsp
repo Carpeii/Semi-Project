@@ -1,45 +1,30 @@
 <%@ page import="com.mywebapp.dto.UserDto" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>hostMain.jsp</title>
 </head>
 <body>
-<h2>´Ü±âÀÓ´ë, 1Æò¿¡¼­ Ã£¾Æº¸¼¼¿ä</h2>
+<h2>ë‹¨ê¸°ìž„ëŒ€, 1í‰ì—ì„œ ì°¾ì•„ë³´ì„¸ìš”</h2>
 <%
-    UserDto user = (session != null) ? (UserDto) session.getAttribute("user") : null;
+    UserDto user = (UserDto) session.getAttribute("user");
 %>
-<%
-    if (user != null) {
-        System.out.println(user);
-        // ·Î±×ÀÎ Á¤º¸ Á¸Àç
-%>
-<p>${user.name}´Ô È¯¿µÇÕ´Ï´Ù</p>
-<button onclick="location.href='${pageContext.request.contextPath}/logout'">·Î±×¾Æ¿ô</button>
-<button onclick="location.href='${pageContext.request.contextPath}/myPage'">¸¶ÀÌ ÆäÀÌÁö</button>
-<button onclick="location.href='${pageContext.request.contextPath}/guestMain'">°Ô½ºÆ® ÆäÀÌÁö·Î</button>
-<button onclick="location.href='${pageContext.request.contextPath}/service/roomAdd'">¹æ°ü¸®</button>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">°è¾à</button>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">Ã¤ÆÃ</button>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">Á¤»ê</button>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">´õº¸±â</button>
-<br><br>
-<button onclick="location.href='${pageContext.request.contextPath}/service/roomAdd'">¹æ µî·ÏÇÏ±â</button>
-<%--        <p>${userId}´Ô È¯¿µÇÕ´Ï´Ù</p>--%>
-<%
-} else if (user == null) {
-    System.out.println(user);
-    // ·Î±×ÀÎ Á¤º¸ ¾øÀ½
-%>
-<button onclick="location.href='${pageContext.request.contextPath}/login'">·Î±×ÀÎ</button>
-<button onclick="location.href='${pageContext.request.contextPath}/join'">È¸¿ø°¡ÀÔ</button>
-<%
-    }
-%>
-
-
+<%-- Check if the user is logged in --%>
+<% if (user != null) { %>
+    <p>${user.name}ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</p>
+    <button onclick="location.href='${pageContext.request.contextPath}/logout'">ë¡œê·¸ì•„ì›ƒ</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/myPage'">ë§ˆì´ íŽ˜ì´ì§€</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/guestMain'">ê²ŒìŠ¤íŠ¸ íŽ˜ì´ì§€ë¡œ</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/service/roomAdd'">ë°©ê´€ë¦¬</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">ê³„ì•½</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">ì±„íŒ…</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">ì •ì‚°</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/jsp/auth/roomAdd.jsp'">ë”ë³´ê¸°</button>
+<% } else { %>
+    <button onclick="location.href='${pageContext.request.contextPath}/login'">ë¡œê·¸ì¸</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/join'">íšŒì›ê°€ìž…</button>
+<% } %>
 </body>
 </html>
