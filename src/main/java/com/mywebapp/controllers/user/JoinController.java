@@ -65,6 +65,11 @@ public class JoinController extends HttpServlet {
                 return;
             }
 
+            if(userId.isEmpty() || password.isEmpty() || name.isEmpty() || phone.isEmpty()) { // 공백이면 회원가입 안되게
+                req.setAttribute("errMsg", "회원가입 폼을 모두 작성해주세요.");
+                req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+            }
+
             // 비밀번호 확인
             if (!pwConfirm.equals(password)) {
                 req.setAttribute("pwErrMsg", "비밀번호가 일치하지 않습니다.");

@@ -57,7 +57,7 @@
         <br>
         <table>
             <tr>
-                <td colspan="3"> <div id="errMsg">${errMsg}</div></td>
+                <td colspan="3"> <div id="errMsg">${errMsg}</div><br></td>
             </tr>
         </table>
         <table>
