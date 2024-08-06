@@ -30,6 +30,7 @@ public class RoomImageController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         Room room = (Room) session.getAttribute("room");
 
@@ -55,6 +56,10 @@ public class RoomImageController extends HttpServlet {
                 String saveFileName = UUID.randomUUID().toString() + fileExtension;
                 String uploadPath = uploadDirPath + File.separator + saveFileName;
 
+                if (!fileExtension.equals(".jpg") && !fileExtension.equals(".png") && !fileExtension.equals(".jpeg")) {
+                    continue; // 이미지 파일이 아니면 무시
+                }
+
                 File file = new File(uploadPath);
                 part.write(uploadPath);
 
@@ -65,14 +70,12 @@ public class RoomImageController extends HttpServlet {
                 roomImage.setImageOrder(imageOrder);
 
                 roomImages.add(roomImage);
-                System.out.println(roomImage.getImageName());
                 imageOrder++;
             }
         }
-        System.out.println(roomImages.size());;
+
         session.setAttribute("roomImages", room);
         session.setAttribute("roomImages", roomImages);
         resp.sendRedirect(req.getContextPath() + "/service/roomOptionAdd");
-//        req.getRequestDispatcher(req.getContextPath() + "/jsp/service/roomOptionAdd").forward(req, resp);
     }
 }
