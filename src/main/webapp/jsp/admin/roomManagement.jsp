@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,10 +23,6 @@
                 <td>${room.id}</td>
                 <td>${room.roomName}</td>
                 <td>
-<%--                    <form action="${pageContext.request.contextPath}/editRoom" method="post" class="d-inline">--%>
-<%--                        <input type="hidden" name="roomId" value="${room.id}">--%>
-<%--                        <button type="submit" class="btn btn-primary">Edit</button>--%>
-<%--                    </form>--%>
                     <form action="${pageContext.request.contextPath}/admin/roomManagement" method="post" class="d-inline">
                         <input type="hidden" name="action" value="approve">
                         <input type="hidden" name="roomId" value="${room.id}">

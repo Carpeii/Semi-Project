@@ -26,7 +26,7 @@ public class RoomPriceController extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setCharacterEncoding("UTF-8");
         int rentPrice = Integer.parseInt(req.getParameter("rentPrice"));
         int longTerm = Integer.parseInt(req.getParameter("longTerm"));
         int longTermDiscount = Integer.parseInt(req.getParameter("longTermDiscount"));
