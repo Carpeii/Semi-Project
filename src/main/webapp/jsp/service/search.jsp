@@ -27,23 +27,28 @@
         <!-- 앨범 한 개 시작 -->
         <div class="col-sm">
             <a href="해당 페이지" class="card shadow-sm" style="text-decoration: none; color: inherit;">
-                <img class="bd-placeholder-img card-img-top" width="100%" height="225" 
+                <img class="bd-placeholder-img card-img-top" width="75%" height="200" 
                      src="${pageContext.request.contextPath}/${image.imagePath}" alt="${image.imageName}">
                 <div class="card-body">
                     <p class="card-title">${room.roomName}</p>
                     <p class="overflow-y-hidden">${room.jibunAddress}</p>
                     <p class="card-title">${room.roomPrice.rentPrice}원/1주일</p>
-                    <div class="d-flex justify-content-between align-items-center"></div>
                     <small class="text-body-secondary">방 ${room.roomCount}</small>
                     <small class="text-body-secondary">화장실 ${room.toiletCount}</small>
                     <small class="text-body-secondary">거실 ${room.livingRoomCount}</small>
                     <small class="text-body-secondary">주방 ${room.kitchenCount}</small>
                 </div>
                 <div class="card-footer">
-                    <c:set var="discount" value="${room.roomPrice.longTermDiscount + room.roomPrice.earlyCheckInDiscount}"/>
-                    <c:if test="${discount > 0}">
-                        <small class="text-primary">장기계약 시 최대 ${discount}% 할인</small>
+                        <p>
+                    <c:if test="${room.roomPrice.longTermDiscount > 0}">
+                        <span class="text-primary">장기계약 시 최대 ${room.roomPrice.longTermDiscount}% 할인</span>
                     </c:if>
+                        </p>
+                        <p>
+                       <c:if test="${room.roomPrice.earlyCheckInDiscount > 0} ">
+                        <span class="text-primary">장기계약 시 최대 ${room.roomPrice.earlyCheckInDiscount}% 할인</span>
+                    </c:if>
+                        </p>
                 </div>
             </a>
         </div>
@@ -51,9 +56,11 @@
     </c:forEach>
 </c:if>
   </div>
+  <!-- 
 longTermDiscount;
 earlyCheckIn;
 earlyCheckInDiscount;
+   -->
 <!-- END ALBUM -->
 <!--  <div class="album py-5 bg-body-tertiary"> -->
 <!--     <div class="container"> -->
@@ -107,5 +114,7 @@ earlyCheckInDiscount;
 		</ul>
 	</nav>
  <%@include file="/jsp/common/footer.jsp" %>
+ 
+ 
 </body>
 </html>

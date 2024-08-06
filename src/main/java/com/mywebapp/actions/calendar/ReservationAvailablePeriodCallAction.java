@@ -37,10 +37,11 @@ public class ReservationAvailablePeriodCallAction implements Action {
 		java.util.Date utilDate = format.parse(dateString);
 		//         util.Date타입을 -> SQL.Date타입으로 변환
 		Date sqlDate = new Date(utilDate.getTime());
+		long roomId = 2l;
 		
 		BookingDaoImpl dao = new BookingDaoImpl();
 		//checkIn값을 가져오는 객체
-		b = dao.reservationAvailablePeriodCall(sqlDate);
+		b = dao.reservationAvailablePeriodCall(sqlDate, roomId);
 		//db에서 가져온 값이 있다면 선택한 날짜와 비교해 최대로 가능한 기간 계산
 		if(b.getCheckInDate() != null) {
 			firstCheckInDate = b.getCheckInDate().toLocalDate();

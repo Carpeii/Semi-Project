@@ -381,7 +381,7 @@ public class RoomDaoImpl implements RoomDao {
 						getRoomListSampleImage(rs.getLong("id")),
 
 						new RoomOption(
-								rs.getLong("room_id"),rs.getString("room_options")
+								rs.getLong("room_id"),rs.getString("room_option")
 						),
 
 						new RoomPrice(
