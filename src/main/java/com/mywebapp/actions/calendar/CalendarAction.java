@@ -29,8 +29,20 @@ public class CalendarAction implements Action {
     	LocalDate checkOut = null;
     	LocalDate in = null;
     	LocalDate out = null;
+    	LocalDate selectStartDate = null;
+    	LocalDate selectEndDate = null;
 		if(req.getSession().getAttribute("monthControll") != null) {
 			monthControll =(Integer)req.getSession().getAttribute("monthControll"); 
+		}
+		if(req.getSession().getAttribute("selectDate") != null && req.getSession().getAttribute("selectEndDate") != null ) {
+			System.out.println("endDate있음--------------------------------------------------------------------------------------------");
+			System.out.println("endDate있음--------------------------------------------------------------------------------------------");
+			System.out.println("endDate있음--------------------------------------------------------------------------------------------");
+			String select = (String)req.getSession().getAttribute("selectDate");
+			selectStartDate = LocalDate.parse(select);
+			
+			selectEndDate =  (LocalDate)req.getSession().getAttribute("selectEndDate");
+			
 		}
 		System.out.println(monthControll);
 		System.out.println("달력Action 호출");
@@ -159,14 +171,22 @@ public class CalendarAction implements Action {
 				        	if(scheduleList.isEmpty()) {
 				        		System.out.println("158-------------false---------------");
 				        		if(todayNum == j) {
-				        			sb.append("<td><button type='submit' name='select' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
-				        			sb.append("["+j+"]").append("</button></td>\n");
+				        			if((selectStartDate != null && selectEndDate != null) &&) {
+				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-success' style'border: none;' value='"+notSelectedDay+"' disabled>");
+				        				sb.append("["+j+"]").append("</button></td>\n");
+				        			} else {
+				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
+				        				sb.append("["+j+"]").append("</button></td>\n");
+				        			}
 				        			//오늘 이전 날짜 비활성화
 				        		} else if((monthControll == 0 && notSelectedDay.getDayOfMonth() < today.getDayOfMonth() )  || monthControll < 0 ){
-				        			sb.append("<td><button type='submit' name='select' class='w-100 h-100 btn btn-outline-secondary' style'border: none;' value='"+notSelectedDay+"' disabled>");
+				        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-secondary' style'border: none;' value='"+notSelectedDay+"' disabled>");
+				        			sb.append(j).append("</button></td>\n");
+				        		} else if((selectStartDate != null && selectEndDate != null) && ((notSelectedDay >= selectStartDate) && (notSelectedDay <= selectEndDate)) ) {
+				        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-success' style'border: none;' value='"+notSelectedDay+"'>");
 				        			sb.append(j).append("</button></td>\n");
 				        		} else {
-				        			sb.append("<td><button type='submit' name='select' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
+				        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
 				        			sb.append(j).append("</button></td>\n");
 				        		}
 				        	} else if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))) {

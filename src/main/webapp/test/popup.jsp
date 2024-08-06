@@ -18,7 +18,7 @@ request.setCharacterEncoding("utf-8");
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container mt-4 sm custom-container">
+	<div class="container mt-4 mb-5 sm custom-container">
 		<div class="row">
 
 			<div class="col">
@@ -28,7 +28,7 @@ request.setCharacterEncoding("utf-8");
 				</form>
 			</div>
 				
-			<div class="col mb-5">
+			<div class="col pb-5">
 				<form action="${pageContext.request.contextPath }/calendar/select" method="post">
 					<table class="table custom-table" style="border:none; ">
 						<tr> 
@@ -108,13 +108,13 @@ request.setCharacterEncoding("utf-8");
 		<div class="mt-5">
 		<c:choose>
 			<c:when test="${not empty datecheck}">
-				<button type="button" class="btn btn-success" onclick="opener.location.reload();self.close();">
+				<button type="button" class="btn btn-success mt-5" onclick="opener.location.reload();self.close();">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
   <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"></path>
 </svg>확인</button>
 			</c:when>
 			<c:otherwise>
-				<button type="button" class="btn btn-tertiary" disabled>
+				<button type="button" class="btn btn-tertiary mt-5" disabled>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16  fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
   <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"></path>
 </svg>확인</button>

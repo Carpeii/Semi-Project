@@ -52,8 +52,8 @@ public class CalendarController extends HttpServlet {
 				action = new CalendarAction();
 				action.execute(req, resp);
 				//날짜 버튼을 눌렀을 때 호출
-			} else if(req.getParameter("select") != null){
-				req.getSession().setAttribute("select", req.getParameter("select"));
+			} else if(req.getParameter("selectDate") != null){
+				req.getSession().setAttribute("selectDate", req.getParameter("selectDate"));
 				action = new ReservationAvailablePeriodCallAction();
 				action.execute(req, resp);
 			}
@@ -61,19 +61,20 @@ public class CalendarController extends HttpServlet {
 		} else if(requestUrl.equals("/select")) {
 			//당일포함-> -1
 			int selectPeriod = Integer.parseInt(req.getParameter("period"));
-			String select = (String)req.getSession().getAttribute("select");
-			LocalDate selectDate = LocalDate.parse(select);
+			String select = (String)req.getSession().getAttribute("selectDate");
+			LocalDate selectStartDate = LocalDate.parse(select);
 			//사용자가 선택한 기간 
-			LocalDate selectEndDate = selectDate.plusDays(selectPeriod-1);
+			LocalDate selectEndDate = selectStartDate.plusDays(selectPeriod-1);
 			System.out.println("사용자가 선택한 기간 : "+selectPeriod);
-			System.out.println("시작 날짜 : " + selectDate);
+			System.out.println("시작 날짜 : " + selectStartDate);
 			System.out.println("끝나는 날짜 : " + selectEndDate);
 //			req.setAttribute("selectDate", selectDate);
 //			req.setAttribute("selectEndDate", selectEndDate);
-			req.getSession().setAttribute("selectDate", selectDate);
 			req.getSession().setAttribute("selectEndDate", selectEndDate);
 			req.setAttribute("datecheck", 1);
-			req.getRequestDispatcher("/test/popup.jsp").forward(req, resp);
+			action =new CalendarAction();
+			action.execute(req, resp);
+//			req.getRequestDispatcher("/test/popup.jsp").forward(req, resp);
 		
 		}
 		

@@ -20,7 +20,7 @@ public class ReservationAvailablePeriodCallAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
-		String dateString = req.getParameter("select");
+		String dateString = req.getParameter("selectDate");
 		LocalDate select = LocalDate.parse(dateString);
 		//db에서 데이터를 받아온 객체
 		Booking b;
