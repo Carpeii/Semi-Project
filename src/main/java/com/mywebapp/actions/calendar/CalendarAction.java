@@ -79,7 +79,7 @@ public class CalendarAction implements Action {
 					
 //				 sb.append("<table border='1' cellspacing='1' width='300px' height='400px' style='text-align: center'>\n");
 				 sb.append("<table class='table calendar-table'>\n");
-				 sb.append("<tr><th colspan='7'>"+" <button value=\"before\" name=\"moveMonth\">&lt</button>   "+year+"-"+month+"   <button value=\"next\" name=\"moveMonth\">&gt</button>"+"</th></tr>\n");
+				 sb.append("<tr><th colspan='7'>"+" <button class='btn' value=\"before\" name=\"moveMonth\">&lt</button>   "+year+"-"+month+"   <button class='btn' value=\"next\" name=\"moveMonth\">&gt</button>"+"</th></tr>\n");
 			        // 요일 헤더
 				 
 			        sb.append("<tr>\n");

@@ -16,22 +16,6 @@ request.setCharacterEncoding("utf-8");
 	src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 
 <title>Insert title here</title>
-
-<% 
-int a = 0;
-if(request.getParameter("a") != null) {
-a = Integer.parseInt(request.getParameter("a"));
-}
-%>
-<%
-if(a > 0){
-%>	
-<script type="text/javascript">
-	self.close();
-</script>
-<% 	} %> 
-	
-
 </head>
 <body>
 	<div class="container mt-4 sm custom-container">
@@ -45,9 +29,9 @@ if(a > 0){
 			</div>
 				
 			<div class="col mb-5">
-				<form action="${pageContext.request.contextPath }/calendar/select" method="post" id="periodfrm"  target="_parent" onsubmit="return closepopup(event);">
+				<form action="${pageContext.request.contextPath }/calendar/select" method="post">
 					<table class="table custom-table" style="border:none; ">
-						<tr>
+						<tr> 
 							<c:if test="${dateDiff >= 7}">
 						<td class="noborder">
 					         	<button  class="w-100 h-100 btn btn-outline-primary" value="7" name="period">1주일</button>
@@ -121,18 +105,22 @@ if(a > 0){
 			</div>
 		</div>
 	</div>
-		<div>
+		<div class="mt-5">
 		<c:choose>
-		<c:when test="${not empty datecheck}">
-		<button class="btn btn-outline-success" onclick=" opener.location.reload();self.close();" style="width:100px; height:50px;">확인</button>
-		</c:when>
-		<c:otherwise>
-		<button class="btn btn-outline-success" onclick=" opener.location.reload();self.close();" style="width:100px; height:50px;" disabled>확인</button>
-		</c:otherwise>
+			<c:when test="${not empty datecheck}">
+				<button type="button" class="btn btn-success" onclick="opener.location.reload();self.close();">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"></path>
+</svg>확인</button>
+			</c:when>
+			<c:otherwise>
+				<button type="button" class="btn btn-tertiary" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16  fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"></path>
+</svg>확인</button>
+			</c:otherwise>
 		</c:choose>
 		</div>
-<script>
-
-</script>
 </body>
 </html>
+
