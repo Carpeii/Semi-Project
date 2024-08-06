@@ -16,7 +16,7 @@
   
 <!-- 호스트 게스트 조건문으로 처리? -->
 
-<jsp:include page="/jsp/common/guestHeader.jsp"></jsp:include>
+<jsp:include page="/jsp/common/hostHeader.jsp"></jsp:include>
 <!-- START ALBUM -->
   <div class="album py-5 bg-body-tertiary">
   
