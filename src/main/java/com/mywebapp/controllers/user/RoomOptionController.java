@@ -30,6 +30,7 @@ public class RoomOptionController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         Room room = (Room) session.getAttribute("room");
         List<RoomImage> roomImages = (List<RoomImage>) session.getAttribute("roomImages");
