@@ -77,11 +77,34 @@
         .pagination .page-link {
             border-radius: 0.375rem;
         }
+        
+        /* Custom styles for search button */
+        
+        .btn-custom {
+            background-color: #007bff; /* 파란색 배경 */
+            color: #ffffff; /* 흰색 글씨 */
+            border: none; /* 기본 테두리 제거 */
+            border-radius: 0.375rem; /* 모서리 둥글게 */
+            font-weight: 500; /* 약간의 굵기 */
+            transition: background-color 0.3s ease, color 0.3s ease; /* 부드러운 전환 효과 */
+        }
+        .btn-custom:hover {
+            background-color: #0056b3; /* 호버 시 더 어두운 파란색 */
+            color: #ffffff; /* 호버 시 흰색 글씨 유지 */
+        }
+        .btn-custom:focus, .btn-custom:active {
+            box-shadow: none; /* 포커스 및 활성 상태에서 그림자 제거 */
+        }
     </style>
 </head>
 <body>
- 
+
+
 <jsp:include page="/jsp/common/header.jsp"></jsp:include>
+
+<%-- 
+<c:import url="/jsp/common/header.jsp" />
+--%>
  
 <div class="hero-section text-center">
     <h1 class="hero-title">단기임대, 1평에서 찾아보세요</h1>
@@ -93,7 +116,7 @@
         <form action="${pageContext.request.contextPath}/host/search" method="get" class="search-form">
             <div class="input-group">
                 <input type="search" name="searchWord" class="form-control" placeholder="지역 또는 건물명을 입력하세요" aria-label="Search">
-                <button class="btn btn-outline-info" type="submit">검색</button>
+                <button class="btn btn-custom" type="submit">검색</button>
             </div>
         </form>
     </div>
@@ -114,7 +137,8 @@
                         	<span class="rent-price">${room.rentPrice}</span>
                         	<span class="rent-info">원/1주</span>
                         </p>
-                        <p class="card-text"><small class="text-muted">방: 1 | 화장실: 1 | 거실: 0 | 주방: 0</small></p>
+                        <p class="card-text"><small class="text-muted">${room.roomOption }</small></p>
+                        <%-- <p class="card-text"><small class="text-muted">방: 1 | 화장실: 1 | 거실: 0 | 주방: 0</small></p>--%>
                     </div>
                     <div class="card-footer text-center">
                         <small class="text-primary">장기계약 시 최대 60% 할인</small>

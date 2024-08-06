@@ -14,22 +14,26 @@
     <style>
         /* Custom styles for navbar */
         .navbar {
-            background-color: #343a40; /* Dark background for navbar */
+            background-color: #f8f9fa; /* Dark background for navbar */
         }
         .navbar-brand img {
             max-height: 60px; /* Adjust logo height */
         }
         .nav-link {
-            color: #ffffff !important; /* White color for nav links */
+            color: #007bff !important; /* Blue color for nav links */
             font-weight: 500; /* Slightly bold */
         }
         .nav-link:hover {
             color: #f8f9fa !important; /* Light color on hover */
-            background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+            background-color: #007bff; /* Blue background on hover */
+            border-radius: 0.25rem; /* Rounded corners on hover */
         }
         .navbar-text {
-            color: #ffffff; /* White color for navbar text */
+            color: #007bff; /* Dark color for navbar text */
             font-weight: 500; /* Slightly bold */
+        }
+        .navbar-text.blue-text {
+            color: #007bff; /* Blue color for specific text */
         }
         .navbar-toggler-icon {
             background-image: url('data:image/svg+xml;base64,...'); /* Custom icon (optional) */
@@ -54,15 +58,6 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">메뉴1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../index.jsp">메인 페이지</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../user/profile.jsp">마이페이지</a>
-                </li>
 
                 <c:choose>
                     <c:when test="${user != null}">
