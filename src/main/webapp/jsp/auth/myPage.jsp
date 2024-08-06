@@ -19,9 +19,6 @@
         <tr>
             <td><input type="submit" name="account" value="계정관리">나의 정보관리</td>
         </tr>
-        <tr>
-            <td><input type="submit" name="chat" value="채팅">채팅</td>
-        </tr>
     </table>
 </form>
 </body>

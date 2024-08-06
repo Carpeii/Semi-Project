@@ -9,9 +9,8 @@
  	 <meta charset="utf-8">
  	 <meta name="viewport" content="width=device-width, initial-scale=1">
      <title>호스트 메인</title>
-     <link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.css">
-  <script src="webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
-  
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.css">
+  <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
   </head>
   <body>
   
@@ -26,7 +25,7 @@
     <div class="container">
      
     <div class="container d-flex justify-content-center m-5">
-        <form action="${pageContext.request.contextPath }/host/search" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 w-50 h- d-flex justify-content-center" role="search">
+        <form action="${pageContext.request.contextPath}/host/search" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 w-50 h- d-flex justify-content-center" role="search">
             <input type="search" name="searchWord" class="form-control w-200 h-70" placeholder="지역 또는 건물명을 입력 하세요" aria-label="Search">
         <button class="btn btn-outline-info btn-lg px-3 rounded-pill mt-3 w-50 ms-5" type="submit">
             검색
@@ -117,6 +116,7 @@
 <!--       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> -->
 <!-- </main> -->
  <!-- footer -->
- <%@include file="/jsp/common/footer.jsp" %>
+ <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
+<%--  <%@include file="/jsp/common/footer.jsp" %> --%>
   </body>
 </html>

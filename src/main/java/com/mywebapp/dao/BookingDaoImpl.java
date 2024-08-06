@@ -1,6 +1,7 @@
 package com.mywebapp.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mywebapp.model.Booking;
-import com.mywebapp.model.Room;
 import com.mywebapp.util.JdbcUtil;
 
 public class BookingDaoImpl implements BookingDao {
@@ -37,88 +37,6 @@ public class BookingDaoImpl implements BookingDao {
 			JdbcUtil.close(con, pstmt, null);
 		}
 	}
-	
-//	@Override
-//	public void insertBookingAndRoom(Booking booking, Room room) {
-//	    Connection con = null;
-//	    PreparedStatement pstmtRoom = null;
-//	    PreparedStatement pstmtBooking = null;
-//	    ResultSet generatedKeys = null;
-//	    
-//	    String insertRoomSql = "INSERT INTO room (room_name, jibun_address, street_address, address_detail, floor) VALUES (?, ?, ?, ?, ?)";
-//	    String insertBookingSql = "INSERT INTO booking (guest_id, room_id, check_in_date, check_out_date, booking_status) VALUES (?, LAST_INSERT_ID(), ?, ?, ?)";
-//	    
-//	    try {
-//	        con = JdbcUtil.getCon();
-//	        pstmtRoom = con.prepareStatement(insertRoomSql, PreparedStatement.RETURN_GENERATED_KEYS);
-//	        
-//	        // Insert room
-//	        pstmtRoom.setString(1, room.getRoomName());
-//	        pstmtRoom.setString(2, room.getJibunAddress());
-//	        pstmtRoom.setString(3, room.getStreetAddress());
-//	        pstmtRoom.setString(4, room.getAddressDetail());
-//	        pstmtRoom.setInt(5, room.getFloor());
-//
-//	        int affectedRows = pstmtRoom.executeUpdate();
-//
-//	        if (affectedRows == 0) {
-//	            throw new SQLException("Creating room failed, no rows affected.");
-//	        }
-//
-//	        // Retrieve the generated room ID
-//	        generatedKeys = pstmtRoom.getGeneratedKeys();
-//	        if (generatedKeys.next()) {
-//	            long roomId = generatedKeys.getLong(1);
-//
-//	            pstmtBooking = con.prepareStatement(insertBookingSql);
-//	            // Insert booking
-//	            pstmtBooking.setLong(1, booking.getGuestId());
-//	            pstmtBooking.setLong(2, roomId); // Use the generated room ID
-//	            pstmtBooking.setDate(3, booking.getCheckInDate());
-//	            pstmtBooking.setDate(4, booking.getCheckOutDate());
-//	            pstmtBooking.setInt(5, 0); // booking_status is 0
-//
-//	            pstmtBooking.executeUpdate();
-//	        } else {
-//	            throw new SQLException("Creating booking failed, no ID obtained.");
-//	        }
-//	    } catch (SQLException e) {
-//	        e.printStackTrace();
-//	    } finally {
-//	        // Close resources in the reverse order of their creation
-//	        if (generatedKeys != null) {
-//	            try {
-//	                generatedKeys.close();
-//	            } catch (SQLException e) {
-//	                e.printStackTrace();
-//	            }
-//	        }
-//	        if (pstmtBooking != null) {
-//	            try {
-//	                pstmtBooking.close();
-//	            } catch (SQLException e) {
-//	                e.printStackTrace();
-//	            }
-//	        }
-//	        if (pstmtRoom != null) {
-//	            try {
-//	                pstmtRoom.close();
-//	            } catch (SQLException e) {
-//	                e.printStackTrace();
-//	            }
-//	        }
-//	        if (con != null) {
-//	            try {
-//	                con.close();
-//	            } catch (SQLException e) {
-//	                e.printStackTrace();
-//	            }
-//	        }
-//	    }
-//	}
-
-	
-	
 	@Override
 	public List<Booking> getBookingsByRoomId(long roomId, int bookingStatus) {
 		Connection con = null;
@@ -180,7 +98,55 @@ public class BookingDaoImpl implements BookingDao {
 			e.printStackTrace();
 		}
 	}
-
-
-
+	//방계약 달력의 계약된 날짜 가져오는 메소드
+	//roomId를 인자로받음 
+	//반환값 List<Booking> checkInDate , dheckOutDate 만 들어있음
+	@Override
+	 public List<Booking> rentalSchedule(Long roomId) {
+			List<Booking> scheduleList = new ArrayList<Booking>();
+			//curdate() -> 오늘의 연 월 일 반환 -> 체크아웃 날짜가 오늘과 같거나 이후인 모든 행 오름차순으로 정렬 가장 옛날부터 -> 최신
+			String sql = "select * from booking where room_id = ? and curdate() <= check_out_date"
+					+ " order by check_in_date asc";
+			try {
+				Connection con = JdbcUtil.getCon();
+				
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setLong(1,roomId);
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					Booking booking = new Booking();
+							booking.setCheckInDate(rs.getDate("check_in_date"));
+							booking.setCheckOutDate(rs.getDate("check_out_date"));
+					scheduleList.add(booking);
+				}
+			}catch(SQLException s) {
+				s.printStackTrace();
+			}
+			return scheduleList;
+		}
+	@Override
+	public Booking reservationAvailablePeriodCall(Date selectDate, long roomId) {
+		//Id도 추가해야함
+		Booking booking =  new Booking();
+		String sql = "select check_in_date from booking where ? < check_in_date and room_id=? limit 1";
+		try {
+			Connection con = JdbcUtil.getCon();
+			
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setDate(1,selectDate);
+			pstmt.setLong(2,roomId);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				booking = new Booking();
+				booking.setCheckInDate(rs.getDate("check_in_date"));
+			}
+		}catch(SQLException s) {
+			s.printStackTrace();
+		}
+		
+		
+		return booking;
+	}
 }

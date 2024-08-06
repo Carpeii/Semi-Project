@@ -7,56 +7,114 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.css">
+  <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 </head>
 <body>
-<!-- 
- 검색된 결과들 보이기 
-asdasdsadas
- 결과중 하나 선택 
-<button onclick="location.href='../service/detail.jsp'">이태원루프탑 STAY</button>
- -->
- <p>Total Page: ${totalpage}</p>
-<p>Page Number: ${pagenum}</p>
-<p>searchWord: ${searchWord}</p>
- <table>
- <c:forEach var="room" items="${requestScope.rooms}">
-			<tr>
-			<td>방 주소 : ${room.jibunAddress }....${room.roomName}....${room.roomPrice.rentPrice}...............${pagenum}...</td> 
-			</tr>
-			<td>
-			<div class="col-md">
-         <div class="card shadow-sm">
-          <a href="해당 페이지">
-        <c:if test="${not empty rooms}">
-        <c:set var="firstRoom" value="${rooms[0]}" />
-        <c:if test="${not empty firstRoom.roomImageList}">
-            <c:set var="firstImage" value="${firstRoom.roomImageList[0]}" />
-            <div>
-                <p>First Image Path: ${pageContext.request.contextPath}/upload/img.jpg</p>
-                <img src="${pageContext.request.contextPath}/upload/img.jpg" alt="Image" />
-            </div>
+<%@include file="/jsp/common/header.jsp" %>
+
+<!-- START ALBUM -->
+			<!--   해당 태그를 행으로 정의                mt-5 위쪽 마진  , mx-5 좌우 x축 마진 -->
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5 mt-5 mx-5">
+      <!-- Attribute로 가져온 list rooms -->
+ <c:if test="${not empty rooms}">
+    <c:forEach var="room" items="${requestScope.rooms}">
+        <!-- room의 멤버 roomImageList가 비어있지 않다면 -->
+        <c:if test="${not empty room.roomImageList}">
+            <!-- room을 참조해서 룸의 맴버 roomImage리스트를 참조하는 변수 image선언 -->
+            <c:set var="image" value="${room.roomImageList[0]}" />
         </c:if>
-    </c:if>
-          </a>
-          </div>
+        <!-- 앨범 한 개 시작 -->
+        <div class="col-sm">
+            <a href="해당 페이지" class="card shadow-sm" style="text-decoration: none; color: inherit;">
+                <img class="bd-placeholder-img card-img-top" width="75%" height="200" 
+                     src="${pageContext.request.contextPath}/${image.imagePath}" alt="${image.imageName}">
+                <div class="card-body">
+                    <p class="card-title">${room.roomName}</p>
+                    <p class="overflow-y-hidden">${room.jibunAddress}</p>
+                    <p class="card-title">${room.roomPrice.rentPrice}원/1주일</p>
+                    <small class="text-body-secondary">방 ${room.roomCount}</small>
+                    <small class="text-body-secondary">화장실 ${room.toiletCount}</small>
+                    <small class="text-body-secondary">거실 ${room.livingRoomCount}</small>
+                    <small class="text-body-secondary">주방 ${room.kitchenCount}</small>
+                </div>
+                <div class="card-footer">
+                        <p>
+                    <c:if test="${room.roomPrice.longTermDiscount > 0}">
+                        <span class="text-primary">장기계약 시 최대 ${room.roomPrice.longTermDiscount}% 할인</span>
+                    </c:if>
+                        </p>
+                        <p>
+                       <c:if test="${room.roomPrice.earlyCheckInDiscount > 0} ">
+                        <span class="text-primary">장기계약 시 최대 ${room.roomPrice.earlyCheckInDiscount}% 할인</span>
+                    </c:if>
+                        </p>
+                </div>
+            </a>
         </div>
-			</td>
-		 </c:forEach>
-		 
-		 <tr>
-		 <c:if test="${pagenum > 1 }">
-		 <td>
- <a href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum-1}">이전페이지</a>
-		 </td>
-		 </c:if>
-		 <c:if test="${totalpage > pagenum }">
-		 <td>
- <a href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${pagenum+1}">다음페이지</a>
-		 </td>
-		 </c:if>
- </table>
+        <!-- 앨범 한 개 끝 -->
+    </c:forEach>
+</c:if>
+  </div>
+  <!-- 
+longTermDiscount;
+earlyCheckIn;
+earlyCheckInDiscount;
+   -->
+<!-- END ALBUM -->
+<!--  <div class="album py-5 bg-body-tertiary"> -->
+<!--     <div class="container"> -->
+<!--       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> -->
+<!-- </main> -->
+ <!-- footer -->
+          <!-- --------------------------------------------------------페이징----------------------------------------------------- -->
+          <!-- --------------------------------------------------------페이징----------------------------------------------------- -->
+          <!-- --------------------------------------------------------페이징----------------------------------------------------- -->
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<li class="page-item"><c:choose>
+					<c:when test="${startBlock > 5 }">
+						<a class="page-link"
+							href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${endBlock - blockPerPage}"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a>
+					</c:when>
+					<c:otherwise>
+						<a class="page-link text-secondary" aria-label="Previous"> <span
+							aria-hidden="true">&laquo;</span>
+						</a>
+					</c:otherwise>
+				</c:choose></li>
+			<c:forEach var="page" begin="${startBlock}" end="${endBlock}">
+				<c:if test="${page == pageNum}">
+					<li class="page-item"><a class="page-link">[${page}]</a></li>
+				</c:if>
+				<!--  endBlock -> 9 , totalPage 7 ,  -->
+			<c:if test="${page <=  totalPage }">
+				<c:if test="${page != pageNum}">
+					<li class="page-item"><a class="page-link"
+						href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${page}">${page}</a></li>
+				</c:if>
+			</c:if>
+			</c:forEach>
 
+			<li class="page-item"><c:choose>
+					<c:when test="${endBlock < totalPage}">
+						<a class="page-link"
+							href="${pageContext.request.contextPath }/host/search?searchWord=${searchWord}&pageNum=${startBlock + blockPerPage}"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a>
+					</c:when>
+					<c:otherwise>
+						<a class="page-link text-secondary" aria-label="Next"> <span
+							aria-hidden="true">&raquo;</span>
+						</a>
+					</c:otherwise>
+				</c:choose></li>
+		</ul>
+	</nav>
+ <%@include file="/jsp/common/footer.jsp" %>
  
-
+ 
 </body>
 </html>
