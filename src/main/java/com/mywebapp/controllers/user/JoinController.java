@@ -29,6 +29,7 @@ public class JoinController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
 
         // 아이디 중복 확인
         boolean isDuplicate = parseBoolean(req.getParameter("isDuplicate"));

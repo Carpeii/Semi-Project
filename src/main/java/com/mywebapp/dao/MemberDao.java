@@ -34,6 +34,47 @@ public class MemberDao {
         }
     }
 
+    public MemberDto joinHostMember(String userId, String bankName, String account, String accountHolder)  {
+        String selectSql = "select id from member where user_id=?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = JdbcUtil.getCon();
+            pstmt = conn.prepareStatement(selectSql);
+            pstmt.setString(1, userId);
+            rs = pstmt.executeQuery();
+
+            int memberId = -1;
+
+            if(rs.next()){
+                memberId = rs.getInt("id"); // member 테이블에서 조회된 Id값 찾아서 변수에 넣기
+
+                String insertSql = "INSERT INTO host (member_id, bank_name, account, account_holder) VALUES (?, ?, ?, ?)";
+                pstmt.close(); // 기존 prepatredStatement 닫고 새로운 Pstmt 생성
+                pstmt = conn.prepareStatement(insertSql);
+                pstmt.setLong(1, memberId); // 조회한 id값 insert
+                pstmt.setString(2, bankName);
+                pstmt.setString(3, account);
+                pstmt.setString(4, accountHolder);
+
+                int rowsAffected = pstmt.executeUpdate();
+
+                if (rowsAffected == 0) {
+                    return null;
+                }
+                return new MemberDto();
+            }
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            JdbcUtil.close(conn, pstmt, rs);
+        }
+    }
+
     public MemberDto loginMember(String userId, String password)  {
         String sql = "select * from member where user_id = ? and password = password(?)";
         Connection conn = null;
@@ -71,6 +112,14 @@ public class MemberDao {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
+        String userId = req.getParameter("userId");
+        if(userId == null || userId.equals("")) {
+            req.setAttribute("idErrMsg", "아이디 입력은 필수입니다.");
+            req.setAttribute("isDuplicate", true);
+            req.getRequestDispatcher("/jsp/auth/joinForm.jsp").forward(req, resp);
+            return;
+        }
+
         try {
             conn = JdbcUtil.getCon();
 
@@ -100,18 +149,4 @@ public class MemberDao {
             JdbcUtil.close(conn, pstmt, rs);
         }
     }
-
-//    public String errMsg(String userId, String password) {
-//        if(userId.isEmpty()) {
-//            return "아이디를 입력하세요.";
-//        } else if (password.isEmpty()) {
-//            return "비밀번호를 입력하세요.";
-//        } else if (userId.isEmpty() && password.isEmpty()){
-//            return  "아이디와 비밀번호를 입력하세요.";
-//        }
-//        return null;
-//    }
-//    public String failMsg(String userId, String password) {
-//
-//    }
 }

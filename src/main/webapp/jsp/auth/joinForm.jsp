@@ -30,7 +30,10 @@
         <div class="py-5 text-center">
             <h2>1평 회원가입</h2>
             <p class="lead">
-            "게스트로 회원가입을 원하시는 경우 아래의 기본정보를 기입하시고 게스트 회원가입을 눌러주세요. 호스트로 회원가입을 원하시는 경우 아래의 기본정보와 추가 입력 폼을 작성하셔야합니다."
+            게스트로 회원가입을 원하시는 경우 아래의 기본정보를 기입하시고 게스트 회원가입을 눌러주세요.
+            </p>
+            <p class="lead">
+            호스트로 회원가입을 원하시는 경우 아래의 기본정보와 추가 입력 폼을 작성하셔야합니다.
             </p>
         </div>
 <%--        <div class="row g-5">--%>
@@ -55,80 +58,89 @@
                 <input type="hidden" name="isDuplicate" value="${isDuplicate}">
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <label for="userId" class="form-label">아이디</label>
-                        <input type="text" class="form-control" name="userId" placeholder value required>
-                        <button type="submit" name="action" value="checkId">아이디 중복 검사</button>
+                        <p>아이디</p>
+<%--                        <label for="userId" class="form-label">아이디</label>--%>
+                        <input type="text" class="form-control" name="userId" id="userId" value="${userId != null ? userId : ''}"/>
+                        <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="checkId">아이디 중복 검사</button>
+                    </div>
+                    <div id="idErrMsg">${idErrMsg}</div><br>
+                    <div class="col-sm-6">
+                        <p>비밀번호</p>
+<%--                        <label for="password" class="form-label">비밀번호</label>--%>
+                        <input type="password" class="form-control" name="password">
                     </div>
                     <div class="col-sm-6">
-                        <label for="password" class="form-label">비밀번호</label>
-                        <input type="password" class="form-control" name="password" placeholder value required>
+                        <p>비밀번호 확인</p>
+<%--                        <label for="pwConfirm" class="form-label">비밀번호 확인</label>--%>
+                        <input type="password" class="form-control" name="pwConfirm">
+                    </div>
+                    <div id="pwErrMsg">${pwErrMsg}</div><br>
+                    <div class="col-sm-6">
+                        <p>이름</p>
+<%--                        <label for="name" class="form-label">이름</label>--%>
+                        <input type="text" class="form-control" name="name" id="name" value="${param.name != null ? param.name : ''}"/>
                     </div>
                     <div class="col-sm-6">
-                        <label for="pwConfirm" class="form-label">비밀번호 확인</label>
-                        <input type="text" class="form-control" name="pwConfirm" placeholder value required>
+                        <p>휴대폰 번호</p>
+<%--                        <label for="phone" class="form-label">휴대폰 번호</label>--%>
+                        <input type="text" class="form-control" name="phone" id="phone" value="${param.phone != null ? param.phone : ''}"/>
                     </div>
-                    <div class="col-sm-6">
-                        <label for="name" class="form-label">이름</label>
-                        <input type="text" class="form-control" name="name" placeholder value required>
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="phone" class="form-label">휴대폰 번호</label>
-                        <input type="text" class="form-control" name="phone" placeholder value required>
-                    </div>
+                    <div id="errMsg">${errMsg}</div>
                     <hr class="my-4">
-                    <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                    <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="guest">게스트로 회원가입하기</button><br>
+                    <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="host">호스트로 추가 정보 작성하기</button>
                 </div>
             </form>
         </div>
     </main>
-<h1>1평 회원가입</h1>
-<form action="${pageContext.request.contextPath}/auth/join" method="post">
-    <input type="hidden" name="isDuplicate" value="${isDuplicate}">
-    <fieldset>
-        <legend>회원가입 폼을 작성해주세요.</legend>
-        <table>
-            <tr>
-                <td><label for="userId">아이디</label></td>
-                <td><input type="text" name="userId" id="userId" value="${userId != null ? userId : ''}"/></td>
-                <td><button type="submit" name="action" value="checkId">아이디 중복 검사</button></td>
-            </tr>
-            <tr>
-                <br>
-                <div id="idErrMsg">${idErrMsg}</div><br>
-            </tr>
-            <tr>
-                <td><label for="password">비밀번호</label></td>
-                <td><input type="password" name="password" id="password" /></td>
-            </tr>
-            <tr>
-                <td><label for="pwConfirm">비밀번호 확인</label></td>
-                <td><input type="password" name="pwConfirm" id="pwConfirm" /></td>
-            </tr>
-            <tr>
-                <div id="pwErrMsg">${pwErrMsg}</div><br>
-            </tr>
-            <tr>
-                <td><label for="name">이름</label></td>
-                <td><input type="text" name="name" id="name" value="${param.name != null ? param.name : ''}"/></td>
-            </tr>
-            <tr>
-                <td><label for="phone">휴대폰 번호</label></td>
-                <td><input type="text" name="phone" id="phone" value="${param.phone != null ? param.phone : ''}"/></td>
-            </tr>
-        </table>
-        <br>
-        <table>
-            <tr>
-                <td colspan="3"> <div id="errMsg">${errMsg}</div><br></td>
-            </tr>
-        </table>
-        <table>
-            회원 타입을 선택해주세요<br>
-            <button type="submit" name="action" value="guest">게스트로 회원가입하기</button><br>
-            <button type="submit" name="action" value="host">호스트로 추가 정보 작성하기</button>
-        </table>
-    </fieldset>
-</form>
+<%--<h1>1평 회원가입</h1>--%>
+<%--<form action="${pageContext.request.contextPath}/auth/join" method="post">--%>
+<%--    <input type="hidden" name="isDuplicate" value="${isDuplicate}">--%>
+<%--    <fieldset>--%>
+<%--        <legend>회원가입 폼을 작성해주세요.</legend>--%>
+<%--        <table>--%>
+<%--            <tr>--%>
+<%--                <td><label for="userId">아이디</label></td>--%>
+<%--                <td><input type="text" name="userId" id="userId" value="${userId != null ? userId : ''}"/></td>--%>
+<%--                <td><button type="submit" name="action" value="checkId">아이디 중복 검사</button></td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <br>--%>
+<%--                <div id="idErrMsg">${idErrMsg}</div><br>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <td><label for="password">비밀번호</label></td>--%>
+<%--                <td><input type="password" name="password" id="password" /></td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <td><label for="pwConfirm">비밀번호 확인</label></td>--%>
+<%--                <td><input type="password" name="pwConfirm" id="pwConfirm" /></td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <div id="pwErrMsg">${pwErrMsg}</div><br>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <td><label for="name">이름</label></td>--%>
+<%--                <td><input type="text" name="name" id="name" value="${param.name != null ? param.name : ''}"/></td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <td><label for="phone">휴대폰 번호</label></td>--%>
+<%--                <td><input type="text" name="phone" id="phone" value="${param.phone != null ? param.phone : ''}"/></td>--%>
+<%--            </tr>--%>
+<%--        </table>--%>
+<%--        <br>--%>
+<%--        <table>--%>
+<%--            <tr>--%>
+<%--                <td colspan="3"> <div id="errMsg">${errMsg}</div><br></td>--%>
+<%--            </tr>--%>
+<%--        </table>--%>
+<%--        <table>--%>
+<%--            회원 타입을 선택해주세요<br>--%>
+<%--            <button type="submit" name="action" value="guest">게스트로 회원가입하기</button><br>--%>
+<%--            <button type="submit" name="action" value="host">호스트로 추가 정보 작성하기</button>--%>
+<%--        </table>--%>
+<%--    </fieldset>--%>
+<%--</form>--%>
 </div>
 </body>
 </html>

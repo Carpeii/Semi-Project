@@ -8,42 +8,72 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>hostJoinForm.jsp</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>1평 단기임대, 한달살기 부동산 단기계약 플랫폼</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.css">
+    <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/auth/hostJoin" method="post">
-    <input type="hidden" name="userId" value="${userId}">
-  <fieldset>
-    <legend>호스트 추가 정보를 입력해주세요.</legend>
-    <table>
+<main>
+    <div class="py-5 text-center">
+        <h2>1평 회원가입</h2>
+        <p class="lead">
+            호스트로 회원가입을 원하시는 경우 아래의 기본정보와 추가 입력 폼을 작성하셔야합니다.
+        </p>
+    </div>
+    <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">호스트 추가 정보 입력</h4>
+        <form action="${pageContext.request.contextPath}/auth/hostJoin" method="post">
+            <div class="row g-3">
+                <p>은행 이름</p>
+                <input type="text" class="form-control" name="bankName" id="bankName" />
+            </div>
+            <div>
+                <p>계좌번호</p>
+                <p>숫자만 입력 가능합니다.</p>
+                <input type="number" class="form-control" name="account" id="account" />
+            </div>
+            <div>
+                <p>예금주</p>
+                <input type="text" class="form-control" name="accountHolder" id="accountHolder" />
+            </div>
+            <div>${errMsg}</div><br>
+            <p>가입하시겠습니까?</p>
+            <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="join">가입하기</button>
+        </form>
+    </div>
+</main>
+<%--<div class="container">--%>
+<%--<form action="${pageContext.request.contextPath}/auth/hostJoin" method="post">--%>
+<%--    <input type="hidden" name="userId" value="${userId}">--%>
+<%--  <fieldset>--%>
+<%--    <legend>호스트 추가 정보를 입력해주세요.</legend>--%>
+<%--    <table>--%>
+
 <%--      <tr>--%>
-<%--        <td><label for="memberId">가입하신 아이디를 적어주세요</label></td><br>--%>
-<%--        <td><input type="text" name="memberId" id="memberId" /></td>--%>
-<%--        <div>${idErrMsg}</div><br>--%>
+<%--        <td><label for="bankName">은행 이름</label></td>--%>
+<%--        <td><input type="text" name="bankName" id="bankName" /></td>--%>
 <%--      </tr>--%>
-      <tr>
-        <td><label for="bankName">은행 이름</label></td>
-        <td><input type="text" name="bankName" id="bankName" /></td>
-      </tr>
-      <tr>
-        <td><label for="account">계좌</label></td>
-<%--        <td>숫자만 입력해주세요</td>--%>
-        <td><input type="text" name="account" id="account" /></td>
-      </tr>
-      <tr>
-        <td><label for="accountHolder">예금주</label></td>
-        <td><input type="text" name="accountHolder" id="accountHolder" /></td>
-      </tr>
-    </table>
-    <br>
-    <table>
-      <div>${errMsg}</div><br>
-    </table>
-    <table>
-      가입하시겠습니까?<br>
-      <input type="submit" name="hostBank" value="가입하기">
-    </table>
-  </fieldset>
-</form>
+<%--      <tr>--%>
+<%--        <td><label for="account">계좌</label></td>--%>
+<%--&lt;%&ndash;        <td>숫자만 입력해주세요</td>&ndash;%&gt;--%>
+<%--        <td><input type="text" name="account" id="account" /></td>--%>
+<%--      </tr>--%>
+<%--      <tr>--%>
+<%--        <td><label for="accountHolder">예금주</label></td>--%>
+<%--        <td><input type="text" name="accountHolder" id="accountHolder" /></td>--%>
+<%--      </tr>--%>
+<%--    </table>--%>
+<%--    <br>--%>
+<%--    <table>--%>
+<%--      <div>${errMsg}</div><br>--%>
+<%--    </table>--%>
+<%--    <table>--%>
+<%--      가입하시겠습니까?<br>--%>
+<%--      <input type="submit" name="hostBank" value="가입하기">--%>
+<%--    </table>--%>
+<%--  </fieldset>--%>
+<%--</form>--%>
 </body>
 </html>
