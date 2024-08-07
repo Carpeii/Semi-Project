@@ -16,18 +16,21 @@ public class MyPageController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String action = req.getParameter("action");
 
-        String booking = req.getParameter("booking");
-        String account = req.getParameter("account");
-        String chat = req.getParameter("chat");
+//        String hostBooking = req.getParameter("hostBooking");
+//        String hostEdit = req.getParameter("hostEdit");
+//        String guestBooking = req.getParameter("guestBooking");
+//        String guestEdit = req.getParameter("guestEdit");
 
-        if(booking != null) {
+        if("hostBooking".equals(action)) {
+            resp.sendRedirect(req.getContextPath() + "/jsp/user/myPageHostBooking.jsp");
+        } else if ("hostEdit".equals(action)) {
+            resp.sendRedirect(req.getContextPath() + "/jsp/user/profile.jsp");
+        } else if ("guestBooking".equals(action)) {
             resp.sendRedirect(req.getContextPath() + "/jsp/user/myPageGuestBooking.jsp");
-        } else if (account != null) {
-            resp.sendRedirect(req.getContextPath() + "/edit");
-        } else if (chat != null) {
-            resp.sendRedirect(req.getContextPath() + "/jsp/user/myPageGuestChat.jsp");
+        } else if ("guestEdit".equals(action)) {
+            resp.sendRedirect(req.getContextPath() + "/jsp/user/profile.jsp");
         }
     }
 }
