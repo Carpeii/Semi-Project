@@ -40,13 +40,7 @@ public class MemberDao {
         }
     }
 
-    public MemberDto loginMember(String userId, String password, HttpServletRequest req)  {
-        String errMsg = errMsg(userId, password);
-        if (errMsg != null) {
-            req.setAttribute("errMsg", errMsg);
-            return null;
-        }
-
+    public MemberDto loginMember(String userId, String password)  {
         String sql = "select * from member where user_id = ? and password = password(?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -58,9 +52,8 @@ public class MemberDao {
             pstmt.setString(1, userId);
             pstmt.setString(2, password);
             rs = pstmt.executeQuery();
-
+            MemberDto dto = new MemberDto();
             if (rs.next()) {
-                MemberDto dto = new MemberDto();
                 dto.setId(rs.getLong("id"));
                 dto.setUserId(rs.getString("user_id"));
                 dto.setName(rs.getString("name"));
@@ -68,7 +61,7 @@ public class MemberDao {
                 dto.setPhone(rs.getString("phone"));
                 return dto;
             }
-            return null;
+            return dto;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -113,14 +106,17 @@ public class MemberDao {
         }
     }
 
-    public String errMsg(String userId, String password) {
-        if(userId.isEmpty()) {
-            return "아이디를 입력하세요.";
-        } else if (password.isEmpty()) {
-            return "비밀번호를 입력하세요.";
-        } else if (userId.isEmpty() && password.isEmpty()){
-            return  "아이디와 비밀번호를 입력하세요.";
-        }
-        return null;
-    }
+//    public String errMsg(String userId, String password) {
+//        if(userId.isEmpty()) {
+//            return "아이디를 입력하세요.";
+//        } else if (password.isEmpty()) {
+//            return "비밀번호를 입력하세요.";
+//        } else if (userId.isEmpty() && password.isEmpty()){
+//            return  "아이디와 비밀번호를 입력하세요.";
+//        }
+//        return null;
+//    }
+//    public String failMsg(String userId, String password) {
+//
+//    }
 }

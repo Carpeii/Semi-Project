@@ -3,6 +3,7 @@ package com.mywebapp.controllers.user;
 import com.mywebapp.dao.MemberDao;
 import com.mywebapp.dto.MemberDto;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,13 +25,26 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
 
         // 공백란 존재
-        if (userId.isEmpty() || password.isEmpty()) {
-            req.setAttribute("errMsg", "아이디와 비밀번호 모두 기입");
-            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+        if (userId.isEmpty()) {
+            req.setAttribute("errMsg", "아이디를 입력하세요");
+//            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+        } else if (password.isEmpty()) {
+            req.setAttribute("errMsg", "비밀번호를 입력하세요.");
+//            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+        }else if (userId.isEmpty() && password.isEmpty()) {
+            req.setAttribute("errMsg", "아이디와 비밀번호 모두 입력하세요.");
+//            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
         }
 
         MemberDao dao = new MemberDao();
-        MemberDto dto = dao.loginMember(userId, password, null);
+        MemberDto dto = dao.loginMember(userId, password);
+
+
+        if(dto.getUserId() == null) {
+            System.out.println("test");
+            req.setAttribute("errMsg", "아이디와 비밀번호를 확인하세요.");
+            RequestDispatcher rd = req.getRequestDispatcher("/jsp/auth/loginMain.jsp");
+        }
 
         HttpSession session = req.getSession();
         session.setAttribute("user", dto);
