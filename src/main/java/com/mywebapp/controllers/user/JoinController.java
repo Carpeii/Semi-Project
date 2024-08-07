@@ -101,7 +101,7 @@ public class JoinController extends HttpServlet {
             session.setAttribute("userId", userId); // session에 userId 저장
 
             if(dto.getMemberType() == 0) {
-                resp.sendRedirect(req.getContextPath() + "/main.jsp");
+                resp.sendRedirect(req.getContextPath() + "/guestMain");
             } else if (dto.getMemberType() == 1) {
                 req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp); // url변경 x
             }
