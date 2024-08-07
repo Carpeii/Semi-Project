@@ -1,6 +1,6 @@
 package com.mywebapp.controllers.user;
 
-import com.mywebapp.dto.UserDto;
+import com.mywebapp.dto.MemberDto;
 import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
@@ -25,7 +25,7 @@ public class ProfileEditController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(); // 수정 페이지에 기본정보 자동으로 입력되어있도록 -> null이 아님
-        UserDto user = (UserDto) session.getAttribute("user");
+        MemberDto user = (MemberDto) session.getAttribute("user");
 
         String name = req.getParameter("name");
         String phone = req.getParameter("phone");
@@ -68,12 +68,12 @@ public class ProfileEditController extends HttpServlet {
 
                     // 업데이트 성공, 비밀번호 수정하지 않는 경우
                     if (newPassword.isEmpty() && pwConfirm.isEmpty()) { // 둘 다 비어있지 않은 경우
-                        UserDto updateUser = new UserDto();
-                        updateUser.setId(user.getId());
-                        updateUser.setName(name);
-                        updateUser.setPhone(phone);
-                        // 세션에 수정도니 정보 저장
-                        session.setAttribute("user", updateUser);
+//                        MemberDto user = new MemberDto();
+                        user.setId(user.getId());
+                        user.setName(name);
+                        user.setPhone(phone);
+                        // 세션에 수정된 정보 저장
+                        session.setAttribute("user", user);
                         if (user.getMemberType() == 0) {
                             resp.sendRedirect(req.getContextPath() + "/guestMain");
                         } else if (user.getMemberType() == 1) {

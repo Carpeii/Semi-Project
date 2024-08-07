@@ -1,19 +1,13 @@
 package com.mywebapp.dao;
 
-import com.mywebapp.dto.HostDto;
 import com.mywebapp.dto.MemberDto;
-import com.mywebapp.dto.UserDto;
-import com.mywebapp.model.Room;
 import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MemberDao {
 

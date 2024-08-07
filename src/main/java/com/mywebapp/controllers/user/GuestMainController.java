@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mywebapp.dto.MemberDto;
 import com.mywebapp.dto.RoomListItemDto;
 import com.mywebapp.dto.UserDto;
 import com.mywebapp.service.RoomService;
@@ -55,7 +56,7 @@ public class GuestMainController extends HttpServlet {
 		
 		// LoginController에서 세션 받아오기
 		HttpSession session = req.getSession();
-		UserDto user = (UserDto) session.getAttribute("user");
+		MemberDto user = (MemberDto) session.getAttribute("user");
 		
         // 세션에 user가 없으면 로그인 상태가 아닌 것으로 간주
 		if (user == null) {

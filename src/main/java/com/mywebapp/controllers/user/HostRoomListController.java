@@ -2,6 +2,7 @@ package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dao.RoomDaoImpl;
+import com.mywebapp.dto.MemberDto;
 import com.mywebapp.dto.UserDto;
 import com.mywebapp.model.Room;
 
@@ -31,7 +32,7 @@ public class HostRoomListController extends HttpServlet {
 //        System.out.println(hostId);
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
-        UserDto user = (UserDto) session.getAttribute("user");
+        MemberDto user = (MemberDto) session.getAttribute("user");
         RoomDao roomDao = new RoomDaoImpl();
         List<Room> rooms = roomDao.getRoomsByHostId(user.getId());
 

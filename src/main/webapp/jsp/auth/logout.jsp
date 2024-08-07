@@ -1,4 +1,4 @@
-<%@ page import="com.mywebapp.dto.UserDto" %><%--
+<%@ page import="com.mywebapp.dto.MemberDto" %><%--
   Created by IntelliJ IDEA.
   User: kimjiwoong
   Date: 2024. 7. 16.
@@ -23,7 +23,7 @@
             <table>
                 <tr>
                     <%
-                        UserDto user = (UserDto) session.getAttribute("user");
+                        MemberDto user = (MemberDto) session.getAttribute("user");
                     %>
                     <td><div id="userId">${user.getUserId()}님, 로그아웃 하시겠습니까?</div></td>
                 </tr>
@@ -34,18 +34,5 @@
         </form>
     </div>
 </main>
-<%--    <form action="${pageContext.request.contextPath}/auth/logout" method="post">--%>
-<%--        <table>--%>
-<%--            <tr>--%>
-<%--                <%--%>
-<%--                    UserDto user = (UserDto) session.getAttribute("user");--%>
-<%--                %>--%>
-<%--                <td><div id="userId">${user.getUserId()}님, 로그아웃 하시겠습니까?</div></td>--%>
-<%--            </tr>--%>
-<%--            <tr>--%>
-<%--                <button type="submit" name="logout">로그아웃</button>--%>
-<%--            </tr>--%>
-<%--        </table>--%>
-<%--    </form>--%>
 </body>
 </html>

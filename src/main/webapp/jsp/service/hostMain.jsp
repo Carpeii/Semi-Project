@@ -1,4 +1,5 @@
 <%@ page import="com.mywebapp.dto.UserDto" %>
+<%@ page import="com.mywebapp.dto.MemberDto" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
 <jsp:include page="/jsp/common/header.jsp"></jsp:include>
 <h2>단기임대, 1평에서 찾아보세요</h2>
 <%
-    UserDto user = (session != null) ? (UserDto) session.getAttribute("user") : null;
+    MemberDto user = (session != null) ? (MemberDto) session.getAttribute("user") : null;
 %>
 <%
     if (user != null) {

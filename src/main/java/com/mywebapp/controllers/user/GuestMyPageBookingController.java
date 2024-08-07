@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dto.GuestRoomBookingDto;
+import com.mywebapp.dto.MemberDto;
 import com.mywebapp.dto.RoomDetailDto;
 import com.mywebapp.dto.UserDto;
 
@@ -30,7 +31,7 @@ public class GuestMyPageBookingController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		UserDto user = (UserDto) session.getAttribute("user");
+		MemberDto user = (MemberDto) session.getAttribute("user");
 		Long bookedRoomId = (Long) session.getAttribute("bookedRoomId");
 //		RoomDetailDto bookedRoom = (RoomDetailDto)session.getAttribute("bookedRoom");
 		
