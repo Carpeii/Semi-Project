@@ -113,6 +113,9 @@ public class BookingInfoController extends HttpServlet {
 
                 // 요청 속성에 DTO 설정
                 req.setAttribute("roomBookingInfo", roomBookingInfo);
+                req.setAttribute("checkInDate", checkInDate);
+                req.setAttribute("checkOutDate", checkOutDate);
+                
 
                 // JSP 페이지로 포워딩
                 req.getRequestDispatcher("/jsp/service/bookingInfo.jsp").forward(req, resp);
