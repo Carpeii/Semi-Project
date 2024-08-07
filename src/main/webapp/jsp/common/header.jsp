@@ -70,8 +70,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/user/myPage">마이 페이지</a>
                         </li>
+                        <!-- 게스트, 호스트 일때 다르게memberType가지고 -->
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/guestMain">게스트 페이지로</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/hostMain">호스트 페이지로</a>
                         </li>
                     </c:when>
                     <c:otherwise>
