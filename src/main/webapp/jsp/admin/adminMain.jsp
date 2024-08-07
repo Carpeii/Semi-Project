@@ -1,4 +1,5 @@
-<%@ page import="com.mywebapp.dto.UserDto" %><%--
+<%@ page import="com.mywebapp.dto.UserDto" %>
+<%@ page import="com.mywebapp.dto.MemberDto" %><%--
   Created by IntelliJ IDEA.
   User: now
   Date: 2024. 7. 21.
@@ -14,7 +15,7 @@
 <h2>단기임대, 1평에서 찾아보세요</h2>
 <h3>관리자 페이지</h3>
 <%
-    UserDto user = (session != null) ? (UserDto) session.getAttribute("user") : null;
+    MemberDto user = (session != null) ? (MemberDto) session.getAttribute("user") : null;
 %>
 <%
     if (user != null) {

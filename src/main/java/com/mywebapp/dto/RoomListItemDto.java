@@ -17,5 +17,6 @@ public class RoomListItemDto {
 	private String streetAddress;
 	private int rentPrice;
 	private String roomOption;
+	// 할인정보 추가?
 
 }

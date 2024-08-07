@@ -1,100 +1,187 @@
-<%@ page import="com.mywebapp.dto.UserDto" %>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
+<% request.setCharacterEncoding("utf-8"); %>
+ 
+<!doctype html>
+<html lang="ko">
 <head>
-    <meta charset="EUC-KR">
-    <title>guestMain.jsp</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>1í‰ - ë‹¨ê¸°ì„ëŒ€, 1í‰ì—ì„œ ì°¾ì•„ë³´ì„¸ìš”</title>
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .hero-section {
+            background: url('${pageContext.request.contextPath}/images/hero-bg.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 4rem 0;
+            color: #fff;
+            text-align: center;
+        }
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0d6efd; /* ë³€ê²½ëœ í…ìŠ¤íŠ¸ ìƒ‰ìƒ */
+        }
+        .search-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            object-fit: cover;
+            height: 200px; /* ì´ë¯¸ì§€ ë†’ì´ ì¡°ì • */
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .card-text {
+            color: #6c757d; /* íšŒìƒ‰ í…ìŠ¤íŠ¸ ìƒ‰ìƒ */
+        }
+        .rent-price {
+            font-size: 1.5rem; /* í…ìŠ¤íŠ¸ í¬ê¸° */
+            font-weight: bold; /* ë³¼ë“œì²´ */
+            color: #000; /* ê²€ì •ìƒ‰ í…ìŠ¤íŠ¸ */
+        }
+        .rent-info {
+            font-size: 1rem; /* ê¸°ë³¸ í…ìŠ¤íŠ¸ í¬ê¸° */
+            color: #6c757d; /* íšŒìƒ‰ í…ìŠ¤íŠ¸ ìƒ‰ìƒ */
+        }
+        .card-footer {
+            background-color: #f1f1f1;
+            border-top: 1px solid #e9ecef;
+            padding: 1rem;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .pagination .page-link {
+            border-radius: 0.375rem;
+        }
+        
+        /* Custom styles for search button */
+        
+        .btn-custom {
+            background-color: #007bff; /* íŒŒë€ìƒ‰ ë°°ê²½ */
+            color: #ffffff; /* í°ìƒ‰ ê¸€ì”¨ */
+            border: none; /* ê¸°ë³¸ í…Œë‘ë¦¬ ì œê±° */
+            border-radius: 0.375rem; /* ëª¨ì„œë¦¬ ë‘¥ê¸€ê²Œ */
+            font-weight: 500; /* ì•½ê°„ì˜ êµµê¸° */
+            transition: background-color 0.3s ease, color 0.3s ease; /* ë¶€ë“œëŸ¬ìš´ ì „í™˜ íš¨ê³¼ */
+        }
+        .btn-custom:hover {
+            background-color: #0056b3; /* í˜¸ë²„ ì‹œ ë” ì–´ë‘ìš´ íŒŒë€ìƒ‰ */
+            color: #ffffff; /* í˜¸ë²„ ì‹œ í°ìƒ‰ ê¸€ì”¨ ìœ ì§€ */
+        }
+        .btn-custom:focus, .btn-custom:active {
+            box-shadow: none; /* í¬ì»¤ìŠ¤ ë° í™œì„± ìƒíƒœì—ì„œ ê·¸ë¦¼ì ì œê±° */
+        }
+        
+        .card-link {
+		    text-decoration: none; /* ë§í¬ ë°‘ì¤„ ì œê±° */
+		    color: inherit; /* ë§í¬ í…ìŠ¤íŠ¸ ìƒ‰ìƒ ìœ ì§€ (ë¶€ëª¨ ìš”ì†Œì˜ ìƒ‰ìƒ ì‚¬ìš©) */
+		}
+
+		.card-link:hover {
+		    text-decoration: none; /* í˜¸ë²„ ì‹œì—ë„ ë°‘ì¤„ ì œê±° */
+		}
+    </style>
 </head>
 <body>
 
-<h2>´Ü±âÀÓ´ë, 1Æò¿¡¼­ Ã£¾Æº¸¼¼¿ä</h2>
-<%
-    UserDto user = (session != null) ? (UserDto) session.getAttribute("user") : null;
-%>
-<%
-    if (user != null) {
-        System.out.println(user);
-        // ·Î±×ÀÎ Á¤º¸ Á¸Àç
-%>
-        <p>${sessionScope.user.userId}´Ô È¯¿µÇÕ´Ï´Ù</p>
-<%--        <p>${user.userId}´Ô È¯¿µÇÕ´Ï´Ù</p>--%>
-        <button onclick="location.href='${pageContext.request.contextPath}/logout'">·Î±×¾Æ¿ô</button>
-        <button onclick="location.href='${pageContext.request.contextPath}/myPage'">¸¶ÀÌ ÆäÀÌÁö</button>
-        <button onclick="location.href='${pageContext.request.contextPath}/hostMain'">È£½ºÆ® ÆäÀÌÁö·Î</button>
-<%--        <p>${userId}´Ô È¯¿µÇÕ´Ï´Ù</p>--%>
 
+<jsp:include page="/jsp/common/header.jsp"></jsp:include>
 
-<%
-    } else if (user == null) {
-        System.out.println(user);
-        // ·Î±×ÀÎ Á¤º¸ ¾øÀ½
-%>
-        <button onclick="location.href='${pageContext.request.contextPath}/login'">·Î±×ÀÎ</button>
-        <button onclick="location.href='${pageContext.request.contextPath}/join'">È¸¿ø°¡ÀÔ</button>
-<%
-    }
-%>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/service/searchByMap.jsp'">Áöµµ·Î °Ë»ö</button>
-<button onclick="location.href='${pageContext.request.contextPath}/jsp/service/search.jsp'">°Ë»ö</button>
+<%-- 
+<c:import url="/jsp/common/header.jsp" />
+--%>
+ 
+<div class="hero-section text-center">
+    <h1 class="hero-title">ë‹¨ê¸°ì„ëŒ€, 1í‰ì—ì„œ ì°¾ì•„ë³´ì„¸ìš”</h1>
+</div>
 
-<!-- RoomListController¿¡¼­ ¼¼¼Ç ¹Ş¾Æ¿Í¼­ ±¸Çö -->
-<%--<c:if test="${not empty userId }">--%>
-<%--    <p>${userId }´Ô È¯¿µÇÕ´Ï´Ù</p>--%>
-<%--</c:if>--%>
-
-<!-- ¹æ ¸ñ·Ï Ç¥½Ã -->
-<c:if test="${not empty roomList}">
-    <table border="1" width="1500">
-        <tr>
-            <th>ÀÌ¹ÌÁö °æ·Î</th>
-            <th>ÀÌ¹ÌÁö ÀÌ¸§</th>
-            <th>¹æ ÀÌ¸§</th>
-            <th>µµ·Î¸í ÁÖ¼Ò</th>
-            <th>ÀÓ´ë °¡°İ</th>
-            <th>¹æ ¿É¼Ç</th>
-            <th>¹æ ¼±ÅÃ</th>
-        </tr>
-        <c:forEach var="room" items="${roomList}">
-            <tr>
-                <!--
-                <td><img src="${room.imagePath}" alt="${room.imageName}" width="100"/></td>
-                -->
-                <td>${room.imagePath}</td>
-                <td>${room.imageName}</td>
-                <td>${room.roomName}</td>
-                <td>${room.streetAddress}</td>
-                <td>${room.rentPrice}</td>
-                <td>${room.roomOption}</td>
-                <td><a href="${pageContext.request.contextPath}/service/roomDetail?roomId=${room.id}">¹æ »ó¼¼º¸±â</a></td>
-            </tr>
-        </c:forEach>
-    </table>
-
-    <!-- Pagination Controls -->
-    <div class="pagination">
-        <c:if test="${pageNum > 1}">
-            <a href="?pageNum=${pageNum - 1}" style="text-decoration: underline; color: #007bff;">Previous</a>
-        </c:if>
-
-        <c:forEach begin="${startPage}" end="${endPage}" var="i">
-            <c:choose>
-                <c:when test="${i == pageNum}">
-                    <span style="color: red; font-weight: bold;">${i}</span> <!-- Highlight current page -->
-                </c:when>
-                <c:otherwise>
-                    <a href="?pageNum=${i}" style="text-decoration: none; color: #007bff;">${i}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-
-        <c:if test="${pageNum < pageCount}">
-            <a href="?pageNum=${pageNum + 1}" style="text-decoration: underline; color: #007bff;">Next</a>
-        </c:if>
+<div class="container my-5">
+    <!-- ê²€ìƒ‰ í¼ -->
+    <div class="d-flex justify-content-center mb-5">
+        <form action="${pageContext.request.contextPath}/host/search" method="get" class="search-form">
+            <div class="input-group">
+                <input type="search" name="searchWord" class="form-control" placeholder="ì§€ì—­ ë˜ëŠ” ê±´ë¬¼ëª…ì„ ì…ë ¥í•˜ì„¸ìš”" aria-label="Search">
+                <button class="btn btn-custom" type="submit">ê²€ìƒ‰</button>
+            </div>
+        </form>
     </div>
-</c:if>
 
+    <!-- ì¹´ë“œ ë·°ë¡œ ë°© ëª©ë¡ í‘œì‹œ -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <c:forEach var="room" items="${roomList}">
+            <div class="col">
+            	 <!-- ì¹´ë“œ ì „ì²´ë¥¼ ë§í¬ë¡œ ê°ìŒ‰ë‹ˆë‹¤ -->
+            	 <a href="${pageContext.request.contextPath}/service/roomDetail?roomId=${room.id}" class="card-link">
+	                <div class="card shadow-sm border-light rounded-3">
+                        <img src="${pageContext.request.contextPath}${room.imagePath}" class="card-img-top" alt="${room.roomName}">
+                    <div class="card-body">
+                        <h5 class="card-title">${room.roomName}</h5>
+                        <p class="card-text">${room.streetAddress}</p>
+                        <p class="card-text">
+                            <span class="rent-price">${room.rentPrice}</span>
+                            <span class="rent-info">ì›/1ì£¼</span>
+                        </p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <small class="text-primary">ì¥ê¸°ê³„ì•½ ì‹œ ìµœëŒ€ 60% í• ì¸</small>
+                    </div>
+                </div>
+	            </a>
+            </div>
+        </c:forEach>
+    </div>
+
+    <!-- í˜ì´ì§€ ë„¤ì´ì…˜ -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4">
+            <c:if test="${startPage > 1}">
+                <li class="page-item">
+                    <a href="${pageContext.request.contextPath}/guestMain?pageNum=${startPage - 1}" class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:forEach var="num" begin="${startPage}" end="${endPage}">
+                <li class="page-item <c:if test="${pageNum == num}">active</c:if>">
+                    <a href="${pageContext.request.contextPath}/guestMain?pageNum=${num}" class="page-link">${num}</a>
+                </li>
+            </c:forEach>
+            <c:if test="${endPage < pageCount}">
+                <li class="page-item">
+                    <a href="${pageContext.request.contextPath}/guestMain?pageNum=${endPage + 1}" class="page-link" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </c:if>
+        </ul>
+    </nav>
+ 
+</div>
+
+<jsp:include page="/jsp/common/footer.jsp"></jsp:include>
+ 
 </body>
 </html>
