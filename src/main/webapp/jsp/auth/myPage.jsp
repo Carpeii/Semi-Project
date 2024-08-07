@@ -15,6 +15,7 @@
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 </head>
 <body>
+<div class="container">
 <main>
     <div class="py-5 text-center">
         <h2>마이 페이지</h2>
@@ -22,31 +23,34 @@
             호스트로 회원가입을 원하시는 경우 아래의 기본정보와 추가 입력 폼을 작성하셔야합니다.
         </p>
     </div>
+    <div class="col-md-8 col-lg-8">
     <form action="${pageContext.request.contextPath}/user/myPage" method="post">
-    <%
-        MemberDto user = (MemberDto) session.getAttribute("user");
-    %>
-    <%
-        if(user.getMemberType() == 1) { // 호스트
-    %>
-    <div>
-        <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="hostBooking">나의 계약관리</button>
-    </div>
-    <div>
-        <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="hostEdit">나의 정보관리</button>
-    </div>
-    <%
-        } else if(user.getMemberType() == 0) { // 게스트
-    %>
-    <div>
-        <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="guestBooking">나의 계약관리</button>
-    </div>
-    <div>
-        <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="guestEdit">나의 정보관리</button>
-    </div>
-    <%
-        }
-    %>
+        <%
+            MemberDto user = (MemberDto) session.getAttribute("user");
+        %>
+        <%
+            if(user.getMemberType() == 1) { // 호스트
+        %>
+        <div>
+            <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="profileEdit">나의 기본정보관리</button>
+        </div>
+            <div><br></div>
+        <div>
+            <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="hostEdit">나의 추가 정보관리</button>
+        </div>
+        <%
+            } else if(user.getMemberType() == 0) { // 게스트
+        %>
+        <div>
+            <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="guestBooking">나의 계약관리</button>
+        </div>
+            <div><br></div>
+        <div>
+            <button class="w-100 btn btn-primary btn-lg" type="submit" name="action" value="guestEdit">나의 정보관리</button>
+        </div>
+        <%
+            }
+        %>
 </form>
 </main>
 </body>

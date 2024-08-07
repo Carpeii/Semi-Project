@@ -23,14 +23,17 @@ public class MyPageController extends HttpServlet {
 //        String guestBooking = req.getParameter("guestBooking");
 //        String guestEdit = req.getParameter("guestEdit");
 
-        if("hostBooking".equals(action)) {
-            resp.sendRedirect(req.getContextPath() + "/jsp/user/myPageHostBooking.jsp");
+//        if("hostBooking".equals(action)) {
+//            resp.sendRedirect(req.getContextPath() + "/user/myPageHostBooking");
+//        } else
+        if ("profileEdit".equals(action)) {
+            resp.sendRedirect(req.getContextPath() + "/user/edit");
         } else if ("hostEdit".equals(action)) {
-            resp.sendRedirect(req.getContextPath() + "/jsp/user/profile.jsp");
+            resp.sendRedirect(req.getContextPath() + "/user/editHost");
         } else if ("guestBooking".equals(action)) {
-            resp.sendRedirect(req.getContextPath() + "/jsp/user/myPageGuestBooking.jsp");
+            resp.sendRedirect(req.getContextPath() + "/user/guestBooking");
         } else if ("guestEdit".equals(action)) {
-            resp.sendRedirect(req.getContextPath() + "/jsp/user/profile.jsp");
+            resp.sendRedirect(req.getContextPath() + "/user/edit");
         }
     }
 }
