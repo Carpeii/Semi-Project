@@ -2,7 +2,6 @@ package com.mywebapp.controllers.user;
 
 import com.mywebapp.dao.MemberDao;
 import com.mywebapp.dto.MemberDto;
-import com.mywebapp.util.JdbcUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import static com.mywebapp.dao.MemberDao.checkUserID;
 import static java.lang.Boolean.parseBoolean;
@@ -47,9 +42,9 @@ public class JoinController extends HttpServlet {
         String name = req.getParameter("name");
         String phone = req.getParameter("phone");
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+//        Connection conn = null;
+//        PreparedStatement pstmt = null;
+//        ResultSet rs = null;
 
 
         // 아이디 중복 체크 버튼이 눌렸을 경우에
@@ -101,7 +96,7 @@ public class JoinController extends HttpServlet {
             session.setAttribute("userId", userId); // session에 userId 저장
 
             if(dto.getMemberType() == 0) {
-                resp.sendRedirect(req.getContextPath() + "/main.jsp");
+                resp.sendRedirect(req.getContextPath() + "/guestMain.jsp");
             } else if (dto.getMemberType() == 1) {
                 req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp); // url변경 x
             }

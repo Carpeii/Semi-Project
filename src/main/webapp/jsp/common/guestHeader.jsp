@@ -1,4 +1,5 @@
 <%@ page import="com.mywebapp.dto.UserDto" %>
+<%@ page import="com.mywebapp.dto.MemberDto" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,10 +12,11 @@
       </div>
       <div class="col-md-3 text-end">
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-              <!-- 현재 선택된 메뉴는 컬러가 검은색으로 나오게 처리 없애도될듯 -->
-              <!-- guestHeader -->
+<%--              <%--%>
+<%--                  UserDto user = (session != null) ? (UserDto) session.getAttribute("user") : null;--%>
+<%--              %>--%>
               <%
-                  UserDto user = (session != null) ? (UserDto) session.getAttribute("user") : null;
+                  MemberDto user = (session != null) ? (MemberDto) session.getAttribute("user") : null;
               %>
               <%
                   if (user != null) { // guestMain
