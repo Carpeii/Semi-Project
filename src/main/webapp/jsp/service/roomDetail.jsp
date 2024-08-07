@@ -42,6 +42,12 @@
             margin-top: 30px;
         }
     </style>
+    <script type="text/javascript">
+	    let popupUrl = '${pageContext.request.contextPath}/calendar/call';
+	    function openPopup() {
+	        window.open(popupUrl, 'popupWindow', 'width=1027,height=474,scrollbars=yes');
+	    }
+    </script>
 </head>
 <body>
 
@@ -125,6 +131,11 @@
             </form>
         </div>
     </c:if>
+    
+    <!-- Popup Button -->
+    <div class="mt-3">
+        <button type="button" class="btn btn-outline-primary" onclick="openPopup()">계약 가능 날짜 확인</button>
+    </div>
 </div>
 
 <!-- Include Bootstrap JS -->

@@ -81,7 +81,7 @@ public class RoomBookingController extends HttpServlet {
 			
 		} else {
             // 사용자 정보가 없을 경우에 대한 처리 (예: 로그인 페이지로 리다이렉트)
-			resp.sendRedirect(req.getContextPath() + "/login");
+			resp.sendRedirect(req.getContextPath() + "/auth/login");
 		}
 	}
 
