@@ -36,9 +36,8 @@ public class BookingInfoController extends HttpServlet {
         String maintenanceBillParam = req.getParameter("maintenanceBill");
         String cleaningFeeParam = req.getParameter("cleaningFee");
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String checkInDateStr = req.getParameter("checkInDate").formatted(formatter);
-        String checkOutDateStr = req.getParameter("checkOutDate").formatted(formatter);
+        String checkInDateStr = (String)req.getParameter("checkInDate");
+        String checkOutDateStr = (String)req.getParameter("checkOutDate");
 
         // 디버깅 출력
         System.out.println("DEBUG: roomIdParam = " + roomIdParam);
