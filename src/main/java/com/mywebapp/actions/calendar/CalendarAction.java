@@ -63,11 +63,10 @@ public class CalendarAction implements Action {
 					LocalDate selectDay =  LocalDate.parse(selectDate);
 				}
 				LocalDate today = null;
-				int todayNum = 0;
+				LocalDate day = LocalDate.now();
 				//최초 호출시 이번달 달력 + 이번달의 오늘날짜 마킹[]
 				if(monthControll == 0) {
 					today = LocalDate.now();
-					todayNum = today.getDayOfMonth();
 					//이전달 , 다음달 을 눌렀을 때 0이 되면 다시 이번달 -> 달력의 년 , 월을 바꾸는 컨트롤러 변수
 				} else if(monthControll != 0) {
 					today = LocalDate.now().plusMonths(monthControll);
@@ -167,35 +166,113 @@ public class CalendarAction implements Action {
 				        	 }
 				        	 //true -> 이미 예약된 날짜
 				        	 //false -> 예약 가능한 날짜
-				        	 //예약 날짜가 비어있는지 검사 -> 비어있다면? 그냥 달력 ㄱ
+				        	 //예약스케쥴이 없을 경우
 				        	if(scheduleList.isEmpty()) {
-				        		System.out.println("158-------------false---------------");
-				        		if(todayNum == j) {
-				        			if((selectStartDate != null && selectEndDate != null) &&) {
-				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-success' style'border: none;' value='"+notSelectedDay+"' disabled>");
+					        		//오늘 이전임?
+				        		if((monthControll == 0 && notSelectedDay.getDayOfMonth() < today.getDayOfMonth() )  || monthControll < 0 ) {
+				        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-secondary' style'border: none;' value='"+notSelectedDay+"' disabled>");
+				        			sb.append(j).append("</button></td>\n");
+				        			
+				        			
+				        			//사용자가 선택한날임?
+				        		} else if((selectStartDate != null && selectEndDate != null) &&
+			        					(notSelectedDay.isAfter(selectStartDate.minusDays(1)) &&notSelectedDay.isBefore(selectEndDate.plusDays(1)))) {
+				        			if(day.isEqual(notSelectedDay)) {
+				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-success' style'border: none;' value='"+notSelectedDay+"'>");
+					        			sb.append("["+j+"]").append("</button></td>\n");
+					        		} else if(notSelectedDay.isEqual(selectStartDate)) {
+					        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-success' style'border: none;' value='"+notSelectedDay+"'>");
+					        			sb.append(j).append("</button></td>\n");
+					        		}else if(notSelectedDay.isEqual(selectEndDate)) {
+					        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-success' style'border: none;' value='"+notSelectedDay+"'>");
+					        			sb.append(j).append("</button></td>\n");
+					        		} else {
+					        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-success' style'border: none;' value='"+notSelectedDay+"'>");
+					        			sb.append(j).append("</button></td>\n");
+					        		}
+				        			
+				        			//예약하려고 누르기만 한 날 -> 현재 controller에서 날짜를 눌렀을 때 ReservationAvailablePeriodCallAction 메소드를 호출해서 CalendarAction이 호출이 안됨
+				        			// 두 개의 메소드를 같이 호출할 방법이 생기면 사용
+				        			//세션에 담으면 가능할듯 ㅎ;
+//				        		} else if(selectStartDate != null && notSelectedDay.equals(selectStartDate)) {
+//				        			if(day.isEqual(notSelectedDay)) {
+//				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-primary' style'border: none;' value='"+notSelectedDay+"'>");
+//					        			sb.append("["+j+"]").append("</button></td>\n");
+//					        		} else {
+//					        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-primary' style'border: none;' value='"+notSelectedDay+"'>");
+//					        			sb.append(j).append("</button></td>\n");
+//					        		}
+				        			
+				        			//아무것도 아니면 선택 가능한 날
+				        		} else {
+				        			if(day.isEqual(notSelectedDay)) {
+				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
 				        				sb.append("["+j+"]").append("</button></td>\n");
 				        			} else {
 				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
-				        				sb.append("["+j+"]").append("</button></td>\n");
+				        				sb.append(j).append("</button></td>\n");
 				        			}
-				        			//오늘 이전 날짜 비활성화
-				        		} else if((monthControll == 0 && notSelectedDay.getDayOfMonth() < today.getDayOfMonth() )  || monthControll < 0 ){
+				        		}
+			        		
+				        	}
+				        	//예약스케쥴에 예약이 있는 경우------------------------------------------------------------------
+				        	if(!scheduleList.isEmpty()) {
+				        		
+				        		//예약중인 날임?
+				        		if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))) {
+				        			//오늘임?
+					        		if(day.isEqual(notSelectedDay)) {
+					        			sb.append("<td class='disabled bg-light'>").append("["+j+"]").append("</td>\n");
+					        		} else {
+					        			sb.append("<td class='disabled bg-light'>").append(j).append("</td>\n");
+					        		}
+					        		
+					        		
+						        	//오늘 이전임?
+				        		} else if((monthControll == 0 && notSelectedDay.getDayOfMonth() < today.getDayOfMonth() )  || monthControll < 0 ) {
 				        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-secondary' style'border: none;' value='"+notSelectedDay+"' disabled>");
 				        			sb.append(j).append("</button></td>\n");
-				        		} else if((selectStartDate != null && selectEndDate != null) && ((notSelectedDay >= selectStartDate) && (notSelectedDay <= selectEndDate)) ) {
-				        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-success' style'border: none;' value='"+notSelectedDay+"'>");
-				        			sb.append(j).append("</button></td>\n");
+				        			
+				        			
+				        			//사용자가 선택한날임?
+				        		} else if((selectStartDate != null && selectEndDate != null) &&
+			        					(notSelectedDay.isAfter(selectStartDate.minusDays(1)) &&notSelectedDay.isBefore(selectEndDate.plusDays(1)))) {
+				        			
+				        			if(day.isEqual(notSelectedDay)) {
+				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-success' style'border: none;' value='"+notSelectedDay+"'>");
+					        			sb.append("["+j+"]").append("</button></td>\n");
+					        		} else if(notSelectedDay.isEqual(selectStartDate)) {
+					        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-success' style'border: none;' value='"+notSelectedDay+"'>");
+					        			sb.append(j).append("</button></td>\n");
+					        		}else if(notSelectedDay.isEqual(selectEndDate)) {
+					        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-success' style'border: none;' value='"+notSelectedDay+"'>");
+					        			sb.append(j).append("</button></td>\n");
+					        		} else {
+					        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-success' style'border: none;' value='"+notSelectedDay+"'>");
+					        			sb.append(j).append("</button></td>\n");
+					        		}
+				        			
+				        			//예약하려고 누르기만 한 날 -> 현재 controller에서 날짜를 눌렀을 때 ReservationAvailablePeriodCallAction 메소드를 호출해서 CalendarAction이 호출이 안됨
+				        			// 두 개의 메소드를 같이 호출할 방법이 생기면 사용
+//				        		} else if(selectStartDate != null && notSelectedDay.equals(selectStartDate)) {
+//				        			if(day.isEqual(notSelectedDay)) {
+//				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-primary' style'border: none;' value='"+notSelectedDay+"'>");
+//					        			sb.append("["+j+"]").append("</button></td>\n");
+//					        		} else {
+//					        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-primary' style'border: none;' value='"+notSelectedDay+"'>");
+//					        			sb.append(j).append("</button></td>\n");
+//					        		}
+				        			
+				        			//아무것도 아니면 선택 가능한 날
 				        		} else {
-				        			sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
-				        			sb.append(j).append("</button></td>\n");
+				        			if(day.isEqual(notSelectedDay)) {
+				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
+				        				sb.append("["+j+"]").append("</button></td>\n");
+				        			} else {
+				        				sb.append("<td><button type='submit' name='selectDate' class='w-100 h-100 btn btn-outline-primary' style'border: none;' value='"+notSelectedDay+"'>");
+				        				sb.append(j).append("</button></td>\n");
+				        			}
 				        		}
-				        	} else if((in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))) {
-				        		System.out.println("150-------------true---------------");
-				        		if(todayNum == j) {
-				        			sb.append("<td class='disabled bg-light'>").append("["+j+"]").append("</td>\n");
-				        		}else {
-					        		sb.append("<td class='disabled bg-light'>").append(j).append("</td>\n");
-					        	}
 				        		
 				        	}
 				            

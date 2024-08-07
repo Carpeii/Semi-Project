@@ -15,7 +15,7 @@
         	let url = '${pageContext.request.contextPath}/calendar/call';
         function openPopup() {
             //매개변수 -> (Url, 창이름 , 옵션)
-            window.open(url, 'popupWindow', 'width=1027,height=474,scrollbars=yes');
+            window.open(url, 'popupWindow', 'width=1001,height=500,scrollbars=yes');
         }
     </script>
 </head>

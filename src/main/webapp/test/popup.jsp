@@ -18,7 +18,7 @@ request.setCharacterEncoding("utf-8");
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container mt-4 mb-5 sm custom-container">
+	<div class="container mt-4 mb-3 sm custom-container">
 		<div class="row">
 
 			<div class="col">
@@ -105,21 +105,43 @@ request.setCharacterEncoding("utf-8");
 			</div>
 		</div>
 	</div>
-		<div class="mt-5">
+		<div class="mt-1 ms-3 d-flex justify-content-between w-50">
 		<c:choose>
 			<c:when test="${not empty datecheck}">
-				<button type="button" class="btn btn-success mt-5" onclick="opener.location.reload();self.close();">
+				<button type="button" class="btn btn-success mt-3 me-5" onclick="opener.location.reload();self.close();">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
   <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"></path>
 </svg>확인</button>
 			</c:when>
 			<c:otherwise>
-				<button type="button" class="btn btn-tertiary mt-5" disabled>
+				<button type="button" class="btn btn-tertiary mt-3 me-5" disabled>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16  fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
   <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"></path>
 </svg>확인</button>
 			</c:otherwise>
 		</c:choose>
+		
+		
+		<form action="${pageContext.request.contextPath }/calendar/cancel" method="post">
+		<c:choose>
+			<c:when test="${not empty selectEndDate}">
+				<button class="btn btn-outline-danger mt-3 me-5">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
+</svg>취소 </button>
+			</c:when>
+			<c:otherwise>
+				<button class="btn btn btn-tertiary mt-3 me-5" disabled>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
+</svg>취소 </button>
+			</c:otherwise>
+		</c:choose>
+		
+		
+		
+
+		</form>
 		</div>
 </body>
 </html>

@@ -56,7 +56,8 @@ public class CalendarController extends HttpServlet {
 				req.getSession().setAttribute("selectDate", req.getParameter("selectDate"));
 				action = new ReservationAvailablePeriodCallAction();
 				action.execute(req, resp);
-			}
+				//취소 버튼을 눌렀을 때
+			} 
 			//날짜 버튼을 누른 후 나오는 기간버튼을 누르면 호출
 		} else if(requestUrl.equals("/select")) {
 			//당일포함-> -1
@@ -75,7 +76,13 @@ public class CalendarController extends HttpServlet {
 			action =new CalendarAction();
 			action.execute(req, resp);
 //			req.getRequestDispatcher("/test/popup.jsp").forward(req, resp);
-		
+			
+		} else if(requestUrl.equals("/cancel")) {
+			System.out.println("취소 버튼 ㄱ");
+				req.getSession().removeAttribute("selectEndDate");
+				action = new CalendarAction();
+				action.execute(req, resp);
+			
 		}
 		
 	}
