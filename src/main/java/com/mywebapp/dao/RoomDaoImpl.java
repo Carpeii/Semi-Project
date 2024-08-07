@@ -135,7 +135,12 @@ public class RoomDaoImpl implements RoomDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(*) FROM room where approve = ?";
+		String sql = "SELECT COUNT(*) " +
+				"FROM room r " +
+				"INNER JOIN room_image ri ON r.id = ri.room_id " +
+				"INNER JOIN room_option ro ON r.id = ro.room_id " +
+				"INNER JOIN room_price rp ON r.id = rp.room_id " +
+				"WHERE r.approve = ?";
 		try {
 			con = JdbcUtil.getCon();
 			pstmt = con.prepareStatement(sql);
