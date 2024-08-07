@@ -37,9 +37,6 @@
 </head>
 <body>
 
-<jsp:include page="/jsp/common/header.jsp"></jsp:include>
-
-
 <div class="container">
 
     <c:if test="${not empty roomBookingInfo}">
@@ -56,9 +53,8 @@
             <p><strong>Early Check-In Discount:</strong> ${roomBookingInfo.earlyCheckInDiscount}</p>
             <p><strong>Maintenance Bill:</strong> ${roomBookingInfo.maintenanceBill}</p>
             <p><strong>Cleaning Fee:</strong> ${roomBookingInfo.cleaningFee}</p>
-            <!--  -->
-            <p><strong>Check-In Date:</strong> ${checkInDate}</p>
-            <p><strong>Check-Out Date:</strong> ${checkOutDate}</p>
+            <p><strong>Check-In Date:</strong> ${booking.checkInDate}</p>
+            <p><strong>Check-Out Date:</strong> ${booking.checkOutDate}</p>
         </div>
     </c:if>
     
@@ -67,8 +63,8 @@
     <div class="form-section">
         <form id="bookingForm" action="${pageContext.request.contextPath}/service/bookRoom" method="post">
             <input type="hidden" name="roomId" value="${roomBookingInfo.id}">
-            <input type="hidden" name="checkInDate" value="${checkInDate}">
-            <input type="hidden" name="checkOutDate" value="${checkOutDate}">
+            <input type="hidden" name="checkInDate" value="${booking.checkInDate}">
+            <input type="hidden" name="checkOutDate" value="${booking.checkOutDate}">
             <!-- 필요한 추가 hidden 필드들도 여기에 포함할 수 있습니다. -->
             <button type="button" class="btn btn-primary" onclick="confirmBooking()">계약 승인 요청하기</button>
         </form>
@@ -76,8 +72,6 @@
 </div>
 
 <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-
-<jsp:include page="/jsp/common/footer.jsp"></jsp:include>
 
 </body>
 </html>

@@ -32,8 +32,8 @@
               </button>
 </div>
 <p>넘어온값</p>
-checkIn  : <input type="text" value="${selectDate }" disabled/> <br><br>
-checkOut : <input type="text" value="${selectEndDate }" disabled/>
+checkIn  : <input type="text"  id="checkInDate" name="checkInDate" value="${selectDate }" class="form-control" disabled required/> <br><br>
+checkOut : <input type="text" id="checkOutDate" name="checkOutDate" value="${selectEndDate }" class="form-control" disabled required/>
 </body>
 				
 			
