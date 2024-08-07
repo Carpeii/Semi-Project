@@ -28,7 +28,7 @@
                     <td><div id="userId">${user.getUserId()}님, 로그아웃 하시겠습니까?</div></td>
                 </tr>
                 <tr>
-                    <button class="btn btn-lg btn-primary" type="submit" name="logout">로그아웃</button>
+                    <td><button class="btn btn-lg btn-primary" type="submit" name="logout">로그아웃</button></td>
                 </tr>
             </table>
         </form>

@@ -55,7 +55,8 @@ public class MemberDao {
                 dto.setPhone(rs.getString("phone"));
                 return dto;
             }
-            return dto;
+            // 로그인에 실패한 경우
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
