@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 @Getter @Setter
 public class RoomDetailDto {
+    //room
     private long id;
     private long hostId;
     private String hostName;
@@ -41,7 +42,7 @@ public class RoomDetailDto {
     // room_option
     private String roomOptions;
     
-    // 
+    // room_price
     private int rentPrice;
     private int longTerm;
     private int longTermDiscount;
@@ -55,11 +56,6 @@ public class RoomDetailDto {
     private boolean internet;
     private int cleaningFee;
     private int refundType;
-    private String reviewMessage;
-    private int rating;
-    private Date reviewCreatedAt;
-    private Date checkInDate;
-    private Date checkOutDate;
 
     public void setRoomByRequest(HttpServletRequest req){
         hostId = Long.parseLong(req.getParameter("hostId"));
@@ -80,5 +76,21 @@ public class RoomDetailDto {
         roomType = Integer.parseInt(req.getParameter("roomType"));
         minimumContract = Integer.parseInt(req.getParameter("minimumContract"));
         approve = Integer.parseInt(req.getParameter("approve"));
+    }
+
+    public void setRoomPriceByRequest(HttpServletRequest req){
+        this.rentPrice = Integer.parseInt(req.getParameter("rentPrice"));
+        this.longTerm = Integer.parseInt(req.getParameter("longTerm"));
+        this.longTermDiscount = Integer.parseInt(req.getParameter("longTermDiscount"));
+        this.earlyCheckIn = Integer.parseInt(req.getParameter("earlyCheckIn"));
+        this.earlyCheckInDiscount = Integer.parseInt(req.getParameter("earlyCheckInDiscount"));
+        this.maintenanceBill = Integer.parseInt(req.getParameter("maintenanceBill"));
+        this.maintenanceBillDetail = req.getParameter("maintenanceBillDetail");
+        this.electricity = req.getParameter("electricity") != null;
+        this.water = req.getParameter("water") != null;
+        this.gas = req.getParameter("gas") != null;
+        this.internet = req.getParameter("internet") != null;
+        this.cleaningFee = Integer.parseInt(req.getParameter("cleaningFee"));
+        this.refundType = Integer.parseInt(req.getParameter("refundType"));
     }
 }

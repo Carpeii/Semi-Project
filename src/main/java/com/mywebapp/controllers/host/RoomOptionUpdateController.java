@@ -52,7 +52,7 @@ public class RoomOptionUpdateController extends HttpServlet {
 //        roomOption.setRoomOptions(optionsJson);
         roomDetailDto.setRoomOptions(optionsJson);
         session.setAttribute("roomDetailDto", roomDetailDto);
-        resp.sendRedirect(req.getContextPath() + "/jsp/service/roomOptionAdd.jsp");
+        resp.sendRedirect(req.getContextPath() + "/service/host/roomPriceUpdate");
     }
 }
 

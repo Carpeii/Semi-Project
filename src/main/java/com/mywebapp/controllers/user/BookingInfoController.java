@@ -96,8 +96,6 @@ public class BookingInfoController extends HttpServlet {
                 roomBookingInfo.setEarlyCheckInDiscount(earlyCheckInDiscount);
                 roomBookingInfo.setMaintenanceBill(maintenanceBill);
                 roomBookingInfo.setCleaningFee(cleaningFee);
-                roomBookingInfo.setCheckInDate(checkInDate);
-                roomBookingInfo.setCheckOutDate(checkOutDate);
 
                 // 요청 속성에 DTO 설정
                 req.setAttribute("roomBookingInfo", roomBookingInfo);
