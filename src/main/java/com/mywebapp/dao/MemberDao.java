@@ -34,7 +34,7 @@ public class MemberDao {
         }
     }
 
-    public MemberDto joinHostMember(String userId, String bankName, String account, String accountHolder)  {
+    public boolean joinHostMember(String userId, String bankName, String account, String accountHolder)  {
         String selectSql = "select id from member where user_id=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -61,15 +61,15 @@ public class MemberDao {
 
                 int rowsAffected = pstmt.executeUpdate();
 
-                if (rowsAffected == 0) {
-                    return null;
+                if (rowsAffected > 0) {
+                    return true;
                 }
-                return new MemberDto();
+                return false;
             }
-            return null;
+            return false;
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return false;
         } finally {
             JdbcUtil.close(conn, pstmt, rs);
         }
