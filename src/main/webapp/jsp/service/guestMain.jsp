@@ -184,4 +184,18 @@
 <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
  
 </body>
+<script type="text/javascript">
+    window.onload = function() {
+      document.getElementById('searchForm').addEventListener('submit', function(event) {
+        let data = document.getElementById('searchInput').value.trim();
+
+        if (data === "") {
+          event.preventDefault(); 
+        } else if (data.length < 2) {
+          alert('두 자 이상 입력해주세요.');
+          event.preventDefault();
+        }
+      });
+    }
+  </script>
 </html>
