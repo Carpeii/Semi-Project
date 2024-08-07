@@ -10,6 +10,7 @@
  	<link href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/roomDetail.css"/>
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
     <script type="text/javascript">
 	    let popupUrl = '${pageContext.request.contextPath}/calendar/call';
 	    function openPopup() {
@@ -18,8 +19,6 @@
     </script>
 </head>
 <body>
-
-<!-- Include header -->
 <jsp:include page="/jsp/common/header.jsp"></jsp:include>
 
 <div class="container">
@@ -40,31 +39,122 @@
 
             <!-- Additional Room Information -->
             <h2>Additional Room Information</h2>
-            <p><strong>Host Name:</strong> ${room.hostName}</p>
-            <p><strong>Usable Area:</strong> ${room.usableArea}</p>
-            <p><strong>Room Count:</strong> ${room.roomCount}</p>
-            <p><strong>Living Room Count:</strong> ${room.livingRoomCount}</p>
-            <p><strong>Toilet Count:</strong> ${room.toiletCount}</p>
-            <p><strong>Kitchen Count:</strong> ${room.kitchenCount}</p>
-            <p><strong>Duplex:</strong> ${room.duplex ? 'Yes' : 'No'}</p>
-            <p><strong>Elevator:</strong> ${room.elevator ? 'Yes' : 'No'}</p>
-            <p><strong>Park:</strong> ${room.park ? 'Yes' : 'No'}</p>
-            <p><strong>Park Detail:</strong> ${room.parkDetail}</p>
-            <p><strong>Room Type:</strong> ${room.roomType}</p>
-            <p><strong>Minimum Contract:</strong> ${room.minimumContract}</p>
-            <p><strong>Rent Price:</strong> ${room.rentPrice}</p>
-            <p><strong>Long Term:</strong> ${room.longTerm}</p>
-            <p><strong>Long Term Discount:</strong> ${room.longTermDiscount}</p>
-            <p><strong>Early Check-In:</strong> ${room.earlyCheckIn}</p>
-            <p><strong>Early Check-In Discount:</strong> ${room.earlyCheckInDiscount}</p>
-            <p><strong>Maintenance Bill:</strong> ${room.maintenanceBill}</p>
-            <p><strong>Maintenance Bill Detail:</strong> ${room.maintenanceBillDetail}</p>
-            <p><strong>Electricity:</strong> ${room.electricity ? 'Yes' : 'No'}</p>
-            <p><strong>Water:</strong> ${room.water ? 'Yes' : 'No'}</p>
-            <p><strong>Gas:</strong> ${room.gas ? 'Yes' : 'No'}</p>
-            <p><strong>Internet:</strong> ${room.internet ? 'Yes' : 'No'}</p>
-            <p><strong>Cleaning Fee:</strong> ${room.cleaningFee}</p>
-            <p><strong>Refund Type:</strong> ${room.refundType}</p>
+             <table class="table room-detail text-s">
+          <thead>
+            <tr>
+              <th class="w-50">Option</th>
+              <th>Information</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i class="bi bi-0-circle"></i> Host Name</td>
+              <td>${room.hostName}</td>
+            </tr>
+            <tr>
+              <td>Usable Area</td>
+              <td>${room.usableArea}</td>
+            </tr>
+            <tr>
+              <td>Room Count</td>
+              <td>${room.roomCount}</td>
+            </tr>
+            <tr>
+              <td>Living Room Count</td>
+              <td>${room.livingRoomCount}</td>
+            </tr>
+            <tr>
+              <td>Toilet Count</td>
+              <td>${room.toiletCount}</td>
+            </tr>
+            <tr>
+              <td>Kitchen Count</td>
+              <td> ${room.kitchenCount}</td>
+            </tr>
+            <tr>
+              <td>Duplex</td>
+              <td> ${room.duplex ? 'Yes' : 'No'}</td>
+            </tr>
+            <tr>
+              <td>Elevator</td>
+              <td>${room.elevator ? 'Yes' : 'No'}</td>
+            </tr>
+            <tr>
+              <td>Park</td>
+              <td> ${room.park ? 'Yes' : 'No'}</td>
+            </tr>
+            <tr>
+              <td>Park Detail</td>
+              <td> ${room.parkDetail}</td>
+            </tr>
+            <tr>
+              <td>Room Type</td>
+              <td> ${room.roomType}</td>
+            </tr>
+            <tr>
+              <td>Minimum Contract</td>
+              <td> ${room.minimumContract}</td>
+            </tr>
+            <tr>
+              <td>Rent Price</td>
+              <td> ${room.rentPrice}</td>
+            </tr>
+             <tr>
+              <td>Long Term</td>
+              <td>${room.longTerm}</td>
+            </tr>
+            <tr>
+              <td>Long Term Discount</td>
+              <td> ${roomBookingInfo.longTermDiscount}</td>
+            </tr>
+            <tr>
+              <td>Early Check-In</td>
+              <td>${roomBookingInfo.earlyCheckIn}</td>
+            </tr>
+            <tr>
+              <td>Early Check-In Discount</td>
+              <td>${roomBookingInfo.earlyCheckInDiscount}</td>
+            </tr>
+            <tr>
+              <td>Maintenance Bill</td>
+              <td>${roomBookingInfo.maintenanceBill}</td>
+            </tr>
+             <tr>
+              <td>Maintenance Bill Detail</td>
+              <td>${room.maintenanceBillDetail}</td>
+            </tr>
+            <tr>
+              <td>Electricity</td>
+              <td>${room.electricity ? 'Yes' : 'No'}</td>
+            </tr>
+            <tr>
+              <td>Water</td>
+              <td>${room.water ? 'Yes' : 'No'}</td>
+            </tr>
+            <tr>
+              <td>Gas</td>
+              <td>${room.gas ? 'Yes' : 'No'}</td>
+            </tr>
+            <tr>
+              <td>Internet</td>
+              <td>${room.internet ? 'Yes' : 'No'}</td>
+            </tr>
+            <tr>
+              <td>Cleaning Fee</td>
+              <td>${roomBookingInfo.cleaningFee}</td>
+            </tr>
+            <tr>
+              <td>Refund Type</td>
+              <td>${room.refundType}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Totals</td>
+              <td>21</td>
+            </tr>
+          </tfoot>
+        </table>
         </div>
 
         <!-- Booking Form -->
