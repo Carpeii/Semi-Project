@@ -44,7 +44,7 @@
         </c:if>
         <!-- 앨범 한 개 시작 -->
         <div class="col-sm">
-            <a href="해당 페이지" class="card shadow-sm" style="text-decoration: none; color: inherit;">
+            <a href="${pageContext.request.contextPath}/service/roomDetail?roomId=${room.id}" class="card shadow-sm" style="text-decoration: none; color: inherit;">
                 <img class="bd-placeholder-img card-img-top" width="75%" height="200" 
                      src="${pageContext.request.contextPath}/${image.imagePath}" alt="${image.imageName}">
                 <div class="card-body">
