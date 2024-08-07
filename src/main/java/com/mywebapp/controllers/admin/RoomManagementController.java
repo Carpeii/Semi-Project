@@ -2,8 +2,8 @@ package com.mywebapp.controllers.admin;
 
 import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dao.RoomDaoImpl;
+import com.mywebapp.dto.MemberDto;
 import com.mywebapp.dto.RoomListItemDto;
-import com.mywebapp.dto.UserDto;
 import com.mywebapp.service.RoomService;
 import com.mywebapp.service.RoomServiceImpl;
 
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class RoomManagementController extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
-        UserDto dto = (UserDto) session.getAttribute("user");
+        MemberDto dto = (MemberDto) session.getAttribute("user");
 
         if (dto.getMemberType() == 3) {
             RoomDao roomDao = new RoomDaoImpl();
@@ -62,7 +61,7 @@ public class RoomManagementController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
-        UserDto dto = (UserDto) session.getAttribute("user");
+        MemberDto dto = (MemberDto) session.getAttribute("user");
 
         if (dto == null || dto.getMemberType() != 3) {
             // 권한이 없는 사용자는 로그인 페이지로 리다이렉트
@@ -88,6 +87,6 @@ public class RoomManagementController extends HttpServlet {
                 return;
         }
         // 작업 완료 후 리다이렉트
-        resp.sendRedirect("/admin/roomManagement");
+        resp.sendRedirect(req.getContextPath() + "/admin/roomManagement");
     }
 }

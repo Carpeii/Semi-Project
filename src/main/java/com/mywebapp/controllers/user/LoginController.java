@@ -1,8 +1,7 @@
 package com.mywebapp.controllers.user;
 
-import com.mywebapp.dto.HostDto;
-import com.mywebapp.dto.UserDto;
-import com.mywebapp.util.JdbcUtil;
+import com.mywebapp.dao.MemberDao;
+import com.mywebapp.dto.MemberDto;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,12 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-@WebServlet("/login")
+@WebServlet("/auth/login")
 public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,76 +24,42 @@ public class LoginController extends HttpServlet {
         String userId = req.getParameter("userId");
         String password = req.getParameter("password");
 
-        // 공백란 존재
-        if (userId.isEmpty() || password.isEmpty()) {
-            req.setAttribute("errMsg", "아이디와 비밀번호 모두 기입");
+         //공백란 존재
+        if (userId.isEmpty() && password.isEmpty()) {
+            req.setAttribute("errMsg", "아이디와 비밀번호를 모두 입력하세요");
             req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+            return;
+        } else if (userId.isEmpty()) {
+            req.setAttribute("errMsg", "아이디를 입력하세요.");
+            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+            return;
+        }else if (password.isEmpty()) {
+            req.setAttribute("errMsg", "비밀번호를 입력하세요.");
+            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+            return;
         }
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        MemberDao dao = new MemberDao();
+        MemberDto dto = dao.loginMember(userId, password);
 
-        try {
-            conn = JdbcUtil.getCon();
 
-            String sql = "select * from member where user_id = ? and password = password(?)";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, userId);
-            pstmt.setString(2, password);
-            rs = pstmt.executeQuery();
-
-            if(rs.next()) {
-                // id, pw와 일치하는 사용자 발견
-                UserDto dto = new UserDto();
-                dto.setId(rs.getLong("id"));
-                dto.setUserId(rs.getString("user_id"));
-                dto.setName(rs.getString("name"));
-                dto.setMemberType(rs.getInt("member_type"));
-                dto.setPhone(rs.getString("phone"));
-
-                // session에 저장
-                HttpSession session = req.getSession();
-                session.setAttribute("user", dto);
-                session.setMaxInactiveInterval(30 * 60); // session 유지시간 30분으로 설정
-
-                if(dto.getMemberType() == 0) {
-                    resp.sendRedirect(req.getContextPath() + "/service/guestMain");
-                } else if (dto.getMemberType() ==1) {
-                    // 호스트 정보 조회
-                    String hostSql = "SELECT * FROM host WHERE member_id = ?";
-                    pstmt = conn.prepareStatement(hostSql);
-                    pstmt.setLong(1, dto.getId()); // UserDto의 id를 사용
-                    ResultSet hostRs = pstmt.executeQuery();
-
-                    if (hostRs.next()) {
-                        // 호스트 정보 설정
-                        HostDto hostDto = new HostDto();
-                        hostDto.setMemberId(hostRs.getLong("member_id"));
-                        hostDto.setBankName(hostRs.getString("bank_name"));
-                        hostDto.setAccount(hostRs.getString("account"));
-                        hostDto.setAccountHolder(hostRs.getString("account_holder"));
-
-                        // 세션에 호스트 정보 저장
-                        session.setAttribute("host", hostDto);
-                        session.setMaxInactiveInterval(30 * 60);
-                    }
-
-                    resp.sendRedirect(req.getContextPath() + "/hostMain");
-                } else if(dto.getMemberType() == 3) { // admin
-                    resp.sendRedirect(req.getContextPath() + "/adminMain");
-                }
-            } else {
-                req.setAttribute("errMsg", "아이디 비밀번호를 확인하세요.");
-                req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
-            }
-        } catch (SQLException e) {
-            e.getMessage();
-            req.setAttribute("errMsg", e.getMessage());
+        if(dto == null) {
+            System.out.println("test");
+            req.setAttribute("errMsg", "아이디와 비밀번호를 확인하세요.");
             req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
-        } finally {
-            JdbcUtil.close(conn, pstmt, rs);
+            return;
         }
 
+        HttpSession session = req.getSession();
+        session.setAttribute("user", dto);
+        session.setMaxInactiveInterval(30 * 60);
+
+        if(dto.getMemberType() == 0) {
+            resp.sendRedirect(req.getContextPath() + "/guestMain");
+        } else if (dto.getMemberType() ==1) {
+            resp.sendRedirect(req.getContextPath() + "/hostMain");
+        } else if (dto.getMemberType() == 3) {
+            resp.sendRedirect(req.getContextPath() + "/adminMain");
+        }
     }
 }

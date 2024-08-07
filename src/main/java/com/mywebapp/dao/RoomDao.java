@@ -25,4 +25,5 @@ public interface RoomDao {
 	List<GuestRoomBookingDto> getRoomsByGuestIdWithStatus(long guestId);
 
 	void updateRoomApproveStatus(long roomId, int approve);
+	void updateRoomDetail(RoomDetailDto roomDetailDto);
 }

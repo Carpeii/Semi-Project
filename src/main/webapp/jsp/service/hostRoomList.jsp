@@ -22,7 +22,7 @@
             <tr>
                 <td>${room.roomName}</td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/editRoom" method="post" class="d-inline">
+                    <form action="${pageContext.request.contextPath}/service/host/roomUpdate" method="get" class="d-inline">
                         <input type="hidden" name="roomId" value="${room.id}">
                         <button type="submit" class="btn btn-primary">Edit</button>
                     </form>

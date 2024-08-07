@@ -16,7 +16,7 @@ import com.mywebapp.dao.BookingDaoImpl;
 import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dto.RoomDetailDto;
-import com.mywebapp.dto.UserDto;
+import com.mywebapp.dto.MemberDto;
 import com.mywebapp.model.Booking;
 import com.mywebapp.model.Room;
 
@@ -38,14 +38,14 @@ public class RoomBookingController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		 // 세션에서 현재 로그인한 사용자의 정보 가져오기
 		HttpSession session = req.getSession();
-		UserDto user = (UserDto) session.getAttribute("user");
+		MemberDto user = (MemberDto) session.getAttribute("user");
 //		String userId = (String) session.getAttribute("user");
 		
 	    // 디버깅을 위한 출력
 	    if (user == null) {
-	        System.out.println("DEBUG: UserDto is null. Redirecting to login.");
+	        System.out.println("DEBUG: MemberDto is null. Redirecting to login.");
 	    } else {
-	        System.out.println("DEBUG: UserDto found. User ID = " + user.getId());
+	        System.out.println("DEBUG: MemberDto found. User ID = " + user.getId());
 	    }
 
 		
@@ -81,7 +81,7 @@ public class RoomBookingController extends HttpServlet {
 			
 		} else {
             // 사용자 정보가 없을 경우에 대한 처리 (예: 로그인 페이지로 리다이렉트)
-			resp.sendRedirect(req.getContextPath() + "/login");
+			resp.sendRedirect(req.getContextPath() + "/auth/login");
 		}
 	}
 
