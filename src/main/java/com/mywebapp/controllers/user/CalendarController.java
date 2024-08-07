@@ -73,7 +73,6 @@ public class CalendarController extends HttpServlet {
 //			req.getRequestDispatcher("/test/popup.jsp").forward(req, resp);
 			
 		} else if(requestUrl.equals("/cancel")) {
-			System.out.println("취소 버튼 ㄱ");
 				req.getSession().removeAttribute("selectEndDate");
 				action = new CalendarAction();
 				action.execute(req, resp);

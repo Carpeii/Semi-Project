@@ -4,6 +4,7 @@
 <%
 request.setCharacterEncoding("utf-8");
 %>
+<%long roomId = Long.parseLong(request.getParameter("roomId")); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,15 +23,17 @@ request.setCharacterEncoding("utf-8");
 		<div class="row">
 
 			<div class="col">
-				<form action="${pageContext.request.contextPath }/calendar/move"
-					method="post">
+				<form action="${pageContext.request.contextPath }/calendar/move?roomId=${roomId}"
+					method="get">
+					<input type="hidden" name="roomId" value="<%=roomId%>"/>
 					<c:out value="${sb}" escapeXml="false" />
 				</form>
 			</div>
 				
 			<div class="col pb-5">
-				<form action="${pageContext.request.contextPath }/calendar/select" method="post">
-					<table class="table custom-table" style="border:none; ">
+				<form action="${pageContext.request.contextPath }/calendar/select" method="get">
+				<input type="hidden" name="roomId" value="<%=roomId%>"/>
+					<table class="table custom-table" style="border:none;">
 						<tr> 
 							<c:if test="${dateDiff >= 7}">
 						<td class="noborder">
@@ -121,7 +124,8 @@ request.setCharacterEncoding("utf-8");
 		</c:choose>
 		
 		
-		<form action="${pageContext.request.contextPath }/calendar/cancel" method="post">
+		<form action="${pageContext.request.contextPath }/calendar/cancel" method="get">
+		<input type="hidden" name="roomId" value="<%=roomId%>"/>
 		<c:choose>
 			<c:when test="${not empty selectEndDate}">
 				<button class="btn btn-outline-danger mt-3 me-5">
