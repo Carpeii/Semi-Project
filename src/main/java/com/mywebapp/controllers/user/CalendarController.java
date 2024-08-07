@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.mywebapp.actions.Action;
 import com.mywebapp.actions.calendar.CalendarAction;
 import com.mywebapp.actions.calendar.ReservationAvailablePeriodCallAction;
-import com.mywebapp.model.Booking;
 @WebServlet("/calendar/*")
 public class CalendarController extends HttpServlet {
 	@Override

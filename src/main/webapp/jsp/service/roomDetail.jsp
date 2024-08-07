@@ -120,32 +120,26 @@
 
                 <!-- Date fields -->
                 <div class="container mt-5">
-    <h1>달력호출창</h1>
-<button type="button" class="btn btn-primary"onclick="openPopup()">
+<button type="button" class="btn btn-primary mb-3"onclick="openPopup()">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
   <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"></path>
   <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path>
-</svg>달력</button>
+</svg> 계약 가능 날짜 확인</button>
+                <div class="mb-3">
+                    <label for="checkInDate" class="form-label">Check-in Date</label>
+                    <input type="text"  id="checkInDate" name="checkInDate" value="${selectDate }" class="form-control w-25" readonly required/>
+                </div>
+
+                <div class="mb-3">
+                    <label for="checkOutDate" class="form-label">Check-out Date</label>
+                    <input type="text" id="checkOutDate" name="checkOutDate" value="${selectEndDate }" class="form-control w-25" readonly required/>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-5">Start Booking</button>
 			</div>
-                <div class="mb-3">
-                    <label for="checkInDate" class="form-label">Check-in Date:</label>
-                    <input type="text"  id="checkInDate" name="checkInDate" value="${selectDate }" class="form-control"  required/>
-                </div>
-
-                <div class="mb-3">
-                    <label for="checkOutDate" class="form-label">Check-out Date:</label>
-                    <input type="text" id="checkOutDate" name="checkOutDate" value="${selectEndDate }" class="form-control"  required/>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Start Booking</button>
             </form>
         </div>
     </c:if>
-    
-    <!-- Popup Button -->
-    <div class="mt-3">
-        <button type="button" class="btn btn-outline-primary" onclick="openPopup()">계약 가능 날짜 확인</button>
-    </div>
 </div>
 
 <!-- Include Bootstrap JS -->

@@ -21,7 +21,12 @@ public class BookingInfoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-
+        if(req.getSession().getAttribute("selectDate") != null) {
+        	req.getSession().removeAttribute("selectDate");
+        	req.getSession().removeAttribute("selectEndDate");
+        	req.getSession().removeAttribute("moveMonth");
+        	System.out.println("달력 세션삭제");
+        }
         // 폼 파라미터 읽기
         String roomIdParam = req.getParameter("roomId");
         String roomName = req.getParameter("roomName");
