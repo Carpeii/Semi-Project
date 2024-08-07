@@ -6,6 +6,8 @@
 <head>
 <meta charset="EUC-KR">
 <title>hostMain.jsp</title>
+<link href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
@@ -21,7 +23,6 @@
 %>
 <p>${sessionScope.user.userId}님 환영합니다</p>
 <button onclick="location.href='${pageContext.request.contextPath}/auth/logout'">로그아웃</button>
-<button onclick="location.href='${pageContext.request.contextPath}/auth/myPage'">마이 페이지</button>
 <button onclick="location.href='${pageContext.request.contextPath}/guestMain'">게스트 페이지로</button>
 <button onclick="location.href='${pageContext.request.contextPath}/service/hostRoomList'">방관리</button>
 <br><br>
@@ -38,6 +39,8 @@
     }
 %>
 
+
+<jsp:include page="/jsp/common/footer.jsp"></jsp:include>
 
 </body>
 </html>
