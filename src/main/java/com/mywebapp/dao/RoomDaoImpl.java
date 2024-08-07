@@ -33,7 +33,7 @@ public class RoomDaoImpl implements RoomDao {
 			// 데이터베이스에서 AUTO_INCREMENT와 같은 자동 생성 키를 가진 열에 대해 사용
 			pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-			pstmt.setString(1, room.getHostId());
+			pstmt.setLong(1, room.getHostId());
 			pstmt.setString(2, room.getRoomName());
 			pstmt.setString(3, room.getJibunAddress());
 			pstmt.setString(4, room.getStreetAddress());
@@ -162,7 +162,7 @@ public class RoomDaoImpl implements RoomDao {
 		RoomDetailDto room = null;
 		String sql = "SELECT " +
 			     "    r.id as room_id, " + 
-	             "    m.id AS member_id, " +
+	             "    m.id host_id, " +
 	             "    m.name AS host_name, " +
 	             "    r.room_name, " +
 	             "    r.jibun_address, " +
@@ -180,6 +180,7 @@ public class RoomDaoImpl implements RoomDao {
 	             "    r.park_detail, " +
 	             "    r.room_type, " +
 	             "    r.minimum_contract, " +
+				 "	  r.approve," +
 	             "    ri.image_name, " +
 	             "    ri.image_path, " +
 	             "    ri.save_file_name, " +
@@ -197,10 +198,7 @@ public class RoomDaoImpl implements RoomDao {
 	             "    rp.gas, " +
 	             "    rp.internet, " +
 	             "    rp.cleaning_fee, " +
-	             "    rp.refund_type, " +
-	             "    rv.message, " +
-	             "    rv.rating, " +
-	             "    rv.created_at " +
+	             "    rp.refund_type " +
 	             "FROM " +
 	             "    room r " +
 	             "INNER JOIN " +
@@ -211,10 +209,6 @@ public class RoomDaoImpl implements RoomDao {
 	             "    room_option rop ON r.id = rop.room_id " +
 	             "INNER JOIN " +
 	             "    room_price rp ON r.id = rp.room_id " +
-	             "INNER JOIN " +
-	             "    booking b ON r.id = b.room_id " +
-	             "INNER JOIN " +
-	             "    review rv ON b.id = rv.booking_id " +
 	             "WHERE r.id = ?";
 
 
@@ -227,13 +221,14 @@ public class RoomDaoImpl implements RoomDao {
 			if (rs.next()) {
 				room = new RoomDetailDto();
 				room.setId(rs.getLong("room_id"));
+				room.setHostId(rs.getLong("host_id"));
 				room.setHostName(rs.getString("host_name"));
 				room.setRoomName(rs.getString("room_name"));
 				room.setJibunAddress(rs.getString("jibun_address"));
 				room.setStreetAddress(rs.getString("street_address"));
 				room.setAddressDetail(rs.getString("address_detail"));
 				room.setFloor(rs.getInt("floor"));
-				room.setUsableArea(rs.getDouble("usable_area"));
+				room.setUsableArea(rs.getInt("usable_area"));
 				room.setRoomCount(rs.getInt("room_count"));
 				room.setLivingRoomCount(rs.getInt("living_room_count"));
 				room.setToiletCount(rs.getInt("toilet_count"));
@@ -242,13 +237,14 @@ public class RoomDaoImpl implements RoomDao {
 				room.setElevator(rs.getBoolean("elevator"));
 				room.setPark(rs.getBoolean("park"));
 				room.setParkDetail(rs.getString("park_detail"));
-				room.setRoomType(rs.getString("room_type"));
+				room.setRoomType(rs.getInt("room_type"));
 				room.setMinimumContract(rs.getInt("minimum_contract"));
+				room.setApprove(rs.getInt("approve"));
 				room.setImageName(rs.getString("image_name"));
 				room.setImagePath(rs.getString("image_path"));
 				room.setSaveFileName(rs.getString("save_file_name"));
 				room.setImageOrder(rs.getInt("image_order"));
-				room.setRoomOption(rs.getString("room_options"));
+				room.setRoomOptions(rs.getString("room_options"));
 				room.setRentPrice(rs.getInt("rent_price"));
 				room.setLongTerm(rs.getInt("long_term"));
 				room.setLongTermDiscount(rs.getInt("long_term_discount"));
@@ -262,9 +258,6 @@ public class RoomDaoImpl implements RoomDao {
 				room.setInternet(rs.getBoolean("internet"));
 				room.setCleaningFee(rs.getInt("cleaning_fee"));
 				room.setRefundType(rs.getInt("refund_type"));
-				room.setReviewMessage(rs.getString("message"));
-				room.setRating(rs.getInt("rating"));
-				room.setReviewCreatedAt(rs.getDate("created_at"));
 			}
 			return room;
 		} catch (SQLException e) {
@@ -295,7 +288,7 @@ public class RoomDaoImpl implements RoomDao {
 			while (rs.next()) {
 				Room room = new Room();
 				room.setId(rs.getLong("id"));
-				room.setHostId(rs.getString("host_id"));
+				room.setHostId(rs.getLong("host_id"));
 				room.setRoomName(rs.getString("room_name"));
 				room.setJibunAddress(rs.getString("jibun_address"));
 				room.setStreetAddress(rs.getString("street_address"));
@@ -337,7 +330,7 @@ public class RoomDaoImpl implements RoomDao {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 
-				Room room = new Room(rs.getLong("id"),rs.getString("host_id"),
+				Room room = new Room(rs.getLong("id"),rs.getLong("host_id"),
 						rs.getString("room_name"),rs.getString("jibun_address"),
 						rs.getString("street_address"),rs.getString("address_detail"),
 						rs.getInt("floor"),rs.getInt("usable_area"),

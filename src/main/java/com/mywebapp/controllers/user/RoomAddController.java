@@ -27,7 +27,7 @@ public class RoomAddController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         // Create Room
         Room room = new Room();
-        room.setHostId(req.getParameter("hostId"));
+        room.setHostId(Long.parseLong(req.getParameter("hostId")));
         room.setRoomName(req.getParameter("roomName"));
         room.setJibunAddress(req.getParameter("jibunAddress"));
         room.setStreetAddress(req.getParameter("streetAddress"));

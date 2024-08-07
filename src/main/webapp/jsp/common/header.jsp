@@ -14,7 +14,7 @@
 		<li><a href="#" class="nav-link px-2 link-secondary">메뉴1</a></li>
 		<li><a href="../index.jsp" class="nav-link px-2">메인 페이지</a></li>
 		<li><a href="../user/profile.jsp" class="nav-link px-2">마이페이지</a></li>
-		<li><a href="../auth/login.jsp" class="nav-link px-2">로그인</a></li>
+		<li><a href="${pageContext.request.contextPath}/login" class="nav-link px-2">로그인</a></li>
 		<li><a href="../service/hostMain.jsp" class="nav-link px-2">호스트 모드</a></li>
       </ul>
     
