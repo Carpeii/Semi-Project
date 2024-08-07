@@ -40,7 +40,13 @@ public class MemberDao {
         }
     }
 
-    public MemberDto loginMember(String userId, String password)  {
+    public MemberDto loginMember(String userId, String password, HttpServletRequest req)  {
+        String errMsg = errMsg(userId, password);
+        if (errMsg != null) {
+            req.setAttribute("errMsg", errMsg);
+            return null;
+        }
+
         String sql = "select * from member where user_id = ? and password = password(?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -105,5 +111,16 @@ public class MemberDao {
         } finally {
             JdbcUtil.close(conn, pstmt, rs);
         }
+    }
+
+    public String errMsg(String userId, String password) {
+        if(userId.isEmpty()) {
+            return "아이디를 입력하세요.";
+        } else if (password.isEmpty()) {
+            return "비밀번호를 입력하세요.";
+        } else if (userId.isEmpty() && password.isEmpty()){
+            return  "아이디와 비밀번호를 입력하세요.";
+        }
+        return null;
     }
 }

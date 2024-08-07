@@ -37,6 +37,7 @@ public class BookingDaoImpl implements BookingDao {
 			JdbcUtil.close(con, pstmt, null);
 		}
 	}
+
 	@Override
 	public List<Booking> getBookingsByRoomId(long roomId, int bookingStatus) {
 		Connection con = null;
@@ -98,6 +99,7 @@ public class BookingDaoImpl implements BookingDao {
 			e.printStackTrace();
 		}
 	}
+
 	//방계약 달력의 계약된 날짜 가져오는 메소드
 	//roomId를 인자로받음 
 	//반환값 List<Booking> checkInDate , dheckOutDate 만 들어있음
@@ -125,6 +127,8 @@ public class BookingDaoImpl implements BookingDao {
 			}
 			return scheduleList;
 		}
+	
+	
 	@Override
 	public Booking reservationAvailablePeriodCall(Date selectDate, long roomId) {
 		//Id도 추가해야함
@@ -149,4 +153,5 @@ public class BookingDaoImpl implements BookingDao {
 		
 		return booking;
 	}
+
 }

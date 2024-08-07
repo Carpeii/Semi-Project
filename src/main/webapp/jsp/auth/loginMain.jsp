@@ -42,6 +42,7 @@
             <input type="password" class="form-control" name="password" id="password" placeholder="password">
             <label for="password">password</label>
         </div>
+        <div class="form-check text-start my-3">${errMsg}</div>
         <button class="btn btn-primary w-100 py-2" type="submit" name="login">Sign in</button>
         <p class="mt-5 mb-3 text-body-secondary">© 2024</p>
     </form>

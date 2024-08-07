@@ -8,6 +8,8 @@
 <title>hostMain.jsp</title>
 </head>
 <body>
+
+<jsp:include page="/jsp/common/header.jsp"></jsp:include>
 <h2>단기임대, 1평에서 찾아보세요</h2>
 <%
     UserDto user = (session != null) ? (UserDto) session.getAttribute("user") : null;

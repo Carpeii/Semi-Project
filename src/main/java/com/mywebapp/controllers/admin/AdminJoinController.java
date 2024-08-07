@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import static com.mywebapp.dao.MemberDao.checkUserID;
 import static java.lang.Boolean.parseBoolean;
 
-@WebServlet("/adminJoin")
+@WebServlet("/admin/adminJoin")
 public class AdminJoinController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,10 +46,6 @@ public class AdminJoinController extends HttpServlet {
         // db 연결 변수
         String name = req.getParameter("name");
         String phone = req.getParameter("phone");
-
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
 
         // 아이디 중복 체크 버튼이 눌렸을 경우에
         if ("checkId".equals(action)) {
@@ -80,7 +76,6 @@ public class AdminJoinController extends HttpServlet {
 
         // 회원가입으로 데이터베이스에 insert
 
-        conn = JdbcUtil.getCon();
         MemberDao dao = new MemberDao();
         dao.joinMember(dto);
 
@@ -88,6 +83,6 @@ public class AdminJoinController extends HttpServlet {
         session.setAttribute("userId", userId); // session에 userId 저장
 
         // 회원가입 성공 -> 메인 페이지로 이동
-        resp.sendRedirect(req.getContextPath() + "/adminMain.jsp");
+        resp.sendRedirect(req.getContextPath() + "/admin/adminMain.jsp");
     }
 }

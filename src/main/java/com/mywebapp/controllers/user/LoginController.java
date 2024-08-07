@@ -30,7 +30,7 @@ public class LoginController extends HttpServlet {
         }
 
         MemberDao dao = new MemberDao();
-        MemberDto dto = dao.loginMember(userId, password);
+        MemberDto dto = dao.loginMember(userId, password, null);
 
         HttpSession session = req.getSession();
         session.setAttribute("user", dto);

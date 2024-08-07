@@ -11,7 +11,7 @@
   <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 </head>
 <body>
-<%@include file="/jsp/common/header.jsp" %>
+<%@include file="/jsp/common/hostHeader.jsp" %>
 
 <!-- START ALBUM -->
 			<!--   해당 태그를 행으로 정의                mt-5 위쪽 마진  , mx-5 좌우 x축 마진 -->
