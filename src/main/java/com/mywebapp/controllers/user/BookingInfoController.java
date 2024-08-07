@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mywebapp.dto.RoomDetailDto;
+import com.mywebapp.model.Booking;
 
 @WebServlet("/service/bookingInfo")
 public class BookingInfoController extends HttpServlet {
@@ -113,8 +114,12 @@ public class BookingInfoController extends HttpServlet {
                 roomBookingInfo.setMaintenanceBill(maintenanceBill);
                 roomBookingInfo.setCleaningFee(cleaningFee);
 
+                Booking booking = new Booking();
+                booking.setCheckInDate(checkInDate);
+                booking.setCheckOutDate(checkOutDate);
                 // 요청 속성에 DTO 설정
                 req.setAttribute("roomBookingInfo", roomBookingInfo);
+                req.setAttribute("booking", booking);
 
                 // JSP 페이지로 포워딩
                 req.getRequestDispatcher("/jsp/service/bookingInfo.jsp").forward(req, resp);

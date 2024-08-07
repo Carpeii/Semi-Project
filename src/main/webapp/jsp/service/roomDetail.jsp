@@ -129,12 +129,12 @@
 			</div>
                 <div class="mb-3">
                     <label for="checkInDate" class="form-label">Check-in Date:</label>
-                    <input type="text"  id="checkInDate" name="checkInDate" value="${selectDate }" class="form-control" required/>
+                    <input type="text"  id="checkInDate" name="checkInDate" value="${selectDate }" class="form-control"  required/>
                 </div>
 
                 <div class="mb-3">
                     <label for="checkOutDate" class="form-label">Check-out Date:</label>
-                    <input type="text" id="checkOutDate" name="checkOutDate" value="${selectEndDate }" class="form-control" required/>
+                    <input type="text" id="checkOutDate" name="checkOutDate" value="${selectEndDate }" class="form-control"  required/>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Start Booking</button>
