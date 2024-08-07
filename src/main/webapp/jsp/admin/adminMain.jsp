@@ -1,11 +1,4 @@
-<%@ page import="com.mywebapp.dto.UserDto" %>
-<%@ page import="com.mywebapp.dto.MemberDto" %><%--
-  Created by IntelliJ IDEA.
-  User: now
-  Date: 2024. 7. 21.
-  Time: 21:21
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.mywebapp.dto.MemberDto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

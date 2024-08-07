@@ -14,8 +14,6 @@ import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dto.GuestRoomBookingDto;
 import com.mywebapp.dto.MemberDto;
-import com.mywebapp.dto.RoomDetailDto;
-import com.mywebapp.dto.UserDto;
 
 @WebServlet("/user/guestBooking")
 public class GuestMyPageBookingController extends HttpServlet {

@@ -3,7 +3,6 @@ package com.mywebapp.controllers.user;
 import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dto.MemberDto;
-import com.mywebapp.dto.UserDto;
 import com.mywebapp.model.Room;
 
 import javax.servlet.ServletException;
@@ -21,15 +20,6 @@ public class HostRoomListController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        // Database connection setup (use a connection pool in a real application)
-////        String hostId = req.getParameter("hostId");
-//        long hostId;
-////        if(hostId == null || hostId.isEmpty()) {
-////
-////            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Host ID is required");
-////            return;
-////        }
-//        System.out.println(hostId);
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         MemberDto user = (MemberDto) session.getAttribute("user");

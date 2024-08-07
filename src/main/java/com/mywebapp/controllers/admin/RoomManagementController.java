@@ -4,7 +4,6 @@ import com.mywebapp.dao.RoomDao;
 import com.mywebapp.dao.RoomDaoImpl;
 import com.mywebapp.dto.MemberDto;
 import com.mywebapp.dto.RoomListItemDto;
-import com.mywebapp.dto.UserDto;
 import com.mywebapp.service.RoomService;
 import com.mywebapp.service.RoomServiceImpl;
 
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 

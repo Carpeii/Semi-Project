@@ -1,5 +1,4 @@
 <%@ page import="com.mywebapp.model.Member" %>
-<%@ page import="com.mywebapp.dto.UserDto" %>
 <%@ page import="com.mywebapp.dto.RoomDetailDto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -13,19 +12,11 @@
 <body>
 <h1>방 수정하기</h1>
 <form method="post" action="<%=request.getContextPath() %>/service/host/roomUpdate">
-    <!-- 기본적인 방 정보 입력란 -->
     <%
-        if(session == null) {
-            response.sendRedirect(request.getContextPath()+"/jsp/auth/loginMain");
-            return;
-        }
-        UserDto user = (UserDto) session.getAttribute("user");
         RoomDetailDto roomDetailDto = (RoomDetailDto) session.getAttribute("roomDetailDto");
-        if(user.getId() != roomDetailDto.getHostId()) {
-            response.sendRedirect(request.getContextPath()+"/jsp/auth/loginMain");
-            return;
-        }
     %>
+
+    <!-- 기본적인 방 정보 입력란 -->
     <input type="hidden" id="hostId" name="hostId" value="<%=roomDetailDto.getHostId()%>" required /><br>
 
     <label for="roomName">방 이름:</label>

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import com.mywebapp.dto.MemberDto;
 import com.mywebapp.dto.RoomListItemDto;
-import com.mywebapp.dto.UserDto;
 import com.mywebapp.service.RoomService;
 import com.mywebapp.service.RoomServiceImpl;
 
