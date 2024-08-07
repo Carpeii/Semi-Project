@@ -92,16 +92,28 @@ public class CalendarAction implements Action {
 				 sb.append("<table class='table calendar-table'>\n");
 				 sb.append("<tr><th colspan='7'>"+" <button class='btn' value=\"before\" name=\"moveMonth\">&lt</button>   "+year+"-"+month+"   <button class='btn' value=\"next\" name=\"moveMonth\">&gt</button>"+"</th></tr>\n");
 			        // 요일 헤더
-				 
+				 	//월 화 수 목 금 토 일
+				 	//1 2  3 4  5 6 7
+				 //->
+				 //일 월 화 수 목 금 토
+				 // 1 2 3 4 5 6 7 
+				 //if (1=<요일)   +1
+				 //if (7==요일) 요일 = 1
 			        sb.append("<tr>\n");
-			        sb.append("<th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th><th>일</th>\n");
+			        sb.append("<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>\n");
 			        sb.append("</tr>\n");
 			        
 			        // 날짜 행
 			        sb.append("<tr>\n");
 
 			        // 빈 칸 추가 (첫째 주의 시작일까지)
-			        for (int i = 1; i < firstDayOfWeek; i++) {
+			        int calendarBlank = 0;
+			        if(firstDayOfWeek<=6) {
+			        	calendarBlank = firstDayOfWeek+1; 
+			        } else if(firstDayOfWeek == 7) {
+			        	calendarBlank = 1;
+			        }
+			        for (int i = 1; i < calendarBlank; i++) {
 			            sb.append("<td class='disabled'> </td>\n");
 			        }
 
@@ -277,7 +289,7 @@ public class CalendarAction implements Action {
 				        	}
 				            
 				            // 일요일에 줄 바꿈
-				            if ((j + firstDayOfWeek - 1) % 7 == 0) {
+				            if ((j + calendarBlank - 1) % 7 == 0) {
 				                sb.append("</tr>\n<tr>\n");
 				            }
 				            if(!scheduleList.isEmpty()) {
@@ -315,8 +327,13 @@ public class CalendarAction implements Action {
 			        
 			        
 			        // 마지막 행의 끝을 추가
-			        	int tableEnd = notSelectedDay.getDayOfWeek().getValue();
-			        	for (int x = tableEnd; x <=6; x++) {
+			        //추가!
+			        if(notSelectedDay.getDayOfWeek().getValue()<=6) {
+			        	calendarBlank = notSelectedDay.getDayOfWeek().getValue()+1; 
+			        } else if(notSelectedDay.getDayOfWeek().getValue() == 7) {
+			        	calendarBlank = 1;
+			        }
+			        	for (int x = calendarBlank; x <=6; x++) {
 			        		sb.append("<td class='disabled'> </td>\n");
 			        	}
 			        sb.append("</tr>\n");
