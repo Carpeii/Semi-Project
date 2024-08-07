@@ -440,7 +440,7 @@ public class RoomDaoImpl implements RoomDao {
 		try {
 			con = JdbcUtil.getCon();
 			String sql = "SELECT "
-					   + "    r.id as roomId, "
+			           + "    r.id AS roomId, "
 			           + "    r.room_name AS roomName, "
 			           + "    r.jibun_address AS jibunAddress, "
 			           + "    r.street_address AS streetAddress, "
@@ -455,7 +455,10 @@ public class RoomDaoImpl implements RoomDao {
 			           + "    JOIN room r ON b.room_id = r.id "
 			           + "    JOIN room_price rp ON r.id = rp.room_id "
 			           + "WHERE "
-			           + "    b.guest_id = ?";
+			           + "    b.guest_id = ? "
+			           + "ORDER BY "
+			           + "    b.id DESC;";
+
 			pstmt = con.prepareStatement(sql);
 			pstmt.setLong(1, guestId);
 			rs = pstmt.executeQuery();
