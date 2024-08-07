@@ -65,10 +65,10 @@
                             <p class="navbar-text">${user.name}님 환영합니다</p>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/logout">로그아웃</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/auth/logout">로그아웃</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/myPage">마이 페이지</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/user/myPage">마이 페이지</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/hostMain">호스트 페이지로</a>
@@ -76,10 +76,10 @@
                     </c:when>
                     <c:otherwise>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/login">로그인</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/auth/login">로그인</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/join">회원가입</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/auth/join">회원가입</a>
                         </li>
                     </c:otherwise>
                 </c:choose>

@@ -63,7 +63,7 @@ public class LoginController extends HttpServlet {
                 session.setMaxInactiveInterval(30 * 60); // session 유지시간 30분으로 설정
 
                 if(dto.getMemberType() == 0) {
-                    resp.sendRedirect(req.getContextPath() + "/service/guestMain");
+                    resp.sendRedirect(req.getContextPath() + "/guestMain");
                 } else if (dto.getMemberType() ==1) {
                     // 호스트 정보 조회
                     String hostSql = "SELECT * FROM host WHERE member_id = ?";
