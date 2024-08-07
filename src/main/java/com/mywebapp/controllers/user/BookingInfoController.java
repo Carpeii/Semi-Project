@@ -3,6 +3,7 @@ package com.mywebapp.controllers.user;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,8 +34,10 @@ public class BookingInfoController extends HttpServlet {
         String earlyCheckInDiscountParam = req.getParameter("earlyCheckInDiscount");
         String maintenanceBillParam = req.getParameter("maintenanceBill");
         String cleaningFeeParam = req.getParameter("cleaningFee");
-        String checkInDateStr = req.getParameter("checkInDate");
-        String checkOutDateStr = req.getParameter("checkOutDate");
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String checkInDateStr = req.getParameter("checkInDate").formatted(formatter);
+        String checkOutDateStr = req.getParameter("checkOutDate").formatted(formatter);
 
         // 디버깅 출력
         System.out.println("DEBUG: roomIdParam = " + roomIdParam);

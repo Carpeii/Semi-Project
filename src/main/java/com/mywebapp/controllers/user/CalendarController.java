@@ -66,11 +66,6 @@ public class CalendarController extends HttpServlet {
 			LocalDate selectStartDate = LocalDate.parse(select);
 			//사용자가 선택한 기간 
 			LocalDate selectEndDate = selectStartDate.plusDays(selectPeriod-1);
-			System.out.println("사용자가 선택한 기간 : "+selectPeriod);
-			System.out.println("시작 날짜 : " + selectStartDate);
-			System.out.println("끝나는 날짜 : " + selectEndDate);
-//			req.setAttribute("selectDate", selectDate);
-//			req.setAttribute("selectEndDate", selectEndDate);
 			req.getSession().setAttribute("selectEndDate", selectEndDate);
 			req.setAttribute("datecheck", 1);
 			action =new CalendarAction();
