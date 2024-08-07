@@ -15,20 +15,28 @@
         	let url = '${pageContext.request.contextPath}/calendar/call';
         function openPopup() {
             //매개변수 -> (Url, 창이름 , 옵션)
-            window.open(url, 'popupWindow', 'width=1027,height=474,scrollbars=yes');
+            window.open(url, 'popupWindow', 'width=1005,height=545,scrollbars=yes');
         }
     </script>
 </head>
 <body>
 
 <div class="container mt-5">
-    <h1>JSP 팝업창 예제</h1>
-    <button type="button"  class="w-25px h-100 btn btn-outline-primary" onclick="openPopup()">팝업창 열기</button>
-    <input  class="w-100 h-100 btn btn-outline-primary" style="cursor: default;" type="button" onclick="openPopup()" value="팝업"	 />
+    <h1>달력호출창</h1>
+    <button type="button" class="btn btn-primary"onclick="openPopup()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+  <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"></path>
+  <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path>
+</svg>
+                달력
+              </button>
 </div>
 <p>넘어온값</p>
 checkIn  : <input type="text" value="${selectDate }" disabled/> <br><br>
 checkOut : <input type="text" value="${selectEndDate }" disabled/>
 </body>
+				
+			
 
 </html>
+

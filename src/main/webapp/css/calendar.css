@@ -43,3 +43,13 @@
       border-collapse: separate; /* 기본적으로 collapse가 설정되어 있으니 separate로 변경 */
       border: none;
     }
+    .btn-link {
+        border: none; /* 버튼의 기본 테두리 제거 */
+        background: none; /* 버튼의 기본 배경 제거 */
+        padding: 0; /* 버튼의 기본 여백 제거 */
+        cursor: pointer; /* 클릭 가능한 커서 모양으로 변경 */
+    }
+    
+    .btn-link svg {
+        vertical-align: middle; /* SVG 아이콘이 텍스트와 일직선에 오도록 조정 */
+    }

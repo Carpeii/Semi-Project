@@ -11,8 +11,26 @@
   <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 </head>
 <body>
-<%@include file="/jsp/common/hostHeader.jsp" %>
-
+<%@include file="/jsp/common/header.jsp" %>
+ <div class="container d-flex justify-content-center align-items-center">
+ <div class="container d-flex justify-content-center m-5">
+        <form action="${pageContext.request.contextPath}/host/search" name="searchForm" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 w-50 h- d-flex justify-content-center" role="search">
+            <input type="search" name="searchWord" class="form-control w-200 h-70" placeholder="지역 또는 건물명을 입력 하세요" aria-label="Search">
+        <button class="btn btn-outline-info btn-lg px-3 rounded-pill mt-3 w-50 ms-5" id="searchButton" type="submit">
+            검색
+        </button>
+        </form>
+</div>
+ </div>
+ <c:if test="${empty rooms}">
+<div class="text-center" style="font-size:2vw;">
+<p>검색 결과가 없습니다.</p>
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+  <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.5 3.5 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.5 4.5 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5m4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5"></path>
+</svg>
+</div>
+</c:if>
 <!-- START ALBUM -->
 			<!--   해당 태그를 행으로 정의                mt-5 위쪽 마진  , mx-5 좌우 x축 마진 -->
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5 mt-5 mx-5">
@@ -56,6 +74,7 @@
     </c:forEach>
 </c:if>
   </div>
+  
   <!-- 
 longTermDiscount;
 earlyCheckIn;
