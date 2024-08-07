@@ -9,41 +9,7 @@
     <title>Room Detail</title>
  	<link href="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-    <style>
-        .container {
-            margin-top: 20px;
-        }
-        .room-detail {
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        .room-detail h2 {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: #007bff;
-        }
-        .room-name {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-        .address-info {
-            margin-bottom: 20px;
-        }
-        .address-info p {
-            margin-bottom: 5px;
-        }
-        .image-info {
-            margin-bottom: 20px;
-        }
-        .form-section {
-            margin-top: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/roomDetail.css"/>
     <script type="text/javascript">
 	    let popupUrl = '${pageContext.request.contextPath}/calendar/call';
 	    function openPopup() {
