@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet("/hostJoin")
+@WebServlet("/auth/hostJoin")
 public class HostJoinController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,15 +38,15 @@ public class HostJoinController extends HttpServlet {
         ResultSet rs = null;
 
         // 유효성 검사
-        if(bankName.equals("") || bankName == null) {
+        if(bankName.isEmpty()) {
             req.setAttribute("errMsg", "은행 이름을 확인해주세요");
             req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
         }
-        if(account.equals("") || account == null) {
+        if(account.isEmpty()) {
             req.setAttribute("errMsg", "계좌를 확인해주세요");
             req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
         }
-        if(accountHolder.equals("") || accountHolder == null) {
+        if(accountHolder.isEmpty()) {
             req.setAttribute("errMsg", "예금주를 확인해주세요");
             req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp);
         }
@@ -77,7 +77,7 @@ public class HostJoinController extends HttpServlet {
 
                 if (rowsAffected > 0) {
                     // 로그인 성공 -> 로그인 페이지로 리다이렉트
-                    resp.sendRedirect(req.getContextPath() + "/hostMain");
+                    resp.sendRedirect(req.getContextPath() + "/main.jsp");
                 } else {
                     // 로그인 실패 -> 다시 회원가입 폼으로
                     req.setAttribute("errMsg", "회원가입에 실패했습니다. 다시 시도해주세요.");
