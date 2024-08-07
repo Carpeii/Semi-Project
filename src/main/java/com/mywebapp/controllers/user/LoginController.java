@@ -24,17 +24,20 @@ public class LoginController extends HttpServlet {
         String userId = req.getParameter("userId");
         String password = req.getParameter("password");
 
-        // 공백란 존재
-//        if (userId.isEmpty()) {
-//            req.setAttribute("errMsg", "아이디를 입력하세요");
-////            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
-//        } else if (password.isEmpty()) {
-//            req.setAttribute("errMsg", "비밀번호를 입력하세요.");
-////            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
-//        }else if (userId.isEmpty() && password.isEmpty()) {
-//            req.setAttribute("errMsg", "아이디와 비밀번호 모두 입력하세요.");
-////            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
-//        }
+         //공백란 존재
+        if (userId.isEmpty() && password.isEmpty()) {
+            req.setAttribute("errMsg", "아이디와 비밀번호를 모두 입력하세요");
+            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+            return;
+        } else if (userId.isEmpty()) {
+            req.setAttribute("errMsg", "아이디를 입력하세요.");
+            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+            return;
+        }else if (password.isEmpty()) {
+            req.setAttribute("errMsg", "비밀번호를 입력하세요.");
+            req.getRequestDispatcher("/jsp/auth/loginMain.jsp").forward(req, resp);
+            return;
+        }
 
         MemberDao dao = new MemberDao();
         MemberDto dto = dao.loginMember(userId, password);
