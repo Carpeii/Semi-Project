@@ -157,7 +157,9 @@
 <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
     <title>팝업 JSP 예제</title>
     <script type="text/javascript">
-        	let url = '${pageContext.request.contextPath}/calendar/call';
+    	let roomId = window.location.search;
+    	console.log('roomId');
+        	let url = '${pageContext.request.contextPath}/calendar/call?roomId=';
         function openPopup() {
             //매개변수 -> (Url, 창이름 , 옵션)
             window.open(url, 'popupWindow', 'width=1005,height=545,scrollbars=yes');

@@ -36,37 +36,10 @@ public class SearchAction implements Action {
 		int totalPage = ((totalRecord-1)/viewCount)+1;
 		//보여줄 페이지의 데이터 1= 2페이지의 행 수
 		int viewRecord = (pageNum-1)*viewCount;
-		System.out.println("viewRecord"+viewRecord);
 		int startBlock = ((pageNum -1) / blockPerPage) * blockPerPage + 1;
         int endBlock = startBlock + blockPerPage -1;
 		
 		ArrayList<Room> rooms = (ArrayList<Room>)dao.searchRoomList(searchWord,viewRecord);
-		for(Room r : rooms) {
-			int price = r.getRoomPrice().getRentPrice();
-			int approve = r.getApprove();
-			String address = r.getJibunAddress();
-			String addressDetail = r.getAddressDetail();
-			String roomName = r.getRoomName();
-			if(r.getRoomImageList() != null) {
-				
-			for(RoomImage i : r.getRoomImageList()) {
-				String imageName = i.getImageName();
-				if(i.getImageName().equals("")) {
-					System.out.println("imageName"+imageName);
-				} else {
-					System.out.println("값이 비어있음");
-				}
-			}
-			} else {
-				System.out.println("image리스트가 비어있음");
-			}
-			System.out.println("totalPage : "+totalPage);
-			System.out.println("pageNum : "+pageNum);
-			System.out.println("blockPerPage : "+blockPerPage);
-			System.out.println("startBlock : "+startBlock);
-			System.out.println("endBlock : "+endBlock);
-			System.out.println(approve +"   " + address +" "+roomName+" " +addressDetail+" "+ price );
-		}
 		//총 9페이지라고 가정
 		//현재 6페이지 ->  뒤로 가기 활성화 ㅇ
 		//  (6     - 5) <= 1?

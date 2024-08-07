@@ -269,7 +269,6 @@ public class CalendarAction implements Action {
 				            // 토요일에 줄 바꿈
 				            if ((j + calendarBlank - 1) % 7 == 0) {
 				                sb.append("</tr>\n<tr>\n");
-				                System.out.println("행추가!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				                tableFinish++;
 				            }
 				            if(!scheduleList.isEmpty()) {
