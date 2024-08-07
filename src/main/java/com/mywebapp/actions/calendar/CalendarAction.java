@@ -23,6 +23,7 @@ public class CalendarAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
+		int tableFinish = 0;
 		int monthControll = 0;
 		Booking b;
     	LocalDate checkIn = null;
@@ -35,17 +36,12 @@ public class CalendarAction implements Action {
 			monthControll =(Integer)req.getSession().getAttribute("monthControll"); 
 		}
 		if(req.getSession().getAttribute("selectDate") != null && req.getSession().getAttribute("selectEndDate") != null ) {
-			System.out.println("endDate있음--------------------------------------------------------------------------------------------");
-			System.out.println("endDate있음--------------------------------------------------------------------------------------------");
-			System.out.println("endDate있음--------------------------------------------------------------------------------------------");
 			String select = (String)req.getSession().getAttribute("selectDate");
 			selectStartDate = LocalDate.parse(select);
 			
 			selectEndDate =  (LocalDate)req.getSession().getAttribute("selectEndDate");
 			
 		}
-		System.out.println(monthControll);
-		System.out.println("달력Action 호출");
 		
 		Long roomId = 2l;
 		//                                          ?
@@ -56,12 +52,7 @@ public class CalendarAction implements Action {
 		for(Booking booking : scheduleList) {
 			checkIn = booking.getCheckInDate().toLocalDate();
 			checkOut = booking.getCheckOutDate().toLocalDate();
-			System.out.println("Local : "+checkIn+"  "+checkOut);
 		}		
-				if(req.getParameter("select") != null) {
-					String selectDate = req.getParameter("select");
-					LocalDate selectDay =  LocalDate.parse(selectDate);
-				}
 				LocalDate today = null;
 				LocalDate day = LocalDate.now();
 				//최초 호출시 이번달 달력 + 이번달의 오늘날짜 마킹[]
@@ -104,17 +95,19 @@ public class CalendarAction implements Action {
 			        sb.append("</tr>\n");
 			        
 			        // 날짜 행
+			        tableFinish++;
 			        sb.append("<tr>\n");
 
 			        // 빈 칸 추가 (첫째 주의 시작일까지)
 			        int calendarBlank = 0;
+			        int calendarBlankDay = firstDay.minusDays(1).getDayOfMonth()-firstDayOfWeek+1;
 			        if(firstDayOfWeek<=6) {
 			        	calendarBlank = firstDayOfWeek+1; 
 			        } else if(firstDayOfWeek == 7) {
 			        	calendarBlank = 1;
 			        }
-			        for (int i = 1; i < calendarBlank; i++) {
-			            sb.append("<td class='disabled'> </td>\n");
+			        for (int i = 1; i < calendarBlank; i++,calendarBlankDay++) {
+			            sb.append("<td class='text-secondary'>"+calendarBlankDay+" </td>\n");
 			        }
 
 			        int i = 0;
@@ -125,10 +118,6 @@ public class CalendarAction implements Action {
 				         checkOut = b.getCheckOutDate().toLocalDate();
 			        }
 			        // 날짜 추가
-			        System.out.println("109-------------do while 시작-------------------------------------------------------");
-			        System.out.println("-------------do while 시작-------------------------------------------------------");
-			        System.out.println("-------------do while 시작-------------------------------------------------------");
-			        System.out.println("-------------in/out리스트 반복 시작---------------");
 			        do{	
 			        	
 			        	if(!scheduleList.isEmpty()) {
@@ -137,22 +126,15 @@ public class CalendarAction implements Action {
 			        	checkOut = b.getCheckOutDate().toLocalDate();
 			        	}
 			        	
-			        	System.out.println("121-------------날짜 찍기while 시작---------------");
 				      	while ( j <= endDay) {
 				      		notSelectedDay = LocalDate.of(today.getYear(),today.getMonthValue(),j);
-				        	System.out.println("현재 날짜 : " + notSelectedDay);
 				        	//true일시 마킹
-				        	System.out.println("리스트의 인덱스 번째 i : " + i);
-				        	System.out.println("현재일 j : " + j);
 				        	//마킹을 in out날짜도 포함시킴
 				        	if(!scheduleList.isEmpty()) {
 				        	in = checkIn.plusDays(-1);
 				        	out = checkOut.plusDays(1);
 				        	}
-				        	 System.out.println("131-------------if분기---------------");
-				        	 System.out.println("(132in.isBefore(notSelectedDay) && out.isAfter(notSelectedDay))");
 				        	 // 체크인 날짜보다 높으면서 체크아웃날짜와 년 월이 다를때
-				        	 System.out.println("134---------if-----------------");
 				        	 //Local : 2024-12-27  2025-01-15
 				        	 if(!scheduleList.isEmpty()) {
 					        	 while(
@@ -163,16 +145,12 @@ public class CalendarAction implements Action {
 					        		       notSelectedDay.getMonthValue() > checkOut.getMonthValue())
 					        		       && 
 					        		       i < (scheduleList.size()-1)) {
-					        		 	System.out.println("i값 : "+i);
-					        		 	System.out.println(scheduleList.size());
-					        		 System.out.println("while true   i++");
 					        		 i++;
 					        		 b = scheduleList.get(i);
 					        		 checkIn = b.getCheckInDate().toLocalDate();
 							        	checkOut = b.getCheckOutDate().toLocalDate();
 							        	in = checkIn.plusDays(-1);
 							        	out = checkOut.plusDays(1);
-					        		 System.out.println(i);
 					        		 
 					        	 }
 				        	 }
@@ -288,42 +266,33 @@ public class CalendarAction implements Action {
 				        		
 				        	}
 				            
-				            // 일요일에 줄 바꿈
+				            // 토요일에 줄 바꿈
 				            if ((j + calendarBlank - 1) % 7 == 0) {
 				                sb.append("</tr>\n<tr>\n");
+				                System.out.println("행추가!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				                tableFinish++;
 				            }
 				            if(!scheduleList.isEmpty()) {
 				            	
 					            if(notSelectedDay.isEqual(checkOut)) {
-					            	System.out.println("171if문  notSelectedDay.isEqual(checkOut) ");
-					            	 System.out.println("-------------if문true---------------");
-					            	 System.out.println("i++");
 					            	i++;
-					            	System.out.println("i : " + i);
 					            	
 					            	if(i < scheduleList.size()) {
-					            		System.out.println("178if문     i < scheduleList.size()      ");
-					            		 System.out.println("179-------------if문true ---------------");
 					            		 b = scheduleList.get(i);
 								         checkIn = b.getCheckInDate().toLocalDate();
 								         checkOut = b.getCheckOutDate().toLocalDate();
 					            	}
 					            }
 				            }
-				            System.out.println("j++");
 				            j++;
 				        }
 				        	
 				      	
 				      	if(!scheduleList.isEmpty()) {
-				      		System.out.println("190-------------if문---------------");
-				      		System.out.println("191    !scheduleList.isEmpty()    ");
-				      		System.out.println("i++");
 				      		i++;
 				      	}
 				      	
 			        }while(i < scheduleList.size());
-			        System.out.println("197-------------do while 끝 ---------------");
 			        
 			        
 			        // 마지막 행의 끝을 추가
@@ -333,10 +302,24 @@ public class CalendarAction implements Action {
 			        } else if(notSelectedDay.getDayOfWeek().getValue() == 7) {
 			        	calendarBlank = 1;
 			        }
-			        	for (int x = calendarBlank; x <=6; x++) {
-			        		sb.append("<td class='disabled'> </td>\n");
+			        calendarBlankDay = notSelectedDay.withDayOfMonth(1).getDayOfMonth();
+			        	for (int x = calendarBlank; x <=6; x++,calendarBlankDay++) {
+			        		sb.append("<td class='text-secondary'>"+calendarBlankDay+" </td>\n");
 			        	}
 			        sb.append("</tr>\n");
+			        
+			        //행 수가 5줄일 때 한줄 추가
+			   
+			        	
+			         if(notSelectedDay.getDayOfWeek().getValue() == 6) {
+			        	sb.append("<tr>\n");
+			        	for (int x = 0; x <=6; x++,calendarBlankDay++) {
+			        		sb.append("<td class='h-100 text-secondary'>"+calendarBlankDay+" </td>\n");
+			        	} 
+			        	sb.append("</tr>\n");
+			        	tableFinish++;
+			        }
+			        
 			        
 			        // 테이블의 끝
 			        sb.append("</table>\n");

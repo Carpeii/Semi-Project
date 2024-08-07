@@ -104,7 +104,6 @@ request.setCharacterEncoding("utf-8");
 
 			</div>
 		</div>
-	</div>
 		<div class="mt-1 ms-3 d-flex justify-content-between w-50">
 		<c:choose>
 			<c:when test="${not empty datecheck}">
@@ -143,6 +142,8 @@ request.setCharacterEncoding("utf-8");
 
 		</form>
 		</div>
+	</div>
+		
 </body>
 </html>
 
