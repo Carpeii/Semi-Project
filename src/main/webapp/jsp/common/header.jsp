@@ -110,7 +110,7 @@
 										href="${pageContext.request.contextPath}/service/hostRoomList">방
 											관리</a></li>
 									<li class="nav-item"><a class="nav-link"
-										href="${pageContext.request.contextPath}/service/contractAdd">계약
+										href="${pageContext.request.contextPath}/service/roomAdd">방
 											추가</a></li>
 								</c:when>
 							</c:choose>
