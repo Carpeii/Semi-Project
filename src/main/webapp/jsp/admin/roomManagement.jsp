@@ -21,7 +21,9 @@
         <c:forEach var="room" items="${roomList}">
             <tr>
                 <td>${room.id}</td>
-                <td>${room.roomName}</td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/service/roomDetail?roomId=${room.id}">${room.roomName}</a>
+                </td>
                 <td>
                     <form action="${pageContext.request.contextPath}/admin/roomManagement" method="post" class="d-inline">
                         <input type="hidden" name="action" value="approve">
