@@ -68,6 +68,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/user/myPage">마이 페이지</a>
                                 </li>
+				                <li class="nav-item">
+				                    <a class="btn btn-primary" href="${pageContext.request.contextPath}/hostMain">호스트 페이지로</a>
+				                </li>
+
+
                             </c:when>
                             <c:when test="${user.memberType == 1}">
                                 <li class="nav-item">
@@ -85,7 +90,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/service/contractAdd">계약 추가</a>
                                 </li>
-
+                                <li class="nav-item">
+				                    <a class="btn btn-primary" href="${pageContext.request.contextPath}/guestMain">게스트 페이지로</a>
+				                </li>
 
                             </c:when>
                         </c:choose>
@@ -102,9 +109,8 @@
 
                     </c:otherwise>
                 </c:choose>
-                
-
-				 
+                    	                        <!-- Display buttons based on the current URL -->
+ 
             </ul>
         </div>
     </div>

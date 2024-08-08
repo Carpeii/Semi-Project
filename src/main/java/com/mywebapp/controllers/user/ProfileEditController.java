@@ -20,6 +20,8 @@ public class ProfileEditController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         HttpSession session = req.getSession(); // 수정 페이지에 기본정보 자동으로 입력되어있도록 -> null이 아님
         MemberDto user = (MemberDto) session.getAttribute("user");
 
@@ -31,7 +33,7 @@ public class ProfileEditController extends HttpServlet {
 
         // 비밀번호 확인되지 않으면 개인정보 수정 불가
         if (password.isEmpty()) {
-            req.setAttribute("errMsg", "Password is empty");
+            req.setAttribute("errMsg", "비밀번호를 입력하세요.");
             req.getRequestDispatcher("/jsp/user/profile.jsp").forward(req, resp);
         }
 
