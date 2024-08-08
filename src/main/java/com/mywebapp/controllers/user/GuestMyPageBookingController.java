@@ -44,6 +44,8 @@ public class GuestMyPageBookingController extends HttpServlet {
 	        // bookedRoomId를 JSP 페이지로 전달
 			req.setAttribute("bookedRoomId", bookedRoomId);
 			
+			//디버깅
+			System.out.println(bookedRoomId);
 			
 			req.getRequestDispatcher("/jsp/user/myPageGuestBooking.jsp").forward(req, resp);
 		} else {
