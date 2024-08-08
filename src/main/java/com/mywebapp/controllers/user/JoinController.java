@@ -104,6 +104,8 @@ public class JoinController extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + "/guestMain");
             } else if (dto.getMemberType() == 1) {
                 req.getRequestDispatcher("/jsp/auth/hostJoinForm.jsp").forward(req, resp); // url변경 x
+            } else if(dto.getMemberType() ==3){
+                resp.sendRedirect(req.getContextPath() + "/adminMain");
             }
         }
     }
