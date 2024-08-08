@@ -113,6 +113,17 @@
 										href="${pageContext.request.contextPath}/service/roomAdd">방
 											추가</a></li>
 								</c:when>
+								<c:when test="${user.memberType == 3}">
+									<li class="nav-item">
+										<p class="navbar-text">관리자 ${user.name}님 환영합니다</p>
+									</li>
+									<li class="nav-item"><a class="nav-link"
+										href="${pageContext.request.contextPath}/auth/logout">로그아웃</a>
+									</li>
+									<li class="nav-item"><a class="nav-link"
+										href="${pageContext.request.contextPath}/admin/roomManagement">방
+											관리</a></li>
+								</c:when>
 							</c:choose>
 
 
