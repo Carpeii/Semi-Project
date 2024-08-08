@@ -67,7 +67,7 @@
 	<nav class="navbar navbar-expand-lg navbar-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/main.jsp"> <img
+				href="${pageContext.request.contextPath}/guestMain"> <img
 				src="${pageContext.request.contextPath}/image/logo.jpg" alt="로고 이미지"
 				class="img-fluid">
 			</a>
