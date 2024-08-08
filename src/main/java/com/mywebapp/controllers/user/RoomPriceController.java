@@ -88,6 +88,6 @@ public class RoomPriceController extends HttpServlet {
 
         roomPriceDao.insert(roomPrice);
 
-        resp.sendRedirect(req.getContextPath() + "/jsp/service/hostMain.jsp");
+        resp.sendRedirect(req.getContextPath() + "/hostMain");
     }
 }
