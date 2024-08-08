@@ -11,7 +11,7 @@ public class JdbcUtil {
             // MariaDB URL (localhost:3306은 MariaDB의 기본 포트)
             String url = "jdbc:mariadb://192.168.0.34:3306/pyeong?useUnicode=true&characterEncoding=UTF-8";
             // MariaDB 사용자명과 비밀번호
-            con = DriverManager.getConnection(url, "root", "1234");
+            con = DriverManager.getConnection(url, "test", "123");
             return con;
         } catch (ClassNotFoundException ce) {
             System.out.println(ce.getMessage());
