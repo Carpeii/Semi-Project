@@ -106,6 +106,81 @@ public class MemberDao {
         }
     }
 
+    public boolean passwordCheck(String password, MemberDto user){
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = JdbcUtil.getCon();
+            String passwordCheckSql = "select * from member where id = ? and password = password(?)";
+            pstmt = conn.prepareStatement(passwordCheckSql);
+            pstmt.setLong(1, user.getId());
+            pstmt.setString(2, password);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            JdbcUtil.close(conn, pstmt, rs);
+        }
+    }
+
+    public boolean updateMember(String name, String phone, MemberDto user) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = JdbcUtil.getCon();
+            String updateSql = "update member set name = ?, phone = ? where id = ?";
+            pstmt = conn.prepareStatement(updateSql);
+            pstmt.setString(1, name);
+            pstmt.setString(2, phone);
+            pstmt.setLong(3, user.getId());
+            int result = pstmt.executeUpdate();
+//        System.out.println(result);
+
+            if(result == 0) {
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            JdbcUtil.close(conn, pstmt, null);
+        }
+    }
+
+    public boolean changePassword(String newPassword, MemberDto user) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = JdbcUtil.getCon();
+            String updatePwSql = "update member set password = password(?) where id = ?";
+            pstmt = conn.prepareStatement(updatePwSql);
+            pstmt.setString(1, newPassword);
+            pstmt.setLong(2, user.getId());
+            int result = pstmt.executeUpdate();
+
+            if(result == 0) {
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            JdbcUtil.close(conn, pstmt, null);
+        }
+    }
+
+
     public static void checkUserID(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 아이디 중복 체크 버튼이 눌렸을 경우에
         Connection conn = null;
@@ -149,4 +224,5 @@ public class MemberDao {
             JdbcUtil.close(conn, pstmt, rs);
         }
     }
+
 }
