@@ -31,12 +31,6 @@
 <%
     }
 %>
-<table>
-    <tr>
-        <!-- 매물 승인 요청 후 대기 매물 리스트 -->
-        <!-- 매물 리스트 해당 클릭하면 해당 매물 상태 관리하는 페이지 나오도록 -->
-        <td><button onclick="location.href='./roomEdit.jsp'">edit</button></td>
-    </tr>
-</table>
+
 </body>
 </html>
