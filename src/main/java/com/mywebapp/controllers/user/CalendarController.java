@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.mywebapp.actions.Action;
 import com.mywebapp.actions.calendar.CalendarAction;
 import com.mywebapp.actions.calendar.ReservationAvailablePeriodCallAction;
-import com.mywebapp.model.Booking;
 @WebServlet("/calendar/*")
 public class CalendarController extends HttpServlet {
 	@Override
@@ -73,7 +72,6 @@ public class CalendarController extends HttpServlet {
 //			req.getRequestDispatcher("/test/popup.jsp").forward(req, resp);
 			
 		} else if(requestUrl.equals("/cancel")) {
-			System.out.println("취소 버튼 ㄱ");
 				req.getSession().removeAttribute("selectEndDate");
 				action = new CalendarAction();
 				action.execute(req, resp);

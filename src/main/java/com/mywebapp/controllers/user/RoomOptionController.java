@@ -55,7 +55,8 @@ public class RoomOptionController extends HttpServlet {
         session.setAttribute("roomOption", roomOption);
         session.setAttribute("roomImages", roomImages);
         session.setAttribute("room", room);
-        resp.sendRedirect(req.getContextPath() + "/jsp/service/roomPriceAdd.jsp");
+
+        resp.sendRedirect(req.getContextPath() + "/service/roomPriceAdd");
     }
 }
 

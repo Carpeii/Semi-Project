@@ -13,10 +13,10 @@
 <body>
 <%@include file="/jsp/common/header.jsp" %>
  <div class="container d-flex justify-content-center align-items-center">
- <div class="container d-flex justify-content-center m-5">
-        <form action="${pageContext.request.contextPath}/host/search" name="searchForm" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 w-50 h- d-flex justify-content-center" role="search">
-            <input type="search" name="searchWord" class="form-control w-200 h-70" placeholder="지역 또는 건물명을 입력 하세요" aria-label="Search">
-        <button class="btn btn-outline-info btn-lg px-3 rounded-pill mt-3 w-50 ms-5" id="searchButton" type="submit">
+ <div class="container d-flex justify-content-center m-5 w-100">
+        <form action="${pageContext.request.contextPath}/host/search" name="searchForm" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 w-100 h- d-flex justify-content-center" role="search">
+            <input type="search" name="searchWord" class="form-control w-100 h-70" placeholder="지역 또는 건물명을 입력 하세요" aria-label="Search">
+        <button class="btn btn-outline-info btn-lg px-3 rounded-pill mt-3 w-25 ms-5" id="searchButton" type="submit">
             검색
         </button>
         </form>
@@ -132,8 +132,7 @@ earlyCheckInDiscount;
 				</c:choose></li>
 		</ul>
 	</nav>
- <%@include file="/jsp/common/footer.jsp" %>
- 
+ <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
  
 </body>
 </html>
