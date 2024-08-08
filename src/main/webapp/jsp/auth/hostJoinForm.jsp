@@ -15,6 +15,7 @@
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 </head>
 <body>
+<jsp:include page="/jsp/common/header.jsp"></jsp:include>
 <main>
     <div class="py-5 text-center">
         <h2>1평 회원가입</h2>

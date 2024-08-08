@@ -15,6 +15,7 @@
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/5.3.3/js/bootstrap.js"></script>
 </head>
 <body>
+<jsp:include page="/jsp/common/header.jsp"></jsp:include>
 <div class="container">
 <main>
     <div class="py-5 text-center">
