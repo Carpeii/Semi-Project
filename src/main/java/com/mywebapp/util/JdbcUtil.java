@@ -9,7 +9,7 @@ public class JdbcUtil {
             // MariaDB JDBC 드라이버 로드
             Class.forName("org.mariadb.jdbc.Driver");
             // MariaDB URL (localhost:3306은 MariaDB의 기본 포트)
-            String url = "jdbc:mariadb://localhost:3306/pyeong?useUnicode=true&characterEncoding=UTF-8";
+            String url = "jdbc:mariadb://192.168.0.34:3306/pyeong?useUnicode=true&characterEncoding=UTF-8";
             // MariaDB 사용자명과 비밀번호
             con = DriverManager.getConnection(url, "root", "1234");
             return con;
