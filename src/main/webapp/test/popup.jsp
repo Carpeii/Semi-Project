@@ -1,9 +1,21 @@
+<%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 request.setCharacterEncoding("utf-8");
 %>
+<%
+	LocalDate CheckOut = null;
+long roomId = Long.parseLong(request.getParameter("roomId")); 
+	int rentPrice = Integer.parseInt(request.getParameter("rentPrice"));
+	
+	if(session.getAttribute("selectDate") != null) {
+	String Date = (String)session.getAttribute("selectDate");
+	CheckOut = LocalDate.parse(Date);
+	}
+	
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,80 +34,133 @@ request.setCharacterEncoding("utf-8");
 		<div class="row">
 
 			<div class="col">
-				<form action="${pageContext.request.contextPath }/calendar/move"
-					method="post">
+				<form action="${pageContext.request.contextPath }/calendar/move?roomId=${roomId}"
+					method="get">
+					<input type="hidden" name="roomId" value="<%=roomId%>"/>
+					<input type="hidden" name="rentPrice" value="<%=rentPrice%>"/>
 					<c:out value="${sb}" escapeXml="false" />
 				</form>
 			</div>
 				
 			<div class="col pb-5">
-				<form action="${pageContext.request.contextPath }/calendar/select" method="post">
-					<table class="table custom-table" style="border:none; ">
+				<form action="${pageContext.request.contextPath }/calendar/select" method="get">
+				<input type="hidden" name="roomId" value="<%=roomId%>"/>
+				<input type="hidden" name="rentPrice" value="<%=rentPrice%>"/>
+				
+					<table class="table custom-table" style="border:none;">
 						<tr> 
 							<c:if test="${dateDiff >= 7}">
 						<td class="noborder">
+						<div class="d-flex flex-column align-items-center">
 					         	<button  class="w-100 h-100 btn btn-outline-primary" value="7" name="period">1주일</button>
+					         	<span class="text-body-tertiary"><%=rentPrice%>원</span>
+					         	<span class="text-body-tertiary">~<%=CheckOut.plusDays(6)%></span>
+						</div>
             			</td>
 							</c:if>
             				<c:if test="${dateDiff >= 14}">
             			<td class="noborder">
+            			<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="14" name="period">2주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*2%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(13)%></span>
+            			</div>
 						</td>
 							</c:if>
 							<c:if test="${dateDiff >= 21}">
 						<td class="noborder">
+						<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="21" name="period">3주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*3%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(20)%></span>
+						</div>
 						</td>
 							</c:if>
 						</tr>
 						<tr>
 							<c:if test="${dateDiff >= 28}">
 							<td class="noborder">
+							<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="28" name="period">4주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*4%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(27)%></span>
+							</div>
 							</td>
 							</c:if>
 							<c:if test="${dateDiff >= 35}">
 							<td class="noborder">
+							<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="35" name="period">5주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*5%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(34)%></span>
+							</div>
 							</td>
 							</c:if>
 							<c:if test="${dateDiff >= 42}">
 							<td class="noborder">
+							<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="42" name="period">6주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*6%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(41)%></span>
+							</div>
 							</td>
 							</c:if>
 						</tr>
 						<tr>
 							<c:if test="${dateDiff >= 49}">
 							<td class="noborder">
+							<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="49" name="period">7주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*7%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(48)%></span>
+							</div>
 							</td>
 							</c:if>
 							<c:if test="${dateDiff >= 63}">
 							<td class="noborder">
+							<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="63" name="period">8주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*8%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(62)%></span>
+							</div>
 							</td>
 							</c:if>
 							<c:if test="${dateDiff >= 70}">
 							<td class="noborder">
+							<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="70" name="period">9주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*9%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(69)%></span>
+							</div>
 							</td>
 							</c:if>
 						</tr>
 						<tr>
 							<c:if test="${dateDiff >= 77}">
 							<td class="noborder">
+							<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="77" name="period">10주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*10%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(76)%></span>
+							</div>
 							</td>
 							</c:if>
 							<c:if test="${dateDiff >= 84}">
 							<td class="noborder">
+							<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="84" name="period">11주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*11%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(83)%></span>
+							</div>
 							</td>
 							</c:if>
 							<c:if test="${dateDiff >= 91}">
 							<td class="noborder">
+							<div class="d-flex flex-column align-items-center">
 								<button class="w-100 h-100 btn btn-outline-primary" value="91" name="period">12주일</button>
+								<span class="text-body-tertiary"><%=rentPrice*12%>원</span>
+								<span class="text-body-tertiary">~<%=CheckOut.plusDays(90)%></span>
+							</div>
 							</td>
 							</c:if>
 						</tr>
@@ -121,7 +186,8 @@ request.setCharacterEncoding("utf-8");
 		</c:choose>
 		
 		
-		<form action="${pageContext.request.contextPath }/calendar/cancel" method="post">
+		<form action="${pageContext.request.contextPath }/calendar/cancel" method="get">
+		<input type="hidden" name="roomId" value="<%=roomId%>"/>
 		<c:choose>
 			<c:when test="${not empty selectEndDate}">
 				<button class="btn btn-outline-danger mt-3 me-5">

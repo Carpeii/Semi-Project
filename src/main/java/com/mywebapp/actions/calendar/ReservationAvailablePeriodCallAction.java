@@ -17,9 +17,11 @@ import com.mywebapp.model.Booking;
 
 public class ReservationAvailablePeriodCallAction implements Action {
 	private String calendarUrl = "/test/popup.jsp";
+	private long roomId;
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
+		roomId = Long.parseLong(req.getParameter("roomId"));
 		String dateString = req.getParameter("selectDate");
 		LocalDate select = LocalDate.parse(dateString);
 		//db에서 데이터를 받아온 객체
@@ -37,7 +39,6 @@ public class ReservationAvailablePeriodCallAction implements Action {
 		java.util.Date utilDate = format.parse(dateString);
 		//         util.Date타입을 -> SQL.Date타입으로 변환
 		Date sqlDate = new Date(utilDate.getTime());
-		long roomId = 2l;
 		
 		BookingDaoImpl dao = new BookingDaoImpl();
 		//checkIn값을 가져오는 객체
