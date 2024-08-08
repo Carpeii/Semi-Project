@@ -3,6 +3,7 @@ package com.mywebapp.controllers.user;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mywebapp.dto.RoomDetailDto;
+import com.mywebapp.model.Booking;
 
 @WebServlet("/service/bookingInfo")
 public class BookingInfoController extends HttpServlet {
@@ -19,7 +21,12 @@ public class BookingInfoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-
+        if(req.getSession().getAttribute("selectDate") != null) {
+        	req.getSession().removeAttribute("selectDate");
+        	req.getSession().removeAttribute("selectEndDate");
+        	req.getSession().removeAttribute("moveMonth");
+        	System.out.println("달력 세션삭제");
+        }
         // 폼 파라미터 읽기
         String roomIdParam = req.getParameter("roomId");
         String roomName = req.getParameter("roomName");
@@ -33,8 +40,9 @@ public class BookingInfoController extends HttpServlet {
         String earlyCheckInDiscountParam = req.getParameter("earlyCheckInDiscount");
         String maintenanceBillParam = req.getParameter("maintenanceBill");
         String cleaningFeeParam = req.getParameter("cleaningFee");
-        String checkInDateStr = req.getParameter("checkInDate");
-        String checkOutDateStr = req.getParameter("checkOutDate");
+        
+        String checkInDateStr = (String)req.getParameter("checkInDate");
+        String checkOutDateStr = (String)req.getParameter("checkOutDate");
 
         // 디버깅 출력
         System.out.println("DEBUG: roomIdParam = " + roomIdParam);
@@ -111,8 +119,12 @@ public class BookingInfoController extends HttpServlet {
                 roomBookingInfo.setMaintenanceBill(maintenanceBill);
                 roomBookingInfo.setCleaningFee(cleaningFee);
 
+                Booking booking = new Booking();
+                booking.setCheckInDate(checkInDate);
+                booking.setCheckOutDate(checkOutDate);
                 // 요청 속성에 DTO 설정
                 req.setAttribute("roomBookingInfo", roomBookingInfo);
+                req.setAttribute("booking", booking);
 
                 // JSP 페이지로 포워딩
                 req.getRequestDispatcher("/jsp/service/bookingInfo.jsp").forward(req, resp);

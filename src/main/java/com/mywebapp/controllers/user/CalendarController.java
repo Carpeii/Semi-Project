@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.mywebapp.actions.Action;
 import com.mywebapp.actions.calendar.CalendarAction;
 import com.mywebapp.actions.calendar.ReservationAvailablePeriodCallAction;
-import com.mywebapp.model.Booking;
 @WebServlet("/calendar/*")
 public class CalendarController extends HttpServlet {
 	@Override
@@ -66,11 +65,6 @@ public class CalendarController extends HttpServlet {
 			LocalDate selectStartDate = LocalDate.parse(select);
 			//사용자가 선택한 기간 
 			LocalDate selectEndDate = selectStartDate.plusDays(selectPeriod-1);
-			System.out.println("사용자가 선택한 기간 : "+selectPeriod);
-			System.out.println("시작 날짜 : " + selectStartDate);
-			System.out.println("끝나는 날짜 : " + selectEndDate);
-//			req.setAttribute("selectDate", selectDate);
-//			req.setAttribute("selectEndDate", selectEndDate);
 			req.getSession().setAttribute("selectEndDate", selectEndDate);
 			req.setAttribute("datecheck", 1);
 			action =new CalendarAction();
@@ -78,7 +72,6 @@ public class CalendarController extends HttpServlet {
 //			req.getRequestDispatcher("/test/popup.jsp").forward(req, resp);
 			
 		} else if(requestUrl.equals("/cancel")) {
-			System.out.println("취소 버튼 ㄱ");
 				req.getSession().removeAttribute("selectEndDate");
 				action = new CalendarAction();
 				action.execute(req, resp);

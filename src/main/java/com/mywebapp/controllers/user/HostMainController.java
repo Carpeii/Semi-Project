@@ -11,6 +11,12 @@ import java.io.IOException;
 public class HostMainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/service/hostMain.jsp").forward(req, resp);
+		
+    	//header.jsp를 위한 페이지 타입 설정
+		req.setAttribute("pageType", "hostMain");
+    	
+    	req.getRequestDispatcher("/jsp/service/hostMain.jsp").forward(req, resp);
+        
+
     }
 }

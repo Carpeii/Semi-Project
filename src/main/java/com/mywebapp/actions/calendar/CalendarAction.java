@@ -19,11 +19,11 @@ import com.mywebapp.model.Booking;
 
 public class CalendarAction implements Action {
 	private String calendarUrl = "/test/popup.jsp";
-	LocalDate notSelectedDay;
-
+	private long roomId;
+	private LocalDate notSelectedDay;
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
-		int tableFinish = 0;
+		roomId = Long.parseLong(req.getParameter("roomId"));
 		int monthControll = 0;
 		Booking b;
     	LocalDate checkIn = null;
@@ -43,7 +43,6 @@ public class CalendarAction implements Action {
 			
 		}
 		
-		Long roomId = 2l;
 		//                                          ?
 		//쿼리문 select * from booking where room_id =1 and curdate() <= check_out_date order by check_in_date asc;
 		//booking table에서 가져온 값 
@@ -95,7 +94,6 @@ public class CalendarAction implements Action {
 			        sb.append("</tr>\n");
 			        
 			        // 날짜 행
-			        tableFinish++;
 			        sb.append("<tr>\n");
 
 			        // 빈 칸 추가 (첫째 주의 시작일까지)
@@ -269,8 +267,6 @@ public class CalendarAction implements Action {
 				            // 토요일에 줄 바꿈
 				            if ((j + calendarBlank - 1) % 7 == 0) {
 				                sb.append("</tr>\n<tr>\n");
-				                System.out.println("행추가!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				                tableFinish++;
 				            }
 				            if(!scheduleList.isEmpty()) {
 				            	
@@ -317,7 +313,6 @@ public class CalendarAction implements Action {
 			        		sb.append("<td class='h-100 text-secondary'>"+calendarBlankDay+" </td>\n");
 			        	} 
 			        	sb.append("</tr>\n");
-			        	tableFinish++;
 			        }
 			        
 			        
