@@ -25,7 +25,7 @@
     <input type="hidden" id="hostId" name="hostId" value="<%=user.getId()%>" required /><br>
 
     <label for="roomName">방 이름:</label>
-    <input type="text" id="roomName" name="roomName" value="기본방이름" required /><br>
+    <input type="text" id="roomName" name="roomName" placeholder="기본방이름" required /><br>
 
     <input type="text" id="postcode" placeholder="우편번호">
     <input type="button" onclick="daumPostcode()" value="우편번호 찾기"><br>
@@ -104,40 +104,40 @@
 <%--    <input type="text" id="addressDetail" name="addressDetail" value="기본상세주소" required /><br>--%>
 
     <label for="floor">층수:</label>
-    <input type="number" id="floor" name="floor" value="1" required /><br>
+    <input type="number" id="floor" name="floor" required /><br>
 
     <label for="usableArea">사용 면적 (㎡):</label>
-    <input type="number" id="usableArea" name="usableArea" value="50" required /><br>
+    <input type="number" id="usableArea" name="usableArea" required /><br>
 
     <label for="roomCount">방 개수:</label>
-    <input type="number" id="roomCount" name="roomCount" value="2" required /><br>
+    <input type="number" id="roomCount" name="roomCount" required /><br>
 
     <label for="livingRoomCount">거실 개수:</label>
-    <input type="number" id="livingRoomCount" name="livingRoomCount" value="1" required /><br>
+    <input type="number" id="livingRoomCount" name="livingRoomCount" required /><br>
 
     <label for="toiletCount">화장실 개수:</label>
-    <input type="number" id="toiletCount" name="toiletCount" value="1" required /><br>
+    <input type="number" id="toiletCount" name="toiletCount" required /><br>
 
     <label for="kitchenCount">주방 개수:</label>
-    <input type="number" id="kitchenCount" name="kitchenCount" value="1" required /><br>
+    <input type="number" id="kitchenCount" name="kitchenCount" required /><br>
 
     <label for="duplex">복층:</label>
-    <input type="checkbox" id="duplex" name="duplex" checked /><br>
+    <input type="checkbox" id="duplex" name="duplex" /><br>
 
     <label for="elevator">엘리베이터:</label>
-    <input type="checkbox" id="elevator" name="elevator" checked /><br>
+    <input type="checkbox" id="elevator" name="elevator" /><br>
 
     <label for="park">주차장:</label>
-    <input type="checkbox" id="park" name="park" checked /><br>
+    <input type="checkbox" id="park" name="park" /><br>
 
     <label for="parkDetail">주차장 상세:</label>
-    <input type="text" id="parkDetail" name="parkDetail" value="기본주차장상세" /><br>
+    <input type="text" id="parkDetail" name="parkDetail"/><br>
 
     <label for="roomType">방 유형:</label>
-    <input type="number" id="roomType" name="roomType" value="1" required /><br>
+    <input type="number" id="roomType" name="roomType" required /><br>
 
     <label for="minimumContract">최소 계약 기간 (주):</label>
-    <input type="number" id="minimumContract" name="minimumContract" value="12" required /><br>
+    <input type="number" id="minimumContract" name="minimumContract" required /><br>
 
     <input type="hidden" id="approve" name="approve" value="0" required /><br>
 
