@@ -66,13 +66,14 @@ public class CalendarController extends HttpServlet {
 			//사용자가 선택한 기간 
 			LocalDate selectEndDate = selectStartDate.plusDays(selectPeriod-1);
 			req.getSession().setAttribute("selectEndDate", selectEndDate);
-			req.setAttribute("datecheck", 1);
+			req.getSession().setAttribute("datecheck", 1);
 			action =new CalendarAction();
 			action.execute(req, resp);
 //			req.getRequestDispatcher("/test/popup.jsp").forward(req, resp);
 			
 		} else if(requestUrl.equals("/cancel")) {
 				req.getSession().removeAttribute("selectEndDate");
+				req.getSession().removeAttribute("datecheck");
 				action = new CalendarAction();
 				action.execute(req, resp);
 			
