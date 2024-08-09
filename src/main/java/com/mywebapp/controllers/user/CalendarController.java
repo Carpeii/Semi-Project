@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mywebapp.actions.Action;
 import com.mywebapp.actions.calendar.CalendarAction;
-import com.mywebapp.actions.calendar.ReservationAvailablePeriodCallAction;
+import com.mywebapp.actions.calendar.BookingPeriodCallAction;
 @WebServlet("/calendar/*")
 public class CalendarController extends HttpServlet {
 	@Override
@@ -53,7 +53,7 @@ public class CalendarController extends HttpServlet {
 				//날짜 버튼을 눌렀을 때 호출
 			} else if(req.getParameter("selectDate") != null){
 				req.getSession().setAttribute("selectDate", req.getParameter("selectDate"));
-				action = new ReservationAvailablePeriodCallAction();
+				action = new BookingPeriodCallAction();
 				action.execute(req, resp);
 				//취소 버튼을 눌렀을 때
 			} 
