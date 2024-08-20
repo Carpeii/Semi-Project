@@ -3,6 +3,7 @@ package com.mywebapp.dao;
 import com.mywebapp.model.Booking;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BookingDao {
@@ -12,6 +13,7 @@ public interface BookingDao {
     void declineBooking(long bookingId);
     List<Booking> rentalSchedule(Long roomId);
     Booking reservationAvailablePeriodCall(Date selectDate, long roomId);
+    Booking reservationAvailablePeriodCall(LocalDate selectDate, long roomId);
     
 
 }

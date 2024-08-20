@@ -5,10 +5,12 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.mywebapp.model.Booking;
+import com.mywebapp.model.BookingStatus;
 import com.mywebapp.util.JdbcUtil;
 
 public class BookingDaoImpl implements BookingDao {
@@ -153,5 +155,29 @@ public class BookingDaoImpl implements BookingDao {
 		
 		return booking;
 	}
+	
+	@Override
+	public Booking reservationAvailablePeriodCall(LocalDate selectDate, long roomId) {
+        Booking booking = null;
+        String sql = "SELECT check_in_date FROM booking WHERE ? < check_in_date AND room_id=? AND booking_status=? LIMIT 1";
+
+        try (Connection con = JdbcUtil.getCon();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setDate(1, Date.valueOf(selectDate));
+            pstmt.setLong(2, roomId);
+            pstmt.setInt(3, BookingStatus.AVAILABLE.getStatus());
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                booking = new Booking();
+                booking.setCheckInDate(rs.getDate("check_in_date"));
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        }
+
+        return booking;
+    }
 
 }
