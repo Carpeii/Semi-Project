@@ -42,7 +42,7 @@ long roomId = Long.parseLong(request.getParameter("roomId"));
 				</form>
 			</div>
 				
-			<div class="col pb-5">
+			<div class="col">
 				<form action="${pageContext.request.contextPath }/calendar/select" method="get">
 				<input type="hidden" name="roomId" value="<%=roomId%>"/>
 				<input type="hidden" name="rentPrice" value="<%=rentPrice%>"/>
@@ -188,6 +188,7 @@ long roomId = Long.parseLong(request.getParameter("roomId"));
 		
 		<form action="${pageContext.request.contextPath }/calendar/cancel" method="get">
 		<input type="hidden" name="roomId" value="<%=roomId%>"/>
+					<input type="hidden" name="rentPrice" value="<%=rentPrice%>"/>
 		<c:choose>
 			<c:when test="${not empty selectEndDate}">
 				<button class="btn btn-outline-danger mt-3 me-5">

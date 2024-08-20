@@ -51,6 +51,9 @@ public class GuestMainController extends HttpServlet {
 		req.setAttribute("endPage", paginationInfo.get("endPage"));
 		req.setAttribute("pageNum", paginationInfo.get("pageNum"));
 		
+		//header.jsp를 위한 페이지 타입 설정
+		req.setAttribute("pageType", "guestMain");
+		
 
 		
 		// LoginController에서 세션 받아오기

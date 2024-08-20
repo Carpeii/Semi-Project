@@ -15,7 +15,7 @@ import com.mywebapp.actions.Action;
 import com.mywebapp.dao.BookingDaoImpl;
 import com.mywebapp.model.Booking;
 
-public class ReservationAvailablePeriodCallAction implements Action {
+public class BookingPeriodCallAction implements Action {
 	private String calendarUrl = "/test/popup.jsp";
 	private long roomId;
 

@@ -18,7 +18,7 @@
 <p>관리자 ${sessionScope.user.userId}님 환영합니다</p>
 
 <button onclick="location.href='${pageContext.request.contextPath}/admin/roomManagement'">방관리</button>
-<button onclick="location.href='../auth/logout.jsp'">로그아웃</button>
+<button onclick="location.href='${pageContext.request.contextPath}/auth/logout'">로그아웃</button>
 <%--<button onclick="location.href='../auth/myPage.jsp'">마이 페이지</button>--%>
 <%--        <p>${userId}님 환영합니다</p>--%>
 <%
@@ -31,12 +31,6 @@
 <%
     }
 %>
-<table>
-    <tr>
-        <!-- 매물 승인 요청 후 대기 매물 리스트 -->
-        <!-- 매물 리스트 해당 클릭하면 해당 매물 상태 관리하는 페이지 나오도록 -->
-        <td><button onclick="location.href='./roomEdit.jsp'">edit</button></td>
-    </tr>
-</table>
+
 </body>
 </html>

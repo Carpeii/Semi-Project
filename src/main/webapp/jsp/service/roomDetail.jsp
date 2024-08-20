@@ -212,7 +212,7 @@
         	let url = '${pageContext.request.contextPath}/calendar/call?roomId='+roomId+'&rentPrice=${room.rentPrice}';
         function openPopup() {
             //매개변수 -> (Url, 창이름 , 옵션)
-            window.open(url, 'popupWindow', 'width=1005,height=545,scrollbars=yes');
+            window.open(url, 'popupWindow', 'width=1150,height=620,scrollbars=yes');
         }
     </script>
 </html>

@@ -445,22 +445,26 @@ public class RoomDaoImpl implements RoomDao {
 		try {
 			con = JdbcUtil.getCon();
 			String sql = "SELECT "
-					+ "    r.id as roomId, "
-					+ "    r.room_name AS roomName, "
-					+ "    r.jibun_address AS jibunAddress, "
-					+ "    r.street_address AS streetAddress, "
-					+ "    r.address_detail AS addressDetail, "
-					+ "    r.floor AS floor, "
-					+ "    b.check_in_date AS checkInDate, "
-					+ "    b.check_out_date AS checkOutDate, "
-					+ "    rp.rent_price AS rentPrice, "
-					+ "    b.booking_status AS bookingStatus "
-					+ "FROM "
-					+ "    booking b "
-					+ "    JOIN room r ON b.room_id = r.id "
-					+ "    JOIN room_price rp ON r.id = rp.room_id "
-					+ "WHERE "
-					+ "    b.guest_id = ?";
+		            + "    b.id AS bookingId, "
+		            + "    r.id AS roomId, "
+		            + "    r.room_name AS roomName, "
+		            + "    r.jibun_address AS jibunAddress, "
+		            + "    r.street_address AS streetAddress, "
+		            + "    r.address_detail AS addressDetail, "
+		            + "    r.floor AS floor, "
+		            + "    b.check_in_date AS checkInDate, "
+		            + "    b.check_out_date AS checkOutDate, "
+		            + "    rp.rent_price AS rentPrice, "
+		            + "    b.booking_status AS bookingStatus "
+		            + "FROM "
+		            + "    booking b "
+		            + "    JOIN room r ON b.room_id = r.id "
+		            + "    JOIN room_price rp ON r.id = rp.room_id "
+		            + "WHERE "
+		            + "    b.guest_id = ? "
+		            + "ORDER BY "
+		            + "    b.id DESC";
+
 			pstmt = con.prepareStatement(sql);
 			pstmt.setLong(1, guestId);
 			rs = pstmt.executeQuery();

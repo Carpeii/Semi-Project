@@ -93,4 +93,19 @@ public class RoomDetailDto {
         this.cleaningFee = Integer.parseInt(req.getParameter("cleaningFee"));
         this.refundType = Integer.parseInt(req.getParameter("refundType"));
     }
+    
+    public void setBookingInfoByRequest(HttpServletRequest req) {
+        this.id = Long.parseLong(req.getParameter("roomId"));
+        this.roomName = req.getParameter("roomName");
+        this.jibunAddress = req.getParameter("jibunAddress");
+        this.streetAddress = req.getParameter("streetAddress");
+        this.addressDetail = req.getParameter("addressDetail");
+        this.floor = Integer.parseInt(req.getParameter("floor"));
+        this.hostName = req.getParameter("hostName");
+        this.rentPrice = Integer.parseInt(req.getParameter("rentPrice"));
+        this.longTermDiscount = Integer.parseInt(req.getParameter("longTermDiscount"));
+        this.earlyCheckInDiscount = Integer.parseInt(req.getParameter("earlyCheckInDiscount"));
+        this.maintenanceBill = Integer.parseInt(req.getParameter("maintenanceBill"));
+        this.cleaningFee = Integer.parseInt(req.getParameter("cleaningFee"));
+    }
 }

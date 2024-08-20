@@ -107,7 +107,7 @@ public class BookingDaoImpl implements BookingDao {
 	 public List<Booking> rentalSchedule(Long roomId) {
 			List<Booking> scheduleList = new ArrayList<Booking>();
 			//curdate() -> 오늘의 연 월 일 반환 -> 체크아웃 날짜가 오늘과 같거나 이후인 모든 행 오름차순으로 정렬 가장 옛날부터 -> 최신
-			String sql = "select * from booking where room_id = ? and curdate() <= check_out_date"
+			String sql = "select * from booking where room_id = ? and booking_status=1 and curdate() <= check_out_date"
 					+ " order by check_in_date asc";
 			try {
 				Connection con = JdbcUtil.getCon();
@@ -133,7 +133,7 @@ public class BookingDaoImpl implements BookingDao {
 	public Booking reservationAvailablePeriodCall(Date selectDate, long roomId) {
 		//Id도 추가해야함
 		Booking booking =  new Booking();
-		String sql = "select check_in_date from booking where ? < check_in_date and room_id=? limit 1";
+		String sql = "select check_in_date from booking where ? < check_in_date and room_id=? and booking_status=1 limit 1";
 		try {
 			Connection con = JdbcUtil.getCon();
 			
