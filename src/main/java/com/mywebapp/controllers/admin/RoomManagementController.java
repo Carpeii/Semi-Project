@@ -1,11 +1,8 @@
 package com.mywebapp.controllers.admin;
 
-import com.mywebapp.dao.RoomDao;
-import com.mywebapp.dao.RoomDaoImpl;
-import com.mywebapp.dto.MemberDto;
-import com.mywebapp.dto.RoomListItemDto;
-import com.mywebapp.service.RoomService;
-import com.mywebapp.service.RoomServiceImpl;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+
+import com.mywebapp.dao.RoomDao;
+import com.mywebapp.dao.RoomDaoImpl;
+import com.mywebapp.dto.MemberDto;
+import com.mywebapp.dto.RoomListItemDto;
+import com.mywebapp.model.RoomAction;
+import com.mywebapp.service.RoomService;
+import com.mywebapp.service.RoomServiceImpl;
 
 @WebServlet("/admin/roomManagement")
 public class RoomManagementController extends HttpServlet {
@@ -72,21 +74,15 @@ public class RoomManagementController extends HttpServlet {
         String action = req.getParameter("action");
         long roomId = Long.parseLong(req.getParameter("roomId"));
 
-        RoomDao roomDao = new RoomDaoImpl();
-
-        switch (action) {
-            case "approve":
-                roomDao.updateRoomApproveStatus(roomId, 1);
-                break;
-            case "decline":
-                roomDao.updateRoomApproveStatus(roomId, 2);
-                break;
-            default:
-                // 유효하지 않은 액션 처리
-                resp.sendRedirect("/admin/roomManagement");
-                return;
+        RoomAction roomAction = RoomAction.fromString(action);
+        if (roomAction != null) {
+            RoomDao roomDao = new RoomDaoImpl();
+            roomDao.updateRoomApproveStatus(roomId, roomAction.getStatusCode());
+            // 작업 완료 후 리다이렉트
+            resp.sendRedirect(req.getContextPath() + "/admin/roomManagement");
+        } else {
+            // 유효하지 않은 액션 값 처리
+            resp.sendRedirect("/admin/roomManagement");
         }
-        // 작업 완료 후 리다이렉트
-        resp.sendRedirect(req.getContextPath() + "/admin/roomManagement");
     }
 }
