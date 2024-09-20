@@ -13,4 +13,5 @@ public class RoomImage {
     private String saveFileName;
     private String imagePath;
     private int imageOrder;
+    private int test;
 }
