@@ -24,7 +24,6 @@ public class RoomPrice {
     private boolean water;
     private boolean gas;
     private boolean internet;
-    private boolean test;
     private int cleaningFee;
     private int refundType;
 
