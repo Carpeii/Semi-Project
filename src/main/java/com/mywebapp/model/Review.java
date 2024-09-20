@@ -13,6 +13,7 @@ public class Review {
     private int rating;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private int test;
     public Review() {
     }
 
