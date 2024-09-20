@@ -12,7 +12,7 @@ public class Review {
     private String message;
     private int rating;
     private Timestamp createdAt;
-
+    public Timestamp updateAt;
     public Review() {
     }
 
